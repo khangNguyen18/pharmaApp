@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  fancy_bottom_navigation_plus: ^1.0.3
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,6 +39,8 @@ dependencies:
   flex_color_scheme: ^7.3.1
   navigation_view: ^1.0.6
   iconly: ^1.0.1
+  animated_bottom_navigation: ^0.0.5
+  animate_do: ^3.3.4
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +73,23 @@ flutter:
   - assets/icons/order.png
   - assets/icons/profile.png
   - assets/icons/category.png
+  - assets/images/background.png
+  - assets/images/logo_white.png
+  - assets/images/support.png
+
+  fonts:
+    - family: Markazi-Bold
+      fonts:
+        - asset: assets/fonts/MarkaziText-Bold.ttf
+    - family: Markazi-Regular
+      fonts:
+        - asset: assets/fonts/MarkaziText-Regular.ttf
+    - family: Markazi-Medium
+      fonts:
+        - asset: assets/fonts/MarkaziText-Medium.ttf
+    - family: Markazi-SemiBold
+      fonts:
+        - asset: assets/fonts/MarkaziText-SemiBold.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

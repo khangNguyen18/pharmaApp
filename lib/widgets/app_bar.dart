@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pharma_app/components/icon_component.dart';
 
 class MyAppBar extends StatelessWidget {
-  const MyAppBar({super.key});
+  MyAppBar({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,20 +43,16 @@ class MyAppBar extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.textsms_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
+                      IconComponent(
+                          icon: Icon(Icons.textsms_outlined),
+                          iconBackgroundColor: null,
+                          iconColor: Colors.white,
+                          onIconPress: () {}),
+                      IconComponent(
+                          icon: Icon(Icons.shopping_cart_outlined),
+                          iconBackgroundColor: null,
+                          onIconPress: () {},
+                          iconColor: Colors.white),
                     ],
                   ),
                 ],

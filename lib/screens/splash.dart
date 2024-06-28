@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pharma_app/screens/home_page.dart';
+import 'package:pharma_app/screens/auth/login_screen.dart';
+import 'package:pharma_app/screens/home_screen.dart';
+import 'package:pharma_app/widgets/bottom_navigation.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,7 +23,7 @@ class _SplashScreen extends State<SplashScreen>
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => const HomePage(),
+          builder: (_) => HomeScreen(),
         ),
       );
     });
