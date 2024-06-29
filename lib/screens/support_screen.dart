@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pharma_app/components/icon_component.dart';
+import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/components/title_component.dart';
 
 class SupportScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class _SupportScreenState extends State<SupportScreen> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: TitleComponent(
           text: 'Hỗ trợ',
+          color: Colors.white,
         ),
         centerTitle: true,
       ),
@@ -26,6 +28,7 @@ class _SupportScreenState extends State<SupportScreen> {
         padding: EdgeInsets.all(20),
         child: Container(
           height: 280,
+          width: 500,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Color.fromARGB(255, 255, 255, 255),
@@ -37,6 +40,7 @@ class _SupportScreenState extends State<SupportScreen> {
           child: Stack(children: [
             Container(
               height: 200,
+              width: 500,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
@@ -48,14 +52,37 @@ class _SupportScreenState extends State<SupportScreen> {
                 image: AssetImage('assets/images/support.png'),
               ),
             ),
-            Align(
-                alignment: Alignment.bottomLeft,
+            Positioned(
+                left: 10,
+                bottom: 10,
                 child: Row(
                   children: [
                     Column(
-                      children: [Text('coloum')],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TitleComponent(
+                          text: 'Chat với PharmaTown',
+                          color: Colors.black,
+                        ),
+                        Text('Hỗ trợ nhanh chóng'),
+                      ],
                     ),
-                    Text('data'),
+                    SizedBox(width: 15),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: TextComponent(
+                        text: 'Chat ngay',
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        decoration: TextDecoration.none,
+                      ),
+                    )
                   ],
                 )),
           ]),

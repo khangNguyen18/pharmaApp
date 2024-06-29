@@ -29,7 +29,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
     CategoryScreen(),
     SupportScreen(),
     OrderScreen(),
-    LoginScreen()
+    ProfileScreen()
   ];
   int _selectedIndex = 0;
 
