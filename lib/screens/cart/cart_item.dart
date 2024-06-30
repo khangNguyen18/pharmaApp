@@ -9,10 +9,9 @@ import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 
 class CartItem extends StatefulWidget {
-  CartItem({super.key, this.value = false, required this.title});
+  CartItem({super.key, this.value = false});
 
   bool value;
-  final String title;
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -31,12 +30,12 @@ class _CartItemState extends State<CartItem> {
       if (quantity > 1) {
         quantity--;
       } else {
-        _showDialog();
+        showConfirmDialog();
       }
     });
   }
 
-  void _showDialog() {
+  void showConfirmDialog() {
     if (Platform.isAndroid) {
       showDialog(
         context: context,
@@ -93,15 +92,16 @@ class _CartItemState extends State<CartItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
-        height: 175,
+      child: SizedBox(
+        height: 165,
+        width: 120,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Image(
-                width: 120,
+                width: 90,
                 image: AssetImage(
                     'assets/images/medicines/BeroccaPerformance.png'),
               ),
@@ -112,36 +112,36 @@ class _CartItemState extends State<CartItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextComponent(
-                    text:
+                    text: //chỗ này sau này là title được truyền vào
                         'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
-                    size: 16,
+                    size: 14,
                     weight: FontWeight.bold,
                   ),
                   TextComponent(
                     text: 'Phân loại: Hộp',
-                    size: 14,
+                    size: 12,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextComponent(
                         text: '115.000 đ',
-                        size: 20,
+                        size: 18,
                         color: Theme.of(context).colorScheme.primary,
                         weight: FontWeight.bold,
                       ),
                       Row(
                         children: [
                           Container(
-                            width: 30,
-                            height: 30,
+                            width: 25,
+                            height: 25,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.black),
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: IconComponent(
                               icon: FaIcon(FontAwesomeIcons.minus),
-                              size: 12,
+                              size: 9,
                               iconColor: Colors.black,
                               onIconPress: decreaseQuantity,
                             ),
@@ -149,18 +149,18 @@ class _CartItemState extends State<CartItem> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: TextComponent(
-                                text: quantity.toString(), size: 18),
+                                text: quantity.toString(), size: 16),
                           ),
                           Container(
-                            width: 30,
-                            height: 30,
+                            width: 25,
+                            height: 25,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.black),
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: IconComponent(
                               icon: FaIcon(FontAwesomeIcons.plus),
-                              size: 12,
+                              size: 9,
                               iconColor: Colors.black,
                               onIconPress: increaseQuantity,
                             ),

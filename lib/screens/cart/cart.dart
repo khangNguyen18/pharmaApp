@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
+import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/components/title_component.dart';
 import 'package:pharma_app/screens/cart/buy_bottom_bar.dart';
@@ -15,15 +18,63 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  final cartItem = CartItem(title: 'Chọn tất cả');
-  final checkBoxList = [
-    CartItem(
-      title: 'BeroccaPerformance',
-    ),
-    // CheckBoxModal(title: 'Check box 1'),
-    // CheckBoxModal(title: 'Check box 2'),
-    // CheckBoxModal(title: 'Check box 3'),
-  ];
+  final allCartItemsChecked = CartItem();
+  final checkBoxList = [];
+
+  _showConfirmDialog() {
+    if (Platform.isAndroid) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: TextComponent(
+            text: 'Bạn có chắc chắn muốn xoá sản phẩm khỏi giỏ hàng?',
+            size: 20,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: TextComponent(
+                text: 'Đồng ý',
+                size: 14,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: TextComponent(
+                text: 'Không',
+                size: 14,
+                color: Theme.of(context).colorScheme.primary,
+                weight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      showCupertinoDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Bạn có chắc chắn muốn xoá sản phẩm khỏi giỏ hàng?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: Text('Đồng ý'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop,
+              child: Text('Không'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,32 +94,169 @@ class _CartState extends State<Cart> {
           color: Colors.white,
           text: 'Giỏ hàng',
         ),
-      ),
-      body: ListView(
-        children: [
-          CartItem(title: 'hello'),
-          ListTile(
-            leading: Checkbox(value: false, onChanged: (value) {}),
-            title: Text(cartItem.title),
-            // onTap: () => onAllChecked(allChecked),
-            // leading: Checkbox(
-            //     value: allChecked.value,
-            //     onChanged: (value) => onAllChecked(allChecked)),
-            // title: Text(allChecked.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                checkBoxList.add(CartItem());
+              });
+            },
+            icon: Icon(Icons.add),
           ),
-          // Divider(),
-          // ...checkBoxList.map(
-          //   (item) => ListTile(
-          //     onTap: () => onItemChecked(item),
-          //     leading: Checkbox(
-          //         value: item.value, onChanged: (value) => onItemChecked(item)),
-          //     title: Text(item.title),
-          //   ),
-          //),
+          IconComponent(
+            size: 20,
+            icon: FaIcon(FontAwesomeIcons.trash),
+            onIconPress: () {},
+          ),
         ],
       ),
+      body: Transform.translate(
+        offset: Offset(-10, 0),
+        child: Transform.translate(
+          offset: Offset(10, 0),
+          child: ListView.builder(
+            itemCount: checkBoxList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Dismissible(
+                confirmDismiss: (DismissDirection direction) async {
+                  if (direction == DismissDirection.endToStart) {
+                    return await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: TextComponent(
+                            text:
+                                'Bạn có chắc chắn muốn xoá sản phẩm khỏi giỏ hàng?',
+                            size: 20,
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                              child: TextComponent(
+                                text: 'Đồng ý',
+                                size: 14,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: TextComponent(
+                                text: 'Không',
+                                size: 14,
+                                color: Theme.of(context).colorScheme.primary,
+                                weight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                background: Container(
+                  color: Colors.red,
+                  padding: EdgeInsets.all(50),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: FaIcon(
+                      FontAwesomeIcons.trash,
+                      color: Colors.white,
+                      textDirection: TextDirection.rtl,
+                    ),
+                  ),
+                ),
+                key: ValueKey(checkBoxList[index]),
+                onDismissed: (DismissDirection direction) {
+                  setState(() {
+                    checkBoxList.removeAt(index);
+                  });
+                },
+                child: ListTile(
+                  leading: Checkbox(
+                    value: checkBoxList[index].value,
+                    onChanged: (value) => onItemChecked(
+                      checkBoxList[index],
+                    ),
+                  ),
+                  title: checkBoxList[index],
+                ),
+
+                // Column(
+                //   children: [
+                //     for (var i = 1; i < checkBoxList.length; i++) ...[
+                //       ListTile(
+                //         leading: Checkbox(
+                //           value: checkBoxList[i].value,
+                //           onChanged: (value) => onItemChecked(checkBoxList[i]),
+                //         ),
+                //         title: checkBoxList[i],
+                //       ),
+
+                //       // ...checkBoxList.map(
+                //       //   (item) => ListTile(
+                //       //     leading: Checkbox(
+                //       //       value: item.value,
+                //       //       onChanged: (value) => onItemChecked(item),
+                //       //     ),
+                //       //     title: CartItem(),
+                //       //   ),
+                //       // ),
+                //     ],
+                //   ],
+                // ),
+              );
+            },
+          ),
+          // child: ListView.builder(
+          //     itemCount: checkBoxList.length,
+          //     itemBuilder: (BuildContext context, int index) {
+          //       return Dismissible(
+          //         background: Container(
+          //           color: Colors.red,
+          //           child: FaIcon(FontAwesomeIcons.trash),
+          //         ),
+          //         key: ValueKey<CartItem>(checkBoxList[index]),
+          //         onDismissed: (DismissDirection direction) {
+          //           setState(() {
+          //             checkBoxList.removeAt(index);
+          //           });
+          //         },
+          //         child: ListView(
+          //           children: [
+          //             ...checkBoxList.map(
+          //               (item) => ListTile(
+          //                 leading: Checkbox(
+          //                   value: item.value,
+          //                   onChanged: (value) => onItemChecked(item),
+          //                 ),
+          //                 title: CartItem(),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+
+          //         //
+          //       );
+          //     }
+
+          //
+          //     //),
+          //     ),
+        ),
+      ),
       bottomNavigationBar: Container(
-        color: Colors.white,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 2.0,
+              offset: Offset(-2.0, 0),
+            ),
+          ],
+          color: Colors.white,
+        ),
         height: 100,
         child: Column(
           children: [
@@ -76,7 +264,8 @@ class _CartState extends State<Cart> {
               onPressed: () {},
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0), side: BorderSide),
+                  borderRadius: BorderRadius.circular(0),
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,7 +294,10 @@ class _CartState extends State<Cart> {
                 children: [
                   Row(
                     children: [
-                      Checkbox(value: false, onChanged: (value) {}),
+                      Checkbox(
+                          value: allCartItemsChecked.value,
+                          onChanged: (value) =>
+                              onAllChecked(allCartItemsChecked)),
                       Text('Tất cả'),
                     ],
                   ),
@@ -114,15 +306,17 @@ class _CartState extends State<Cart> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             TextComponent(
                               text: 'Tổng tiền',
-                              size: 13,
+                              size: 14,
                             ),
                             TextComponent(
                               text: '115.000 đ',
                               size: 20,
+                              weight: FontWeight.w900,
+                              color: Colors.red,
                             ),
                           ],
                         ),
@@ -153,32 +347,37 @@ class _CartState extends State<Cart> {
       ),
     );
   }
+
+  onAllChecked(CartItem cbItem) {
+    final newValue = !cbItem.value;
+    setState(() {
+      cbItem.value = newValue;
+      checkBoxList.forEach((element) {
+        element.value = newValue;
+      });
+    });
+  }
+
+  onItemChecked(CartItem cbItem) {
+    final newValue = !cbItem.value;
+    setState(() {
+      cbItem.value = newValue;
+
+      if (!newValue) {
+        allCartItemsChecked.value = false;
+      } else {
+        final allListChecked = checkBoxList.every((element) => element.value);
+        allCartItemsChecked.value = allListChecked;
+      }
+    });
+  }
+
+  deleteCartItem(CartItem cbItem) {
+    setState(() {
+      if (!cbItem.value) checkBoxList.remove(cbItem);
+    });
+  }
 }
-
-//   onAllChecked(CartItem cbItem) {
-//     final newValue = !cbItem.value;
-//     setState(() {
-//       cbItem.value = newValue;
-//       checkBoxList.forEach((element) {
-//         element.value = newValue;
-//       });
-//     });
-//   }
-
-//   onItemChecked(CartItem cbItem) {
-//     final newValue = !cbItem.value;
-//     setState(() {
-//       cbItem.value = newValue;
-
-//       if (!newValue) {
-//         allChecked.value = false;
-//       } else {
-//         final allListChecked = checkBoxList.every((element) => element.value);
-//         allChecked.value = allListChecked;
-//       }
-//     });
-//   }
-// }
 
 // class CheckBoxModal {
 //   String title;

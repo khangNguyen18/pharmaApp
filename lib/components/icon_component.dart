@@ -19,7 +19,6 @@ class IconComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-<<<<<<< HEAD
     return Container(
       decoration: BoxDecoration(
           color: iconBackgroundColor, borderRadius: BorderRadius.circular(10)),
@@ -29,17 +28,6 @@ class IconComponent extends StatelessWidget {
         color: iconColor,
         iconSize: size,
       ),
-=======
-    return 
-        Container(
-          decoration: BoxDecoration(
-              color: iconBackgroundColor, borderRadius: BorderRadius.circular(10)),
-          child: IconButton(
-            onPressed: onIconPress,
-            icon: icon,
-            color: iconColor,
-          ),
->>>>>>> 234aac509b2252eaa7c5b09f8242b2cbc60766f7
     );
   }
 }
