@@ -1,5 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/widgets.dart';
+import 'package:iconly/iconly.dart';
+import 'package:pharma_app/components/text_component.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -14,81 +18,82 @@ class LoginScreen extends StatefulWidget {
 final _formSignInKey = GlobalKey<FormState>();
 bool rememberPassword = true;
 
+// void _submitLoginData() {
+//   showDialog(context: context, builder: builder)
+// }
+
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        child: ListView(
-          children: <Widget>[
-            Container(
-              height: 260,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/background.png'),
-                    fit: BoxFit.fill),
-              ),
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    top: 10,
-                    width: 430,
-                    height: 240,
-                    child: FadeInUp(
-                        duration: Duration(milliseconds: 800),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/logo_white.png'))),
-                        )),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Positioned(
-                    child: FadeInUp(
-                        duration: Duration(milliseconds: 800),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 10, right: 230),
-                          child: Center(
-                            child: Text(
-                              "Xin chào!",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold),
-                            ),
+      appBar: AppBar(
+        toolbarHeight: 50,
+        automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.close_rounded),
+              style: IconButton.styleFrom(
+                  foregroundColor: Colors.white, iconSize: 40)),
+        ],
+        bottom: AppBar(
+          toolbarHeight: 200,
+          automaticallyImplyLeading: false,
+          title: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+            child: Image(image: AssetImage('assets/images/logo_white.png')),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          elevation: 5,
+          shadowColor: Colors.black,
+        ),
+      ),
+      body: ListView(
+        children: [
+          Container(
+            child: Stack(
+              children: [
+                Positioned(
+                  child: FadeInUp(
+                      duration: Duration(milliseconds: 800),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10, right: 240),
+                        child: Center(
+                          child: Text(
+                            "Xin chào!",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
                           ),
-                        )),
-                  ),
-                  Positioned(
-                    child: FadeInUp(
-                        duration: Duration(milliseconds: 800),
-                        child: Container(
-                          child: Center(
-                            child: Text(
-                              "Vui lòng nhập số điện thoại của bạn để tiếp tục",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal),
-                            ),
+                        ),
+                      )),
+                ),
+                Positioned(
+                  top: 49,
+                  left: 40,
+                  child: FadeInUp(
+                      duration: Duration(milliseconds: 800),
+                      child: Container(
+                        child: Center(
+                          child: Text(
+                            "Vui lòng nhập số điện thoại của bạn để tiếp tục",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal),
                           ),
-                        )),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-                padding: EdgeInsets.all(30.0),
-                child: FadeInUp(
-                  duration: Duration(milliseconds: 1000),
-                  child: SingleChildScrollView(
+                        ),
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 100, 30, 30),
+                  child: FadeInUp(
+                    duration: Duration(milliseconds: 1000),
                     child: Form(
                       key: _formSignInKey,
                       child: Column(
@@ -248,10 +253,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
-                                'Don\'t have an account? ',
-                                style: TextStyle(
-                                  color: Colors.black45,
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  'Chưa có tài khoản? Đăng ký ngay',
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black45),
                                 ),
                               ),
                             ],
@@ -263,9 +271,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                ))
-          ],
-        ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

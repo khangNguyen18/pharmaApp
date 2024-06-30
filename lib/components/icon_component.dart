@@ -18,14 +18,15 @@ class IconComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(
-      decoration: BoxDecoration(
-          color: iconBackgroundColor, borderRadius: BorderRadius.circular(10)),
-      child: IconButton(
-        onPressed: onIconPress,
-        icon: icon,
-        color: iconColor,
-      ),
+    return 
+        Container(
+          decoration: BoxDecoration(
+              color: iconBackgroundColor, borderRadius: BorderRadius.circular(10)),
+          child: IconButton(
+            onPressed: onIconPress,
+            icon: icon,
+            color: iconColor,
+          ),
     );
   }
 }

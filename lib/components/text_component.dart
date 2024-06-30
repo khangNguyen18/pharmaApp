@@ -19,7 +19,7 @@ class TextComponent extends StatelessWidget {
       style: TextStyle(
           color: color,
           fontFamily: "MarkaziText-Medium",
-          fontSize: 16,
+          fontSize: 18,
           fontStyle: fontStyle,
           decoration: decoration),
     );

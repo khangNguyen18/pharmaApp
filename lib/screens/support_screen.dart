@@ -37,7 +37,7 @@ class _SupportScreenState extends State<SupportScreen> {
               width: 1.0,
             ),
           ),
-          child: Stack(children: [
+            child: Stack(children: [
             Container(
               height: 200,
               width: 500,
@@ -56,6 +56,7 @@ class _SupportScreenState extends State<SupportScreen> {
                 left: 10,
                 bottom: 10,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +68,6 @@ class _SupportScreenState extends State<SupportScreen> {
                         Text('Hỗ trợ nhanh chóng'),
                       ],
                     ),
-                    SizedBox(width: 15),
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
