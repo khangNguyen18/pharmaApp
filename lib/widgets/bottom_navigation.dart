@@ -38,7 +38,8 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
         height: 80,
-        elevation: 0,
+        elevation: 20,
+        shadowColor: Colors.black,
         onDestinationSelected: (index) => {
           setState(() {
             _selectedIndex = index;

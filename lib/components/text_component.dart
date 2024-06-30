@@ -22,6 +22,7 @@ class TextComponent extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
+<<<<<<< HEAD
         color: color,
         fontFamily: "MarkaziText-Medium",
         fontSize: size,
@@ -29,6 +30,13 @@ class TextComponent extends StatelessWidget {
         decoration: decoration,
         fontWeight: weight,
       ),
+=======
+          color: color,
+          fontFamily: "MarkaziText-Medium",
+          fontSize: 18,
+          fontStyle: fontStyle,
+          decoration: decoration),
+>>>>>>> 234aac509b2252eaa7c5b09f8242b2cbc60766f7
     );
   }
 }

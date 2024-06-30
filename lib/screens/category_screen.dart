@@ -44,7 +44,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ],
         title: TitleComponent(
           text: 'Danh mục thuốc',
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
     );
