@@ -1,27 +1,34 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TextComponent extends StatelessWidget {
   String text;
   Color color;
-  FontStyle fontStyle = FontStyle.normal;
+  FontStyle fontStyle;
   TextDecoration decoration;
+  double size;
+  FontWeight weight;
   TextComponent(
       {super.key,
       required this.text,
-      required this.color,
-      required this.fontStyle,
-      required this.decoration});
+      required this.size,
+      this.weight = FontWeight.normal,
+      this.color = Colors.black,
+      this.fontStyle = FontStyle.normal,
+      this.decoration = TextDecoration.none});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       style: TextStyle(
-          color: color,
-          fontFamily: "MarkaziText-Medium",
-          fontSize: 16,
-          fontStyle: fontStyle,
-          decoration: decoration),
+        color: color,
+        fontFamily: "MarkaziText-Medium",
+        fontSize: size,
+        fontStyle: fontStyle,
+        decoration: decoration,
+        fontWeight: weight,
+      ),
     );
   }
 }

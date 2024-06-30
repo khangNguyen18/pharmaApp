@@ -81,6 +81,7 @@ class _SupportScreenState extends State<SupportScreen> {
                         color: Colors.white,
                         fontStyle: FontStyle.normal,
                         decoration: TextDecoration.none,
+                        size: 16,
                       ),
                     )
                   ],

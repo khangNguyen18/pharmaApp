@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/title_component.dart';
+import 'package:pharma_app/screens/cart/cart.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -21,15 +24,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
           Row(
             children: [
               IconComponent(
-                  icon: Icon(Icons.textsms_outlined),
+                  icon: FaIcon(FontAwesomeIcons.solidMessage),
                   iconBackgroundColor: null,
                   iconColor: Colors.white,
                   onIconPress: () {}),
               IconComponent(
-                  icon: Icon(Icons.shopping_cart_outlined),
-                  iconBackgroundColor: null,
-                  onIconPress: () {},
-                  iconColor: Colors.white),
+                icon: FaIcon(FontAwesomeIcons.cartShopping),
+                iconBackgroundColor: null,
+                onIconPress: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Cart()),
+                  );
+                },
+                iconColor: Colors.white,
+              ),
             ],
           )
         ],

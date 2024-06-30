@@ -1,19 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class IconComponent extends StatelessWidget {
-  Icon icon;
+  Widget icon;
   Color? iconBackgroundColor;
   void Function() onIconPress;
-  Color iconColor = Colors.white;
+  Color iconColor;
+  double size;
 
   IconComponent(
       {super.key,
       required this.icon,
-      required this.iconBackgroundColor,
+      this.size = 30,
+      this.iconBackgroundColor,
       required this.onIconPress,
-      required this.iconColor});
+      this.iconColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class IconComponent extends StatelessWidget {
         onPressed: onIconPress,
         icon: icon,
         color: iconColor,
+        iconSize: size,
       ),
     );
   }

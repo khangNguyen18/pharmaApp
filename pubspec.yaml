@@ -41,6 +41,7 @@ dependencies:
   iconly: ^1.0.1
   animated_bottom_navigation: ^0.0.5
   animate_do: ^3.3.4
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,8 @@ flutter:
   - assets/images/background.png
   - assets/images/logo_white.png
   - assets/images/support.png
+  #medicines
+  - assets/images/medicines/BeroccaPerformance.png
 
   fonts:
     - family: Markazi-Bold
