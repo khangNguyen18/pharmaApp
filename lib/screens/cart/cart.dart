@@ -19,61 +19,7 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final allCartItemsChecked = CartItem();
-  final checkBoxList = [];
-
-  _showConfirmDialog() {
-    if (Platform.isAndroid) {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: TextComponent(
-            text: 'Bạn có chắc chắn muốn xoá sản phẩm khỏi giỏ hàng?',
-            size: 20,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-              },
-              child: TextComponent(
-                text: 'Đồng ý',
-                size: 14,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: TextComponent(
-                text: 'Không',
-                size: 14,
-                color: Theme.of(context).colorScheme.primary,
-                weight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      showCupertinoDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('Bạn có chắc chắn muốn xoá sản phẩm khỏi giỏ hàng?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-              },
-              child: Text('Đồng ý'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop,
-              child: Text('Không'),
-            ),
-          ],
-        ),
-      );
-    }
-  }
+  final List checkBoxList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -157,8 +103,8 @@ class _CartState extends State<Cart> {
                 },
                 background: Container(
                   color: Colors.red,
-                  padding: EdgeInsets.all(50),
-                  child: Align(
+                  padding: const EdgeInsets.all(50),
+                  child: const Align(
                     alignment: Alignment.centerRight,
                     child: FaIcon(
                       FontAwesomeIcons.trash,
@@ -247,7 +193,7 @@ class _CartState extends State<Cart> {
         ),
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: Colors.black,
@@ -374,7 +320,9 @@ class _CartState extends State<Cart> {
 
   deleteCartItem(CartItem cbItem) {
     setState(() {
-      if (!cbItem.value) checkBoxList.remove(cbItem);
+      if (cbItem.value == true) {
+        checkBoxList.remove(cbItem);
+      }
     });
   }
 }

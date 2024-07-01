@@ -75,12 +75,12 @@ class _CartItemState extends State<CartItem> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(ctx);
+                Navigator.of(context).pop(true);
               },
               child: Text('Đồng ý'),
             ),
             TextButton(
-              onPressed: () => Navigator.pop,
+              onPressed: () => Navigator.of(context).pop(false),
               child: Text('Không'),
             ),
           ],
