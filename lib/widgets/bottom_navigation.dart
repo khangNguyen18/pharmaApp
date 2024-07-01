@@ -37,8 +37,8 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-        height: 60,
-        elevation: 20,
+        height: 50,
+        elevation: 5.0,
         shadowColor: Colors.black,
         onDestinationSelected: (index) => {
           setState(() {
