@@ -102,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         side: BorderSide(color: Colors.transparent)),
                     child: Container(
                       alignment: Alignment.center,
-                      width: 75,
+                      width: 80,
                       height: 100,
                       child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -154,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         side: BorderSide(color: Colors.transparent)),
                     child: Container(
                       alignment: Alignment.center,
-                      width: 75,
+                      width: 80, //nhớ chỉn
                       height: 100,
                       child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.center,

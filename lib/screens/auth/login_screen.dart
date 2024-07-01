@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/screens/auth/register_screen.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -17,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 
 final _formSignInKey = GlobalKey<FormState>();
 bool rememberPassword = true;
-
+bool _isVisible = false;
 // void _submitLoginData() {
 //   showDialog(context: context, builder: builder)
 // }
@@ -75,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Positioned(
                   top: 49,
-                  left: 40,
+                  left: 25,
                   child: FadeInUp(
                       duration: Duration(milliseconds: 800),
                       child: Container(
@@ -133,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 25.0,
                           ),
                           TextFormField(
-                            obscureText: true,
+                            obscureText: _isVisible,
                             obscuringCharacter: '*',
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -142,6 +144,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _isVisible = !_isVisible;
+                                    });
+                                  },
+                                  icon: _isVisible
+                                      ? Icon(Icons.visibility)
+                                      : Icon(Icons.visibility_off)),
                               label: const Text('Mật khẩu'),
                               hintText: 'Mật khẩu',
                               hintStyle: const TextStyle(
@@ -249,19 +260,57 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(
                             height: 25.0,
                           ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                FaIcon(
+                                  FontAwesomeIcons.facebookF,
+                                  size: 35,
+                                  color: Color.fromRGBO(66, 103, 178, 1),
+                                ),
+                                FaIcon(
+                                  FontAwesomeIcons.googlePlusG,
+                                  size: 40,
+                                  color: Colors.red,
+                                ),
+                                FaIcon(
+                                  FontAwesomeIcons.apple,
+                                  size: 40,
+                                  color: Colors.black,
+                                ),
+                                FaIcon(
+                                  FontAwesomeIcons.twitter,
+                                  size: 40,
+                                  color: Color.fromRGBO(29, 161, 242, 1),
+                                ),
+                              ]),
+                          const SizedBox(
+                            height: 25.0,
+                          ),
                           // don't have an account
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  'Chưa có tài khoản? Đăng ký ngay',
-                                  style: TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                      color: Colors.black45),
+                              const Text(
+                                'Bạn chưa có tài khoản? ',
+                                style: TextStyle(
+                                  color: Colors.black45,
                                 ),
                               ),
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (e) => const RegisterScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('Đăng ký',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              Color.fromRGBO(0, 103, 105, 1))))
                             ],
                           ),
                           const SizedBox(
