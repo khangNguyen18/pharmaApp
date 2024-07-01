@@ -18,7 +18,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 90,
+        toolbarHeight: 120,
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           Row(
