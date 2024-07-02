@@ -8,14 +8,16 @@ class TextComponent extends StatelessWidget {
   TextDecoration decoration;
   double size;
   FontWeight weight;
-  TextComponent(
-      {super.key,
-      required this.text,
-      required this.size,
-      this.weight = FontWeight.normal,
-      this.color = Colors.black,
-      this.fontStyle = FontStyle.normal,
-      this.decoration = TextDecoration.none});
+
+  TextComponent({
+    super.key,
+    required this.text,
+    required this.size,
+    this.weight = FontWeight.normal,
+    this.color = Colors.black,
+    this.fontStyle = FontStyle.normal,
+    this.decoration = TextDecoration.none,
+  });
 
   @override
   Widget build(BuildContext context) {

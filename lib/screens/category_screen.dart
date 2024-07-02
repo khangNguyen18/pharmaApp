@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/title_component.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
+import 'package:pharma_app/screens/products/product_card.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -24,12 +26,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
           Row(
             children: [
               IconComponent(
-                  icon: FaIcon(FontAwesomeIcons.solidMessage),
+                  icon: Icon(IconlyLight.chat),
                   iconBackgroundColor: null,
                   iconColor: Colors.white,
                   onIconPress: () {}),
               IconComponent(
-                icon: FaIcon(FontAwesomeIcons.cartShopping),
+                icon: Icon(
+                  IconlyLight.buy,
+                ),
                 iconBackgroundColor: null,
                 onIconPress: () {
                   Navigator.push(
@@ -46,6 +50,22 @@ class _CategoryScreenState extends State<CategoryScreen> {
           text: 'Danh mục thuốc',
           color: Colors.white,
         ),
+      ),
+      body: ListView(
+        children: [
+          Row(
+            children: [
+              ProductCard(),
+              ProductCard(),
+            ],
+          ),
+          Row(
+            children: [
+              ProductCard(),
+              ProductCard(),
+            ],
+          )
+        ],
       ),
     );
   }

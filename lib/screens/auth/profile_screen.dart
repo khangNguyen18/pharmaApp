@@ -73,7 +73,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 15),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Route route = MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    );
+                    Navigator.push(context, route);
+                  },
                   child: TextComponent(
                     text: 'Đăng ký/Đăng nhập',
                     color: Colors.black,

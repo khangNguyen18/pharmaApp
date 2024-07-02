@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconly/iconly.dart';
+import 'package:pharma_app/components/icon_component.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -19,34 +21,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 50,
         automaticallyImplyLeading: false,
+        toolbarHeight: 40,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.close_rounded),
-              style: IconButton.styleFrom(
-                  foregroundColor: Colors.white, iconSize: 40)),
-        ],
-        bottom: AppBar(
-          toolbarHeight: 200,
-          automaticallyImplyLeading: false,
-          title: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-            child: Image(image: AssetImage('assets/images/logo_white.png')),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          elevation: 5,
-          shadowColor: Colors.black,
-        ),
       ),
       backgroundColor: Colors.white,
       body: Container(
         child: ListView(
           children: <Widget>[
+            Container(
+              decoration:
+                  BoxDecoration(color: Theme.of(context).colorScheme.primary),
+              child: Stack(
+                children: [
+                  Positioned(
+                    child: IconComponent(
+                      icon: Icon(IconlyLight.arrow_left_2),
+                      onIconPress: () {
+                        Navigator.pop(context);
+                      },
+                      iconColor: Colors.white,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Image(
+                      image: AssetImage('assets/images/logo_white_small.png'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Container(
               child: Center(
                 child: FadeInUp(

@@ -52,7 +52,9 @@ class _CartState extends State<Cart> {
           IconComponent(
             size: 20,
             icon: FaIcon(FontAwesomeIcons.trash),
-            onIconPress: () {},
+            onIconPress: () {
+              
+            },
           ),
         ],
       ),
