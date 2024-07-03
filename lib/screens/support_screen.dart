@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
-import 'package:pharma_app/components/title_component.dart';
 
 class SupportScreen extends StatefulWidget {
   const SupportScreen({super.key});
@@ -18,9 +17,10 @@ class _SupportScreenState extends State<SupportScreen> {
       appBar: AppBar(
         toolbarHeight: 90,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: TitleComponent(
+        title: TextComponent(
           text: 'Hỗ trợ',
           color: Colors.white,
+          isTitle: true,
         ),
         centerTitle: true,
       ),
@@ -37,7 +37,7 @@ class _SupportScreenState extends State<SupportScreen> {
               width: 1.0,
             ),
           ),
-            child: Stack(children: [
+          child: Stack(children: [
             Container(
               height: 200,
               width: 500,
@@ -61,9 +61,10 @@ class _SupportScreenState extends State<SupportScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TitleComponent(
+                        TextComponent(
                           text: 'Chat với PharmaTown',
                           color: Colors.black,
+                          isTitle: true,
                         ),
                         Text('Hỗ trợ nhanh chóng'),
                       ],

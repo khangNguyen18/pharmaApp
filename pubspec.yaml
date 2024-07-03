@@ -42,6 +42,7 @@ dependencies:
   animated_bottom_navigation: ^0.0.5
   animate_do: ^3.3.4
   font_awesome_flutter: ^10.7.0
+  flutter_hooks: ^0.20.5
 
 dev_dependencies:
   flutter_test:

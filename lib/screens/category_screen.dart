@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
-import 'package:pharma_app/components/title_component.dart';
+import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/screens/products/product_card.dart';
 
@@ -20,7 +17,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 120,
+        toolbarHeight: 110,
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           Row(
@@ -46,20 +43,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ],
           )
         ],
-        title: TitleComponent(
+        title: TextComponent(
           text: 'Danh mục thuốc',
           color: Colors.white,
+          isTitle: true,
         ),
       ),
       body: ListView(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ProductCard(),
               ProductCard(),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ProductCard(),
               ProductCard(),
