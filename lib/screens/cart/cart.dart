@@ -9,6 +9,7 @@ import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/components/title_component.dart';
 import 'package:pharma_app/screens/cart/buy_bottom_bar.dart';
 import 'package:pharma_app/screens/cart/cart_item.dart';
+import 'package:pharma_app/screens/discount_screen.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -261,7 +262,12 @@ class _CartState extends State<Cart> {
         child: Column(
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Route route = MaterialPageRoute(
+                  builder: (context) => DiscountScreen(),
+                );
+                Navigator.push(context, route);
+              },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0),

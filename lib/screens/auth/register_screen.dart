@@ -179,6 +179,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(
                             height: 25.0,
                           ),
+                          TextFormField(
+                            obscureText: !_isVisible,
+                            obscuringCharacter: '*',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Vui lòng xác nhận mật khẩu';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _isVisible = !_isVisible;
+                                    });
+                                  },
+                                  icon: _isVisible
+                                      ? Icon(Icons.visibility)
+                                      : Icon(Icons.visibility_off)),
+                              label: const Text('Xác nhận mật khẩu'),
+                              hintText: 'Xác nhận mật khẩu',
+                              hintStyle: const TextStyle(
+                                color: Colors.black26,
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.black12, // Default border color
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.black26, // Default border color
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 25.0,
+                          ),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(

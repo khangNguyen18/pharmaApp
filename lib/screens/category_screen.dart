@@ -18,30 +18,27 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 120,
+        toolbarHeight: 150,
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
-          Row(
-            children: [
-              IconComponent(
-                  icon: FaIcon(FontAwesomeIcons.solidMessage),
-                  iconBackgroundColor: null,
-                  iconColor: Colors.white,
-                  onIconPress: () {}),
-              IconComponent(
-                icon: FaIcon(FontAwesomeIcons.cartShopping),
-                iconBackgroundColor: null,
-                onIconPress: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Cart()),
-                  );
-                },
-                iconColor: Colors.white,
-              ),
-            ],
-          )
+          IconComponent(
+              icon: FaIcon(FontAwesomeIcons.solidMessage),
+              iconBackgroundColor: null,
+              iconColor: Colors.white,
+              onIconPress: () {}),
+          IconComponent(
+            icon: FaIcon(FontAwesomeIcons.cartShopping),
+            iconBackgroundColor: null,
+            onIconPress: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Cart()),
+              );
+            },
+            iconColor: Colors.white,
+          ),
         ],
+        centerTitle: true,
         title: TitleComponent(
           text: 'Danh mục thuốc',
           color: Colors.white,
