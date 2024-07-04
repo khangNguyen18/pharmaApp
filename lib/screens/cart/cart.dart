@@ -4,6 +4,7 @@ import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart_item.dart';
+import 'package:pharma_app/screens/cart/payment_screen.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -77,7 +78,7 @@ class _CartState extends State<Cart> {
                           title: TextComponent(
                             text:
                                 'Bạn có chắc chắn muốn xoá sản phẩm khỏi giỏ hàng?',
-                            size: 20,
+                            size: 25,
                           ),
                           actions: [
                             TextButton(
@@ -86,7 +87,6 @@ class _CartState extends State<Cart> {
                               },
                               child: TextComponent(
                                 text: 'Đồng ý',
-                                size: 14,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
@@ -94,7 +94,6 @@ class _CartState extends State<Cart> {
                               onPressed: () => Navigator.of(context).pop(false),
                               child: TextComponent(
                                 text: 'Không',
-                                size: 14,
                                 color: Theme.of(context).colorScheme.primary,
                                 weight: FontWeight.bold,
                               ),
@@ -209,7 +208,7 @@ class _CartState extends State<Cart> {
             ],
             color: Colors.white,
           ),
-          height: 100,
+          height: 130,
           child: Column(
             children: [
               ElevatedButton(
@@ -229,8 +228,8 @@ class _CartState extends State<Cart> {
                           padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                           child: TextComponent(
                             text: 'Mã khuyến mãi',
-                            size: 18,
                             weight: FontWeight.w500,
+                            size: 22,
                           ),
                         ),
                       ],
@@ -262,11 +261,11 @@ class _CartState extends State<Cart> {
                             children: [
                               TextComponent(
                                 text: 'Tổng tiền',
-                                size: 14,
+                                size: 18,
                               ),
                               TextComponent(
                                 text: '115.000 đ',
-                                size: 20,
+                                size: 35,
                                 weight: FontWeight.w900,
                                 color: Colors.red,
                               ),
@@ -274,7 +273,14 @@ class _CartState extends State<Cart> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentScreen(),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
@@ -285,7 +291,7 @@ class _CartState extends State<Cart> {
                           ),
                           child: TextComponent(
                             text: 'Mua hàng',
-                            size: 18,
+                            size: 25,
                             color: Colors.white,
                           ),
                         ),

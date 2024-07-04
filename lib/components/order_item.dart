@@ -37,19 +37,19 @@ class OrderItem extends StatelessWidget {
                     TextComponent(
                       text: //chỗ này sau này là title được truyền vào
                           'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
-                      size: 16,
+                      size: 22,
                       weight: FontWeight.bold,
                     ),
                     TextComponent(
                       text: 'Phân loại: Hộp',
-                      size: 14,
+                      size: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextComponent(
                           text: '115.000 đ',
-                          size: 20,
+                          size: 35,
                           color: Theme.of(context).colorScheme.primary,
                           weight: FontWeight.bold,
                         ),

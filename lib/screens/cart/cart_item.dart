@@ -114,34 +114,34 @@ class _CartItemState extends State<CartItem> {
                   TextComponent(
                     text: //chỗ này sau này là title được truyền vào
                         'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
-                    size: 14,
+                    size: 20,
                     weight: FontWeight.bold,
                   ),
                   TextComponent(
                     text: 'Phân loại: Hộp',
-                    size: 12,
+                    size: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextComponent(
                         text: '115.000 đ',
-                        size: 18,
+                        size: 35,
                         color: Theme.of(context).colorScheme.primary,
                         weight: FontWeight.bold,
                       ),
                       Row(
                         children: [
                           Container(
-                            width: 25,
-                            height: 25,
+                            width: 30,
+                            height: 30,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.black),
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: IconComponent(
                               icon: FaIcon(FontAwesomeIcons.minus),
-                              size: 9,
+                              size: 13,
                               iconColor: Colors.black,
                               onIconPress: decreaseQuantity,
                             ),
@@ -149,18 +149,20 @@ class _CartItemState extends State<CartItem> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: TextComponent(
-                                text: quantity.toString(), size: 16),
+                              text: quantity.toString(),
+                              size: 25,
+                            ),
                           ),
                           Container(
-                            width: 25,
-                            height: 25,
+                            width: 30,
+                            height: 30,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.black),
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: IconComponent(
                               icon: FaIcon(FontAwesomeIcons.plus),
-                              size: 9,
+                              size: 13,
                               iconColor: Colors.black,
                               onIconPress: increaseQuantity,
                             ),

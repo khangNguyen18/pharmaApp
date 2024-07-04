@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TextComponent extends StatelessWidget {
   String text;
@@ -12,7 +13,7 @@ class TextComponent extends StatelessWidget {
   TextComponent(
       {super.key,
       required this.text,
-      this.size = 16,
+      this.size = 22,
       this.weight = FontWeight.normal,
       this.color = Colors.black,
       this.fontStyle = FontStyle.normal,
@@ -24,23 +25,28 @@ class TextComponent extends StatelessWidget {
     if (isTitle == false) {
       return Text(
         text,
-        style: TextStyle(
-          color: color,
-          fontFamily: "MarkaziText-Medium",
-          fontSize: size,
-          fontStyle: fontStyle,
-          decoration: decoration,
-          fontWeight: weight,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: GoogleFonts.markaziText(
+          textStyle: TextStyle(
+            color: color,
+            fontSize: size,
+            fontStyle: fontStyle,
+            decoration: decoration,
+            fontWeight: weight,
+          ),
         ),
       );
     } else {
       return Text(
         text,
-        style: TextStyle(
-          color: color,
-          fontFamily: "MarkaziText-Bold",
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
+        style: GoogleFonts.markaziText(
+          textStyle: TextStyle(
+            color: color,
+            fontFamily: "MarkaziText-Bold",
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       );
     }

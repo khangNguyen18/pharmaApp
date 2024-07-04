@@ -41,7 +41,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             color: Colors.white,
             fontStyle: FontStyle.normal,
             decoration: TextDecoration.none,
-            size: 16,
           ),
         ),
       ),
@@ -52,14 +51,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  'Chào mừng đến Pharma Town',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "MarkaziText-Bold",
-                    fontSize: 23,
-                    fontWeight: FontWeight.bold,
-                  ),
+                TextComponent(
+                  text: 'Chào mừng đến Pharma Town',
+                  weight: FontWeight.bold,
+                  isTitle: true,
+                  size: 50,
                 ),
                 const SizedBox(height: 15),
                 const Text(
@@ -84,7 +80,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: Colors.black,
                     fontStyle: FontStyle.italic,
                     decoration: TextDecoration.underline,
-                    size: 16,
                   ),
                 ),
                 SizedBox(height: 10),

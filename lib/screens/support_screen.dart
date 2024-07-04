@@ -37,26 +37,27 @@ class _SupportScreenState extends State<SupportScreen> {
               width: 1.0,
             ),
           ),
-          child: Stack(children: [
-            Container(
-              height: 200,
-              width: 500,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+          child: Stack(
+            children: [
+              Container(
+                height: 200,
+                width: 500,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                  color: const Color.fromARGB(255, 238, 255, 241),
                 ),
-                color: const Color.fromARGB(255, 238, 255, 241),
+                child: Image(
+                  image: AssetImage('assets/images/support.png'),
+                ),
               ),
-              child: Image(
-                image: AssetImage('assets/images/support.png'),
-              ),
-            ),
-            Positioned(
+              Positioned(
                 left: 10,
                 bottom: 10,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,12 +83,14 @@ class _SupportScreenState extends State<SupportScreen> {
                         color: Colors.white,
                         fontStyle: FontStyle.normal,
                         decoration: TextDecoration.none,
-                        size: 16,
+                        size: 20,
                       ),
                     )
                   ],
-                )),
-          ]),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

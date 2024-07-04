@@ -3,7 +3,7 @@ import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
-import 'package:pharma_app/screens/products/product_card.dart';
+import 'package:pharma_app/components/product_card.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
