@@ -38,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final primaryColor = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(
+        elevation: 5.0,
+        shadowColor: Colors.black,
         toolbarHeight: 160,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: CupertinoSearchTextField(

@@ -10,6 +10,8 @@ class TextComponent extends StatelessWidget {
   double size;
   FontWeight weight;
   bool isTitle;
+  int maxLines;
+
   TextComponent(
       {super.key,
       required this.text,
@@ -18,14 +20,14 @@ class TextComponent extends StatelessWidget {
       this.color = Colors.black,
       this.fontStyle = FontStyle.normal,
       this.decoration = TextDecoration.none,
-      this.isTitle = false});
+      this.isTitle = false, this.maxLines = 2});
 
   @override
   Widget build(BuildContext context) {
     if (isTitle == false) {
       return Text(
         text,
-        maxLines: 2,
+        maxLines: maxLines,
         overflow: TextOverflow.ellipsis,
         style: GoogleFonts.markaziText(
           textStyle: TextStyle(

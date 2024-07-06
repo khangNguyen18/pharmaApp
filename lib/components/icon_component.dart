@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
 class IconComponent extends StatelessWidget {
-  Widget icon;
+  var icon;
   Color? iconBackgroundColor;
   void Function() onIconPress;
   Color iconColor;
   double size;
   bool hasBorder;
 
-  IconComponent(
-      {super.key,
-      required this.icon,
-      this.size = 30,
-      this.iconBackgroundColor,
-      required this.onIconPress,
-      this.iconColor = Colors.white,
-      this.hasBorder = false});
+  IconComponent({
+    super.key,
+    required this.icon,
+    this.size = 30,
+    this.iconBackgroundColor,
+    required this.onIconPress,
+    this.iconColor = Colors.white,
+    this.hasBorder = false,
+  });
 
   @override
   Widget build(BuildContext context) {
