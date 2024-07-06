@@ -5,6 +5,7 @@ import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart_item.dart';
 import 'package:pharma_app/screens/cart/payment_screen.dart';
+import 'package:pharma_app/screens/discount_screen.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -51,8 +52,7 @@ class _CartState extends State<Cart> {
             icon: Icon(Icons.add),
           ),
           IconComponent(
-            size: 20,
-            icon: FaIcon(FontAwesomeIcons.trash),
+            icon: Icon(IconlyLight.delete),
             onIconPress: () {
               setState(() {
                 checkBoxList.removeWhere((item) => item.value == true);
@@ -212,7 +212,14 @@ class _CartState extends State<Cart> {
           child: Column(
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DiscountScreen(),
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0),

@@ -1,10 +1,12 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
-var kColorScheme = ColorScheme.fromSeed(seedColor: Colors.teal,);
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: Colors.teal,
+);
+
 class AppTheme {
   AppTheme._();
-
 
   static ThemeData lightTheme = FlexThemeData.light(
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -20,7 +22,7 @@ class AppTheme {
           ),
         ),
     dialogBackground: const Color.fromARGB(255, 174, 174, 174),
-    secondary: const Color.fromARGB(255, 238, 238, 238),
+    secondary: kColorScheme.error,
     subThemesData: const FlexSubThemesData(
       blendOnLevel: 10,
       blendOnColors: false,
@@ -28,24 +30,7 @@ class AppTheme {
       useM2StyleDividerInM3: true,
       alignedDropdown: true,
       useInputDecoratorThemeInDialogs: true,
-      
     ),
-    //  ThemeData().copyWith(
-    //     colorScheme: kColorScheme,
-    //     appBarTheme: const AppBarTheme().copyWith(
-    //       backgroundColor: kColorScheme.onPrimaryContainer,
-    //       foregroundColor: kColorScheme.primaryContainer,
-    //     ),
-    //     elevatedButtonTheme: ElevatedButtonThemeData(
-    //       style: ElevatedButton.styleFrom(
-    //         backgroundColor: kColorScheme.primaryContainer,
-    //       ),
-    //     ),
-    
-    //     cardTheme: const CardTheme().copyWith(
-    //       color: kColorScheme.secondaryContainer,
-    //     ),
-    //   ),
   );
 
   static ThemeData darkTheme = FlexThemeData.dark(

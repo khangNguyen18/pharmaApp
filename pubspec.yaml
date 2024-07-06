@@ -44,6 +44,8 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   flutter_hooks: ^0.20.5
   google_fonts: ^6.2.1
+  carousel_slider: ^4.2.1
+  flutter_timer_countdown: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -71,17 +73,31 @@ flutter:
   assets:
   - assets/images/logo.png
   - assets/images/logo_home.png
+
+  - assets/images/background.png
+  - assets/images/logo_white.png
+  - assets/images/support.png
+  - assets/images/logo_white_small.png
+  - assets/images/logo_no_text.png
+  #medicines
+  - assets/images/medicines/BeroccaPerformance.png
+  #carousel
+  - assets/images/carousel/carousel1.png
+  - assets/images/carousel/carousel2.jpg
+  - assets/images/carousel/carousel3.png
+  - assets/images/carousel/carousel4.jpg
+  #icon
   - assets/icons/support.png
   - assets/icons/home.png
   - assets/icons/order.png
   - assets/icons/profile.png
   - assets/icons/category.png
-  - assets/images/background.png
-  - assets/images/logo_white.png
-  - assets/images/support.png
-  - assets/images/logo_white_small.png
-  #medicines
-  - assets/images/medicines/BeroccaPerformance.png
+  - assets/icons/drugstore.png
+  - assets/icons/coupon.png
+  - assets/icons/medicine1.png
+  - assets/icons/pharmacist.png
+  - assets/icons/schedule.png
+  - assets/icons/storm.png
 
   fonts:
     - family: Markazi-Bold

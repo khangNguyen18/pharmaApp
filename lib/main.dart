@@ -11,6 +11,10 @@ void main() {
   runApp(MyApp());
 }
 
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: Colors.teal,
+);
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,8 +24,9 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      theme: ThemeData(colorScheme: kColorScheme),
+      // theme: AppTheme.lightTheme,
+      // darkTheme: AppTheme.darkTheme,
     );
   }
 }

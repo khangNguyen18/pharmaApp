@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/screens/product_detail_screen.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({super.key});
@@ -16,47 +17,57 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print('hello ');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailScreen(),
+          ),
+        );
       },
       child: SizedBox(
         width: 200,
         height: 370,
         child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           elevation: 3,
           color: Colors.white,
           child: Column(
             children: [
-              const Image(
-                image: AssetImage(
-                    'assets/images/medicines/BeroccaPerformance.png'),
-                fit: BoxFit.fill,
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+                child: Image(
+                  image: AssetImage(
+                      'assets/images/medicines/BeroccaPerformance.png'),
+                  fit: BoxFit.fill,
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 20, 8, 8),
+                padding: const EdgeInsets.fromLTRB(10, 18, 10, 8),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    TextComponent(
+                      text:
+                          'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
+                      size: 20,
+                      weight: FontWeight.bold,
                     ),
 
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 5),
                     //chỗ này sẽ làm if discount = ... => show Text()
                     TextComponent(
                       text: '115.000 đ',
-                      size: 25,
+                      size: 32,
                       color: Theme.of(context).colorScheme.primary,
                       weight: FontWeight.w900,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         Icon(
@@ -75,7 +86,7 @@ class _ProductCardState extends State<ProductCard> {
                         ),
                         TextComponent(
                           text: 'Đã bán 7,6k',
-                          size: 14,
+                          size: 16,
                         ),
                       ],
                     ),
