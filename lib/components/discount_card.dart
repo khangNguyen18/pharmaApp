@@ -1,8 +1,6 @@
-import 'package:coupon_uikit/coupon_uikit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:pharma_app/components/text_component.dart';
-import 'package:pharma_app/widgets/my_clipper.dart';
+import 'package:ticket_clippers/ticket_clippers.dart';
 
 class DiscountCard extends StatelessWidget {
   const DiscountCard({super.key});
@@ -10,33 +8,77 @@ class DiscountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
-    return CouponCard(
-      curveAxis: Axis.vertical,
-      firstChild: Container(
-        color: primaryColor,
-        child: Image(
-          image: AssetImage('assets/images/logo_white_small.png'),
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: ClipPath(
+        clipper: RoundedEdgeClipper(
+          edge: Edge.left,
+          points: 10,
         ),
-      ),
-      secondChild: Container(
-          height: double.infinity,
-          decoration: BoxDecoration(
-            border: Border.all(width: 1),
-            color: Colors.blue,
-          ),
+        child: Container(
+          height: 150,
+          width: 450,
+          color: Color.fromARGB(255, 236, 236, 236),
           child: Row(
             children: [
               Expanded(
-                child: Column(
-                  children: [
-                    TextComponent(
-                        text:
-                            '"SIEUDEAL70" Giảm 70k cho đơn hàng Online từ 599k'),
-                  ],
+                flex: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: primaryColor,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 5,
+                        offset: Offset(0.0,1.0),
+                      ),
+                    ],
+                  ),
+                  child: Image(image: AssetImage('assets/images/clipperticket.png',),fit: BoxFit.fill,),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 236, 236, 236),
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextComponent(
+                                  text: '"SIEUDEAL70" Giảm 70K cho đơn hàng Online từ 849k',
+                                  size: 25,
+                                  weight: FontWeight.bold,
+                                ),
+                                TextComponent(
+                                  text: 'Trị giá 70.000 đ',
+                                  size: 18,
+                                  weight: FontWeight.bold,
+                                ),
+                                Row(
+                                  children: [TextComponent(text: 'HSD 12/07/2024'),TextComponent(text: 'Điều kiện')],
+                                )
+                              ],
+                            ),
+                          ),
+                          Radio(value: '', groupValue: '', onChanged: (_) {})
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
     // return Container(
     //   child: Row(

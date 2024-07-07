@@ -48,6 +48,7 @@ dependencies:
   flutter_timer_countdown: ^1.0.7
   flutter_custom_clippers: ^2.1.0
   coupon_uikit: ^0.2.1
+  ticket_clippers: ^0.0.8
 
 dev_dependencies:
   flutter_test:
@@ -81,8 +82,10 @@ flutter:
   - assets/images/support.png
   - assets/images/logo_white_small.png
   - assets/images/logo_no_text.png
+  - assets/images/clipperticket.png
   #medicines
   - assets/images/medicines/BeroccaPerformance.png
+  
   #carousel
   - assets/images/carousel/carousel1.png
   - assets/images/carousel/carousel2.jpg

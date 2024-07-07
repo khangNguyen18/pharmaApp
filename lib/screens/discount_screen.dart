@@ -38,7 +38,6 @@ class _DiscountScreenState extends State<DiscountScreen> {
       body: Column(
         children: [
           DiscountCard(),
-          DiscountCard(),
         ],
       ),
     );
