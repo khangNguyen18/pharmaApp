@@ -9,9 +9,10 @@ import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 
 class CartItem extends StatefulWidget {
-  CartItem({super.key, this.value = false});
+  CartItem({super.key, this.value = false, required this.title});
 
   bool value;
+  String title;
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -112,8 +113,8 @@ class _CartItemState extends State<CartItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextComponent(
-                    text: //chỗ này sau này là title được truyền vào
-                        'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
+                    text:
+                        widget.title,
                     size: 20,
                     weight: FontWeight.bold,
                   ),

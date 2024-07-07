@@ -1,8 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
@@ -10,11 +9,7 @@ import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/product_card.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
-import 'package:pharma_app/widgets/app_bar.dart';
-import 'package:pharma_app/widgets/bottom_navigation.dart';
-import 'package:flutter/cupertino.dart';
-
-import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
+import 'package:pharma_app/screens/discount_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -171,7 +166,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icon(Icons.discount_rounded),
                       hasBorder: true,
                       size: 40,
-                      onIconPress: () {},
+                      onIconPress: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DiscountScreen(),
+                          ),
+                        );
+                      },
                     ),
                     TextComponent(
                       text: 'Mã giảm giá',

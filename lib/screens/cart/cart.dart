@@ -15,7 +15,10 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  final allCartItemsChecked = CartItem();
+  final allCartItemsChecked = CartItem(
+    title:
+        'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
+  );
   final List checkBoxList = [];
   int count = 0;
   @override
@@ -46,7 +49,10 @@ class _CartState extends State<Cart> {
           IconButton(
             onPressed: () {
               setState(() {
-                checkBoxList.add(CartItem());
+                checkBoxList.add(CartItem(
+                  title:
+                      'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
+                ));
               });
             },
             icon: Icon(Icons.add),

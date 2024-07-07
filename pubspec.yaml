@@ -46,6 +46,8 @@ dependencies:
   google_fonts: ^6.2.1
   carousel_slider: ^4.2.1
   flutter_timer_countdown: ^1.0.7
+  flutter_custom_clippers: ^2.1.0
+  coupon_uikit: ^0.2.1
 
 dev_dependencies:
   flutter_test:

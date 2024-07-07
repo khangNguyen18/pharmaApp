@@ -39,7 +39,7 @@ class _OrderScreenState extends State<OrderScreen> {
                 labelPadding: const EdgeInsets.symmetric(horizontal: 22),
                 tabs: [
                   TextComponent(
-                    text: 'Đang xử lý',
+                    text: 'Đang xử lý hsfkjksdhfksdhkfsf',
                     size: 20,
                   ),
                   TextComponent(
