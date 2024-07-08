@@ -7,6 +7,7 @@ import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/auth/register_screen.dart';
+import 'package:pharma_app/services/api.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -207,6 +208,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 backgroundColor:
                                     Color.fromRGBO(0, 103, 105, 1)),
                             onPressed: () {
+                              var data = {
+                                "email": emailController.text,
+                                "password": passwordController.text,
+                              };
+                              Api.postLoginAuth(data);
                               if (_formSignInKey.currentState!.validate() &&
                                   rememberPassword) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -217,8 +223,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               } else if (!rememberPassword) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content: Text(
-                                          'Please agree to the processing of personal data')),
+                                    content: Text(
+                                        'Please agree to the processing of personal data'),
+                                  ),
                                 );
                               }
                             },

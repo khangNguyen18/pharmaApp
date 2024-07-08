@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/auth/login_screen.dart';
+import 'package:pharma_app/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -12,6 +15,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  var isLogin = false.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,7 +184,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ],
-          )
+          ),
+          TextButton(
+            onPressed: () async {
+              final SharedPreferences? prefs = await _prefs;
+              prefs?.clear();
+              Get.offAll(HomeScreen());
+            },
+            child: Text('Đăng xuất'),
+          ),
+          TextButton(
+              onPressed: () async {
+                final SharedPreferences? prefs = await _prefs;
+                print(prefs?.get('token'));
+              },
+              child: Text('Print token'))
         ],
       ),
     );
