@@ -26,6 +26,9 @@ bool _isVisible = false;
 // }
 
 class _LoginScreenState extends State<LoginScreen> {
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,29 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
         automaticallyImplyLeading: false,
         toolbarHeight: 40,
       ),
-      // appBar: AppBar(
-      //   toolbarHeight: 200,
-      //   automaticallyImplyLeading: false,
-      //   backgroundColor: Theme.of(context).colorScheme.primary,
-      //   title: Stack(
-      //     children: [
-      //       Positioned(
-      //         child: IconButton(
-      //           onPressed: () {
-      //             Navigator.pop(context);
-      //           },
-      //           icon: Icon(Icons.close_rounded),
-      //           style: IconButton.styleFrom(
-      //               foregroundColor: Colors.white, iconSize: 40),
-      //         ),
-      //       ),
-      //       Positioned(
-      //           left: 40,
-      //           child: Image(image: AssetImage('assets/images/logo_white.png')))
-      //     ],
-      //   ),
-
-      // ),
       body: ListView(
         children: [
           Container(
@@ -109,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Container(
                       child: Center(
                         child: Text(
-                          "Vui lòng nhập số điện thoại của bạn để tiếp tục",
+                          "Vui lòng nhập email của bạn để tiếp tục",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -131,15 +111,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 10.0,
                         ),
                         TextFormField(
+                          controller: emailController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Vui lòng nhập số điện thoại';
+                              return 'Vui lòng nhập email';
                             }
                             return null;
                           },
                           decoration: InputDecoration(
-                            label: const Text('Số điện thoại'),
-                            hintText: 'Số điện thoại',
+                            label: const Text('Email'),
+                            hintText: 'Email',
                             hintStyle: const TextStyle(
                               color: Colors.black26,
                             ),
@@ -161,6 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 25.0,
                         ),
                         TextFormField(
+                          controller: passwordController,
                           obscureText: _isVisible,
                           obscuringCharacter: '*',
                           validator: (value) {
@@ -219,6 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(
                           width: double.infinity,
+                          height: 50,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor:
@@ -324,18 +307,22 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (e) => const RegisterScreen(),
-                                    ),
-                                  );
-                                },
-                                child: Text('Đăng ký',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromRGBO(0, 103, 105, 1))))
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (e) => const RegisterScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Đăng ký',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(0, 103, 105, 1),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(

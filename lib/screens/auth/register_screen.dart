@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
+import 'package:pharma_app/services/api.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,6 +18,10 @@ bool _isVisible = false;
 bool rememberPassword = true;
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  var fullNameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,6 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 1.0,
                           ),
                           TextFormField(
+                            controller: fullNameController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Vui lòng nhập họ và tên';
@@ -114,15 +120,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 25.0,
                           ),
                           TextFormField(
+                            controller: emailController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Vui lòng nhập số điện thoại';
+                                return 'Vui lòng nhập email';
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                              label: const Text('Số điện thoại'),
-                              hintText: 'Số điện thoại',
+                              label: const Text('Email'),
+                              hintText: 'Email',
                               hintStyle: const TextStyle(
                                 color: Colors.black26,
                               ),
@@ -144,6 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 25.0,
                           ),
                           TextFormField(
+                            controller: passwordController,
                             obscureText: !_isVisible,
                             obscuringCharacter: '*',
                             validator: (value) {
@@ -186,11 +194,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           SizedBox(
                             width: double.infinity,
+                            height: 50,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       Color.fromRGBO(0, 103, 105, 1)),
                               onPressed: () {
+                                var data = {
+                                  "fullname": fullNameController.text,
+                                  "email": emailController.text,
+                                  "password": passwordController.text,
+                                };
+                                Api.postRegisterAuth(data);
                                 if (_formSignInKey.currentState!.validate() &&
                                     rememberPassword) {
                                   ScaffoldMessenger.of(context).showSnackBar(
