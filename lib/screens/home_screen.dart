@@ -10,6 +10,7 @@ import 'package:pharma_app/components/product_card.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/screens/discount_screen.dart';
+import 'package:pharma_app/services/api.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -189,31 +190,31 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Stack(
             children: [
-              Container(
-                height: 450,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      primaryColor,
-                      Color.fromARGB(255, 65, 221, 104),
-                    ],
-                    begin: Alignment(0, -1),
-                    end: Alignment(0, 0),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 60, 8, 20),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: 450,
+              //   decoration: BoxDecoration(
+              //     gradient: LinearGradient(
+              //       colors: [
+              //         primaryColor,
+              //         Color.fromARGB(255, 65, 221, 104),
+              //       ],
+              //       begin: Alignment(0, -1),
+              //       end: Alignment(0, 0),
+              //     ),
+              //   ),
+              //   child: Padding(
+              //     padding: const EdgeInsets.fromLTRB(8, 60, 8, 20),
+              //     child: ListView(
+              //       scrollDirection: Axis.horizontal,
+              //       children: [
+              //         ProductCard(),
+              //         ProductCard(),
+              //         ProductCard(),
+              //         ProductCard(),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               Positioned(
                 child: ClipPath(
                   clipper: ClipTrapezoid(),
@@ -330,19 +331,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 380,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(8, 0, 8, 14),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: ProductCard(),
-                      ),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                    ],
+                  child: FutureBuilder(
+                    future: Api.getProduct(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, int index) {
+                            return ProductCard(list: snapshot.data[index]);
+                          },
+                        );
+                      }
+                    },
                   ),
                 ),
+                //     Padding(
+                //       padding: const EdgeInsets.only(right: 5),
+                //       child: ProductCard(),
+                //     ),
+                //     ProductCard(),
+                //     ProductCard(),
+                //     ProductCard(),
+                //   ],
+                // ),
               ),
             ],
           ),
@@ -374,24 +389,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       ))
                 ],
               ),
-              Container(
-                height: 380,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: ProductCard(),
-                      ),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: 380,
+              //   child: Padding(
+              //     padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+              //     child: ListView(
+              //       scrollDirection: Axis.horizontal,
+              //       children: [
+              //         Padding(
+              //           padding: const EdgeInsets.only(right: 5),
+              //           child: ProductCard(),
+              //         ),
+              //         ProductCard(),
+              //         ProductCard(),
+              //         ProductCard(),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ],

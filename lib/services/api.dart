@@ -1,30 +1,27 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.130.4/";
-
-  
-
+  static const baseUrl = "http://10.21.18.200/";
 
   //post account
-  static Future<void> postLoginAuth(Map adata) async {
+  static postLoginAuth(Map adata) async {
     print(adata);
-    
+
     var url = Uri.parse("${baseUrl}auth/login");
     try {
       final res = await http.post(url,
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(adata));
       if (res.statusCode == 200) {
-        print(res.body);
-        var token = jsonDecode(res.body)['data']['accesstoken'];
-        debugPrint('this is token $token');
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString(
+            'tokenLogin', jsonDecode(res.body)['data']["accesstoken"]);
       } else {
         print("Failed to get response");
       }
@@ -33,7 +30,7 @@ class Api {
     }
   }
 
-  static Future<void> postRegisterAuth(Map<String, String> rdata) async {
+  static postRegisterAuth(Map<String, String> rdata) async {
     print(rdata);
     var url = Uri.parse("${baseUrl}auth/register");
 
@@ -43,12 +40,30 @@ class Api {
           body: jsonEncode(rdata));
       if (res.statusCode == 200) {
         print(res.body);
-        
       } else {
         print("Failed to get response");
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  static getProduct() async {
+    List<Product> products = [];
+    print(2);
+    var url = Uri.parse("${baseUrl}product/get-products");
+    try {
+      final res = await http.get(url);
+
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+
+        return data['data'];
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

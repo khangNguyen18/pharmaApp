@@ -4,9 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/product_detail_screen.dart';
+import 'package:pharma_app/services/api.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({super.key});
+  ProductCard({super.key, required this.list});
+
+  dynamic list;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -53,8 +56,7 @@ class _ProductCardState extends State<ProductCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextComponent(
-                      text:
-                          'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
+                      text: widget.list["title"],
                       size: 20,
                       weight: FontWeight.bold,
                     ),

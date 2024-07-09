@@ -43,8 +43,8 @@ class ProcessingTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ProductCard(),
-            ProductCard(),
+            // ProductCard(),
+            // ProductCard(),
           ],
         )
       ],

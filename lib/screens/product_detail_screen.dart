@@ -208,24 +208,24 @@ class ProductDetailScreen extends StatelessWidget {
                       ))
                 ],
               ),
-              Container(
-                height: 380,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: ProductCard(),
-                      ),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: 380,
+              //   child: Padding(
+              //     padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+              //     child: ListView(
+              //       scrollDirection: Axis.horizontal,
+              //       children: [
+              //         Padding(
+              //           padding: const EdgeInsets.only(right: 5),
+              //           child: ProductCard(),
+              //         ),
+              //         ProductCard(),
+              //         ProductCard(),
+              //         ProductCard(),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           Divider(
@@ -256,24 +256,24 @@ class ProductDetailScreen extends StatelessWidget {
                       ))
                 ],
               ),
-              Container(
-                height: 380,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: ProductCard(),
-                      ),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: 380,
+              //   child: Padding(
+              //     padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+              //     child: ListView(
+              //       scrollDirection: Axis.horizontal,
+              //       children: [
+              //         Padding(
+              //           padding: const EdgeInsets.only(right: 5),
+              //           child: ProductCard(),
+              //         ),
+              //         ProductCard(),
+              //         ProductCard(),
+              //         ProductCard(),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ],

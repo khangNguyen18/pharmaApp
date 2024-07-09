@@ -15,7 +15,6 @@ class AddToCartOverlay extends StatefulWidget {
 }
 
 class _AddToCartOverlayState extends State<AddToCartOverlay> {
-  
   int quantity = 1;
   void increaseQuantity() {
     setState(() {
@@ -152,24 +151,26 @@ class _AddToCartOverlayState extends State<AddToCartOverlay> {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             SizedBox(
               height: 60,
               width: 420,
               child: ElevatedButton(
-                    onPressed: () {},
-                    child: TextComponent(
-                      text: 'Thêm vào giỏ',
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
+                onPressed: () {},
+                child: TextComponent(
+                  text: 'Thêm vào giỏ',
+                  color: Colors.white,
+                  size: 30,
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
+                ),
+              ),
             ),
           ],
         ),

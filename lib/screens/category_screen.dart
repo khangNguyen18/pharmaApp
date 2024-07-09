@@ -54,15 +54,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ProductCard(),
-              ProductCard(),
+              // ProductCard(),
+              // ProductCard(),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ProductCard(),
-              ProductCard(),
+              // ProductCard(),
+              // ProductCard(),
             ],
           )
         ],
