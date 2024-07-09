@@ -202,6 +202,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           //       print(token);
           //     },
           //     child: Text('Print token')),
+          Image.network(
+              "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/300x300/20240225124135-0-P04392_1.png"),
         ],
       ),
     );

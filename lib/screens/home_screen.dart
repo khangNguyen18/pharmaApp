@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/images/carousel/carousel4.jpg',
   ];
   int _currentPage = 0;
+  final searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
@@ -39,8 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
         toolbarHeight: 160,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: CupertinoSearchTextField(
+          controller: searchController,
           backgroundColor: Colors.white,
           autocorrect: false,
+          onChanged: (_) {
+            print(searchController.toString());
+          },
         ),
         actions: [
           Row(
@@ -190,31 +196,39 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Stack(
             children: [
-              // Container(
-              //   height: 450,
-              //   decoration: BoxDecoration(
-              //     gradient: LinearGradient(
-              //       colors: [
-              //         primaryColor,
-              //         Color.fromARGB(255, 65, 221, 104),
-              //       ],
-              //       begin: Alignment(0, -1),
-              //       end: Alignment(0, 0),
-              //     ),
-              //   ),
-              //   child: Padding(
-              //     padding: const EdgeInsets.fromLTRB(8, 60, 8, 20),
-              //     child: ListView(
-              //       scrollDirection: Axis.horizontal,
-              //       children: [
-              //         ProductCard(),
-              //         ProductCard(),
-              //         ProductCard(),
-              //         ProductCard(),
-              //       ],
-              //     ),
-              //   ),
-              // ),
+              Container(
+                height: 450,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      primaryColor,
+                      Color.fromARGB(255, 65, 221, 104),
+                    ],
+                    begin: Alignment(0, -1),
+                    end: Alignment(0, 0),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 60, 8, 20),
+                  child: FutureBuilder(
+                    future: Api.getProduct(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, int index) {
+                            return ProductCard(list: snapshot.data[index]);
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
               Positioned(
                 child: ClipPath(
                   clipper: ClipTrapezoid(),
@@ -269,17 +283,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        Container(
-                          child: TimerCountdown(
-                            format: CountDownTimerFormat.hoursMinutesSeconds,
-                            enableDescriptions: false,
-                            endTime: DateTime(
-                              2024,
-                              7,
-                              1,
-                              5,
-                              30,
-                            ),
+                        TimerCountdown(
+                          format: CountDownTimerFormat.hoursMinutesSeconds,
+                          enableDescriptions: false,
+                          endTime: DateTime(
+                            2024,
+                            7,
+                            1,
+                            5,
+                            30,
                           ),
                         ),
                         Padding(
@@ -349,15 +361,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-                //     Padding(
-                //       padding: const EdgeInsets.only(right: 5),
-                //       child: ProductCard(),
-                //     ),
-                //     ProductCard(),
-                //     ProductCard(),
-                //     ProductCard(),
-                //   ],
-                // ),
               ),
             ],
           ),

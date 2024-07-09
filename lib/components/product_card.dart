@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
+import 'package:intl/intl.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/product_detail_screen.dart';
 import 'package:pharma_app/services/api.dart';
@@ -23,7 +24,9 @@ class _ProductCardState extends State<ProductCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(),
+            builder: (context) => ProductDetailScreen(
+              list: widget.list,
+            ),
           ),
         );
       },
@@ -64,7 +67,7 @@ class _ProductCardState extends State<ProductCard> {
                     const SizedBox(height: 5),
                     //chỗ này sẽ làm if discount = ... => show Text()
                     TextComponent(
-                      text: '115.000 đ',
+                      text: '${widget.list["price"]} đ',
                       size: 32,
                       color: Theme.of(context).colorScheme.primary,
                       weight: FontWeight.w900,
@@ -87,8 +90,8 @@ class _ProductCardState extends State<ProductCard> {
                           ),
                         ),
                         TextComponent(
-                          text: 'Đã bán 7,6k',
-                          size: 16,
+                          text: 'Đã bán ${widget.list["sold"].toString()}',
+                          size: 18,
                         ),
                       ],
                     ),

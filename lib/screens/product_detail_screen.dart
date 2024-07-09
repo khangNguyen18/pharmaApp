@@ -9,7 +9,9 @@ import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/widgets/detail_bottom_bar.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
+  ProductDetailScreen({super.key, required this.list});
+
+  dynamic list;
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +51,11 @@ class ProductDetailScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Image(
-            image: AssetImage('assets/images/medicines/BeroccaPerformance.png'),
-          ),
+          Image.network(
+              'https://images.pexels.com/photos/213780/pexels-photo-213780.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+          // Image(
+          //   image: AssetImage('assets/images/medicines/BeroccaPerformance.png'),
+          // ),
           Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -65,8 +69,7 @@ class ProductDetailScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
             child: TextComponent(
-              text:
-                  'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
+              text: list["title"].toString(),
               size: 30,
               maxLines: 3,
               weight: FontWeight.w600,
@@ -75,7 +78,7 @@ class ProductDetailScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
             child: TextComponent(
-              text: '115.000 đ/Hộp',
+              text: '${list["price"]} đ/Hộp'.toString(),
               color: primaryColor,
               weight: FontWeight.w800,
               size: 40,
@@ -110,7 +113,7 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                 ),
                 TextComponent(
-                  text: 'Đã bán 7,6k',
+                  text: 'Đã bán ',
                   size: 22,
                 ),
               ],
