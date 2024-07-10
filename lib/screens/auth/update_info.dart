@@ -1,71 +1,85 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-<<<<<<< Updated upstream
-=======
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
-import 'package:pharma_app/screens/auth/verification_screen.dart';
->>>>>>> Stashed changes
+import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/screens/auth/login_screen.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class UpdateInfo extends StatefulWidget {
+  const UpdateInfo({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<UpdateInfo> createState() => _UpdateInfoState();
 }
 
-final _formSignInKey = GlobalKey<FormState>();
 bool _isVisible = false;
-bool rememberPassword = true;
+final _formSignInKey = GlobalKey<FormState>();
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _UpdateInfoState extends State<UpdateInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   toolbarHeight: 75,
+      //   backgroundColor: Theme.of(context).colorScheme.primary,
+      //   title: TextComponent(
+      //     text: 'Cập nhật thông tin',
+      //     isTitle: true,
+      //     color: Colors.white,
+      //   ),
+      //   automaticallyImplyLeading: false,
+      //   leading: IconButton(
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //     icon: FaIcon(FontAwesomeIcons.arrowLeft),
+      //     style: IconButton.styleFrom(foregroundColor: Colors.white),
+      //   ),
+      // ),
       appBar: AppBar(
-        toolbarHeight: 50,
         automaticallyImplyLeading: false,
-<<<<<<< Updated upstream
-=======
         toolbarHeight: 20,
->>>>>>> Stashed changes
         backgroundColor: Theme.of(context).colorScheme.primary,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.close_rounded),
-              style: IconButton.styleFrom(
-                  foregroundColor: Colors.white, iconSize: 40)),
-        ],
-        bottom: AppBar(
-          toolbarHeight: 200,
-          automaticallyImplyLeading: false,
-          title: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-            child: Image(image: AssetImage('assets/images/logo_white.png')),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          elevation: 5,
-          shadowColor: Colors.black,
-        ),
       ),
       backgroundColor: Colors.white,
       body: Container(
         child: ListView(
           children: <Widget>[
             Container(
+              decoration:
+                  BoxDecoration(color: Theme.of(context).colorScheme.primary),
+              child: Stack(
+                children: [
+                  Positioned(
+                    child: IconComponent(
+                      icon: Icon(IconlyLight.arrow_left_2),
+                      onIconPress: () {
+                        Navigator.pop(context);
+                      },
+                      iconColor: Colors.white,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Image(
+                      image: AssetImage('assets/images/logo_white_small.png'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
               child: Center(
                 child: FadeInUp(
                     duration: Duration(milliseconds: 800),
                     child: Container(
-                      margin: EdgeInsets.only(top: 20, right: 200),
+                      margin: EdgeInsets.only(top: 20, right: 130),
                       child: Center(
                         child: Text(
-                          "Đăng ký ngay",
+                          "Cập nhật thông tin",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 26,
@@ -237,12 +251,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   backgroundColor:
                                       Color.fromRGBO(0, 103, 105, 1)),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (e) => const VerificationScreen(),
-                                  ),
-                                );
                                 if (_formSignInKey.currentState!.validate() &&
                                     rememberPassword) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -264,60 +272,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 25.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Divider(
-                                  thickness: 0.7,
-                                  color: Colors.grey.withOpacity(0.5),
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 0,
-                                  horizontal: 10,
-                                ),
-                                child: Text(
-                                  'Hoặc đăng ký',
-                                  style: TextStyle(
-                                    color: Colors.black45,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Divider(
-                                  thickness: 0.7,
-                                  color: Colors.grey.withOpacity(0.5),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 25.0,
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                FaIcon(
-                                  FontAwesomeIcons.facebookF,
-                                  size: 35,
-                                  color: Color.fromRGBO(66, 103, 178, 1),
-                                ),
-                                FaIcon(
-                                  FontAwesomeIcons.googlePlusG,
-                                  size: 40,
-                                  color: Colors.red,
-                                ),
-                                FaIcon(
-                                  FontAwesomeIcons.apple,
-                                  size: 40,
-                                  color: Colors.black,
-                                ),
-                              ]),
                         ],
                       ),
                     ),

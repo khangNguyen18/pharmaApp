@@ -9,6 +9,10 @@ import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/components/title_component.dart';
 import 'package:pharma_app/screens/cart/buy_bottom_bar.dart';
 import 'package:pharma_app/screens/cart/cart_item.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:pharma_app/screens/cart/payment_screen.dart';
+>>>>>>> Stashed changes
 import 'package:pharma_app/screens/discount_screen.dart';
 
 class Cart extends StatefulWidget {
@@ -273,6 +277,7 @@ class _CartState extends State<Cart> {
                   borderRadius: BorderRadius.circular(0),
                 ),
               ),
+<<<<<<< Updated upstream
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -288,6 +293,26 @@ class _CartState extends State<Cart> {
                         ),
                       ),
                     ],
+=======
+            ],
+            color: Colors.white,
+          ),
+          height: 130,
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DiscountScreen(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0),
+>>>>>>> Stashed changes
                   ),
                   Icon(IconlyLight.arrow_right_2),
                 ],

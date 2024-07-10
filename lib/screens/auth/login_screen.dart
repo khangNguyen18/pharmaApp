@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         toolbarHeight: 50,
         automaticallyImplyLeading: false,
+<<<<<<< Updated upstream
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
@@ -53,6 +54,9 @@ class _LoginScreenState extends State<LoginScreen> {
           elevation: 5,
           shadowColor: Colors.black,
         ),
+=======
+        toolbarHeight: 20,
+>>>>>>> Stashed changes
       ),
       body: ListView(
         children: [
@@ -60,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Stack(
               children: [
                 Positioned(
+<<<<<<< Updated upstream
                   child: FadeInUp(
                       duration: Duration(milliseconds: 800),
                       child: Container(
@@ -71,6 +76,98 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.black,
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold),
+=======
+                  child: IconComponent(
+                    icon: const Icon(IconlyLight.arrow_left_2),
+                    onIconPress: () {
+                      Navigator.pop(context);
+                    },
+                    iconColor: Colors.white,
+                  ),
+                ),
+                const Align(
+                  alignment: Alignment.center,
+                  child: Image(
+                    image: AssetImage('assets/images/logo_white_small.png'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 15),
+          Stack(
+            children: [
+              Positioned(
+                child: FadeInUp(
+                    duration: Duration(milliseconds: 800),
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10, right: 230),
+                      child: Center(
+                        child: Text(
+                          "Xin chào!",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    )),
+              ),
+              Positioned(
+                top: 49,
+                left: 30,
+                child: FadeInUp(
+                    duration: Duration(milliseconds: 800),
+                    child: Container(
+                      child: Center(
+                        child: Text(
+                          "Vui lòng nhập số điện thoại của bạn để tiếp tục",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 100, 30, 30),
+                child: FadeInUp(
+                  duration: Duration(milliseconds: 1000),
+                  child: Form(
+                    key: _formSignInKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Vui lòng nhập số điện thoại';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            label: const Text('Số điện thoại'),
+                            hintText: 'Số điện thoại',
+                            hintStyle: const TextStyle(
+                              color: Colors.black26,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.black26, // Default border color
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.black26, // Default border color
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+>>>>>>> Stashed changes
                           ),
                         ),
                       )),
@@ -297,6 +394,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: Colors.black45,
                                 ),
                               ),
+<<<<<<< Updated upstream
                               GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -318,6 +416,77 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
+=======
+                            ),
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.7,
+                                color: Colors.grey.withOpacity(0.5),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 25.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ),
+                        const SizedBox(
+                          height: 25.0,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              FaIcon(
+                                FontAwesomeIcons.facebookF,
+                                size: 35,
+                                color: Color.fromRGBO(66, 103, 178, 1),
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.googlePlusG,
+                                size: 40,
+                                color: Colors.red,
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.apple,
+                                size: 40,
+                                color: Colors.black,
+                              ),
+                            ]),
+                        const SizedBox(
+                          height: 25.0,
+                        ),
+                        // don't have an account
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Bạn chưa có tài khoản? ',
+                              style: TextStyle(
+                                color: Colors.black45,
+                              ),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (e) => const RegisterScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text('Đăng ký',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(0, 103, 105, 1))))
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                      ],
+>>>>>>> Stashed changes
                     ),
                   ),
                 ),

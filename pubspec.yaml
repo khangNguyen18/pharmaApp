@@ -77,6 +77,10 @@ flutter:
   - assets/images/background.png
   - assets/images/logo_white.png
   - assets/images/support.png
+<<<<<<< Updated upstream
+=======
+  - assets/images/logo_white_small.png
+>>>>>>> Stashed changes
   - assets/images/clipperticket.png
   #medicines
   - assets/images/medicines/BeroccaPerformance.png
