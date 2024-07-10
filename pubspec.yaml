@@ -110,6 +110,12 @@ flutter:
   - assets/icons/storm.png
   - assets/icons/delivery_truck.png
   - assets/icons/medicine.png
+  - assets/icons/beauty.png
+  - assets/icons/childrenandmom.png
+  - assets/icons/functionalproducts.png
+  - assets/icons/medicalequipment.png
+  - assets/icons/personalcare.png
+  - assets/icons/medicine1.png
 
   fonts:
     - family: Markazi-Bold
