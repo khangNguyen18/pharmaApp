@@ -7,7 +7,7 @@ import 'package:pharma_app/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.130.5/";
+  static const baseUrl = "http://192.168.130.5:3001/";
 
   //post account
   static postLoginAuth(Map adata) async {
@@ -50,14 +50,15 @@ class Api {
 
   static getProduct() async {
     //List<Product> products = [];
-    
+
     var url = Uri.parse("${baseUrl}product/get-products");
     try {
       final res = await http.get(url);
 
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
-
+        List.from(data['data'] as List)
+            .forEach((e) => print(e["activeElement"]));
         return data['data'];
       } else {
         return [];

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/screens/product_detail_screen.dart';
 import 'package:pharma_app/services/api.dart';
 
@@ -45,10 +46,9 @@ class _ProductCardState extends State<ProductCard> {
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(15),
                 ),
-                child: Image(
-                  image: AssetImage(
-                      'assets/images/medicines/BeroccaPerformance.png'),
-                  fit: BoxFit.fill,
+                child: Image.network(
+                  widget.list["photoUrl"][0],
+                  // fit: BoxFit.fill,
                 ),
               ),
               Padding(
@@ -67,7 +67,8 @@ class _ProductCardState extends State<ProductCard> {
                     const SizedBox(height: 5),
                     //chỗ này sẽ làm if discount = ... => show Text()
                     TextComponent(
-                      text: '${widget.list["price"]} đ',
+                      text:
+                          '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list["price"].toString()))}',
                       size: 32,
                       color: Theme.of(context).colorScheme.primary,
                       weight: FontWeight.w900,

@@ -20,7 +20,8 @@ class TextComponent extends StatelessWidget {
       this.color = Colors.black,
       this.fontStyle = FontStyle.normal,
       this.decoration = TextDecoration.none,
-      this.isTitle = false, this.maxLines = 2});
+      this.isTitle = false,
+      this.maxLines = 2});
 
   @override
   Widget build(BuildContext context) {

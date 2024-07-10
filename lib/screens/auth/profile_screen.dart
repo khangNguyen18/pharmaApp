@@ -5,7 +5,6 @@ import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/auth/login_screen.dart';
 import 'package:pharma_app/screens/home_screen.dart';
-import 'package:pharma_app/screens/test_product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -51,6 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: ListView(
         children: [
+          Image.network('https://picsum.photos/250?image=9'),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
             child: Column(
@@ -155,12 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TestProduct()));
-                    },
+                    onPressed: () {},
                     style: OutlinedButton.styleFrom(
                         side: BorderSide(color: Colors.transparent)),
                     child: Container(
@@ -202,8 +197,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           //       print(token);
           //     },
           //     child: Text('Print token')),
-          Image.network(
-              "https://prod-cdn.pharmacity.io/e-com/images/ecommerce/300x300/20240225124135-0-P04392_1.png"),
         ],
       ),
     );

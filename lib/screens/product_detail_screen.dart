@@ -2,19 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
+import 'package:intl/intl.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/product_card.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/widgets/detail_bottom_bar.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   ProductDetailScreen({super.key, required this.list});
 
   dynamic list;
 
   @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  @override
   Widget build(BuildContext context) {
+    print(List.from(widget.list["activeElement"] as List).first["title"]);
     final primaryColor = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(
@@ -52,10 +59,50 @@ class ProductDetailScreen extends StatelessWidget {
       body: ListView(
         children: [
           Image.network(
-              'https://images.pexels.com/photos/213780/pexels-photo-213780.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
-          // Image(
-          //   image: AssetImage('assets/images/medicines/BeroccaPerformance.png'),
-          // ),
+            widget.list["photoUrl"][0],
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 100,
+                width: double.infinity,
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+              Positioned(
+                right: 0,
+                bottom: 20,
+                left: 24,
+                child: SizedBox(
+                  height: 80,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    physics: AlwaysScrollableScrollPhysics(),
+                    separatorBuilder: (_, __) => const SizedBox(
+                      width: 20,
+                    ),
+                    itemCount: 6,
+                    itemBuilder: (_, index) => GestureDetector(
+                      onTap: () {
+                        
+                      },
+                      child: Container(
+                        width: 80,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        padding: EdgeInsets.all(8),
+                        child: ClipRRect(
+                          child: Image.network(
+                            widget.list["photoUrl"][0],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
           Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -69,7 +116,7 @@ class ProductDetailScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
             child: TextComponent(
-              text: list["title"].toString(),
+              text: widget.list["title"].toString(),
               size: 30,
               maxLines: 3,
               weight: FontWeight.w600,
@@ -78,7 +125,9 @@ class ProductDetailScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
             child: TextComponent(
-              text: '${list["price"]} đ/Hộp'.toString(),
+              text:
+                  '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list["price"].toString()))}/${widget.list["unit"]}'
+                      .toString(),
               color: primaryColor,
               weight: FontWeight.w800,
               size: 40,
@@ -113,7 +162,7 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                 ),
                 TextComponent(
-                  text: 'Đã bán ',
+                  text: 'Đã bán ${widget.list["sold"]}',
                   size: 22,
                 ),
               ],
@@ -167,22 +216,26 @@ class ProductDetailScreen extends StatelessWidget {
             color: Color.fromARGB(255, 219, 219, 219),
             thickness: 5,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: TextComponent(
-              text: 'Mô tả sản phẩm',
-              isTitle: true,
+          if (widget.list["activeElement"].toString() != "[]")
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: TextComponent(
+                    text: 'Thành phần',
+                    isTitle: true,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: TextComponent(
+                    text: "${widget.list["activeElement"][0]["title"]}".toString(),
+                    maxLines: 6,
+                    size: 20,
+                  ),
+                ),
+              ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: TextComponent(
-              text:
-                  'Viên sủi Berocca Performance Mango Multivitamin bổ sung vitamin và khoáng chất cần thiết cho cơ thể, hỗ trợ chuyển hóa tạo năng lượng, giúp giảm căng thẳng bớt mệt mỏi, tăng cường tập trung tỉnh táo. Hỗ trợ giảm tình trạng thiếu hụt vitamin và khoáng chất.',
-              maxLines: 6,
-              size: 20,
-            ),
-          ),
           Divider(
             height: 30,
             color: Color.fromARGB(255, 219, 219, 219),
