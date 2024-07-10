@@ -9,6 +9,7 @@ import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/product_card.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/screens/discount_screen.dart';
 import 'package:pharma_app/services/api.dart';
@@ -217,11 +218,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (!snapshot.hasData) {
                         return Center(child: CircularProgressIndicator());
                       } else {
+                        List<Product> pdata = snapshot.data;
                         return ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data.length,
+                          itemCount: pdata.length,
                           itemBuilder: (context, int index) {
-                            return ProductCard(list: snapshot.data[index]);
+                            return ProductCard(list: pdata[index]);
                           },
                         );
                       }
@@ -350,11 +352,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (!snapshot.hasData) {
                         return Center(child: CircularProgressIndicator());
                       } else {
+                        List<Product> pdata = snapshot.data;
                         return ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data.length,
+                          itemCount: pdata.length,
                           itemBuilder: (context, int index) {
-                            return ProductCard(list: snapshot.data[index]);
+                            return ProductCard(list: pdata[index]);
                           },
                         );
                       }

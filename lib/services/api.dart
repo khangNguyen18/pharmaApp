@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pharma_app/models/activeElement_model.dart';
 import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.130.5:3001/";
+  static const baseUrl = "http://192.168.1.9:3001/";
 
   //post account
   static postLoginAuth(Map adata) async {
@@ -49,17 +50,54 @@ class Api {
   }
 
   static getProduct() async {
-    //List<Product> products = [];
-
+    List<Product> products = [];
+    List<ActiveElementModel> activeElement = [];
     var url = Uri.parse("${baseUrl}product/get-products");
     try {
       final res = await http.get(url);
 
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
-        List.from(data['data'] as List)
-            .forEach((e) => print(e["activeElement"]));
-        return data['data'];
+        data["data"].forEach(
+          (value) => {
+            value["activeElement"].forEach((item) => {
+                  activeElement
+                      .add(ActiveElementModel(item["title"], [...item["desc"]]))
+                })
+          },
+        );
+        data['data'].forEach(
+          (value) => {
+            products.add(Product(
+                value["title"],
+                value["desc"],
+                [...value["photoUrl"]],
+                value["sold"] ?? 0,
+                value["discount"] ?? 0,
+                value["price"] ?? 0,
+                [...value["categories"]],
+                [...value["subCategories"]],
+                [...value["subSubCategories"]],
+                [...value["indication"]],
+                [...value["contraindication"]],
+                [...value["dosage"]],
+                [...value["uses"]],
+                activeElement,
+                value["producer"],
+                value["packing"],
+                [...value["sideEffect"]],
+                [...value["careFul"]],
+                [...value["drugInteractions"]],
+                [...value["ageOfUse"]],
+                [...value["genderOfUse"]],
+                [...value["using"]],
+                [...value["recommendation"]],
+                [...value["preserve"]],
+                value["unit"])),
+          },
+        );
+        print(products.first.activeElement!.first ?? "alo");
+        return products;
       } else {
         return [];
       }

@@ -11,7 +11,7 @@ import 'package:pharma_app/services/api.dart';
 class ProductCard extends StatefulWidget {
   ProductCard({super.key, required this.list});
 
-  dynamic list;
+  Product list;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -47,8 +47,8 @@ class _ProductCardState extends State<ProductCard> {
                   topRight: Radius.circular(15),
                 ),
                 child: Image.network(
-                  widget.list["photoUrl"][0],
-                  // fit: BoxFit.fill,
+                  widget.list.photoUrl!.first.toString(),
+                  fit: BoxFit.fill,
                 ),
               ),
               Padding(
@@ -59,7 +59,7 @@ class _ProductCardState extends State<ProductCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextComponent(
-                      text: widget.list["title"],
+                      text: widget.list.title.toString(),
                       size: 20,
                       weight: FontWeight.bold,
                     ),
@@ -68,7 +68,7 @@ class _ProductCardState extends State<ProductCard> {
                     //chỗ này sẽ làm if discount = ... => show Text()
                     TextComponent(
                       text:
-                          '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list["price"].toString()))}',
+                          '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list.price.toString()))}',
                       size: 32,
                       color: Theme.of(context).colorScheme.primary,
                       weight: FontWeight.w900,
@@ -91,7 +91,7 @@ class _ProductCardState extends State<ProductCard> {
                           ),
                         ),
                         TextComponent(
-                          text: 'Đã bán ${widget.list["sold"].toString()}',
+                          text: 'Đã bán ${widget.list.sold.toString()}',
                           size: 18,
                         ),
                       ],

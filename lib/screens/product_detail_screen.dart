@@ -6,22 +6,24 @@ import 'package:intl/intl.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/product_card.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/widgets/detail_bottom_bar.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   ProductDetailScreen({super.key, required this.list});
 
-  dynamic list;
+  Product list;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  int pointImage = 0;
+  bool _showMoreColumns = false;
   @override
   Widget build(BuildContext context) {
-    print(List.from(widget.list["activeElement"] as List).first["title"]);
     final primaryColor = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +61,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       body: ListView(
         children: [
           Image.network(
-            widget.list["photoUrl"][0],
+            widget.list.photoUrl![pointImage].toString(),
           ),
           Stack(
             children: [
@@ -80,10 +82,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     separatorBuilder: (_, __) => const SizedBox(
                       width: 20,
                     ),
-                    itemCount: 6,
+                    itemCount: widget.list.photoUrl!.length,
                     itemBuilder: (_, index) => GestureDetector(
                       onTap: () {
-                        
+                        setState(() {
+                          pointImage = index;
+                        });
                       },
                       child: Container(
                         width: 80,
@@ -93,7 +97,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         padding: EdgeInsets.all(8),
                         child: ClipRRect(
                           child: Image.network(
-                            widget.list["photoUrl"][0],
+                            widget.list.photoUrl![index].toString(),
                           ),
                         ),
                       ),
@@ -116,7 +120,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
             child: TextComponent(
-              text: widget.list["title"].toString(),
+              text: widget.list.title.toString(),
               size: 30,
               maxLines: 3,
               weight: FontWeight.w600,
@@ -126,7 +130,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
             child: TextComponent(
               text:
-                  '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list["price"].toString()))}/${widget.list["unit"]}'
+                  '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list.price.toString()))}/${widget.list.unit}'
                       .toString(),
               color: primaryColor,
               weight: FontWeight.w800,
@@ -162,7 +166,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 TextComponent(
-                  text: 'Đã bán ${widget.list["sold"]}',
+                  text: 'Đã bán ${widget.list.sold}',
                   size: 22,
                 ),
               ],
@@ -216,26 +220,489 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             color: Color.fromARGB(255, 219, 219, 219),
             thickness: 5,
           ),
-          if (widget.list["activeElement"].toString() != "[]")
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: TextComponent(
-                    text: 'Thành phần',
-                    isTitle: true,
-                  ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (widget.list.activeElement != null &&
+                  widget.list.activeElement!.isNotEmpty)
+                Column(
+                  children: widget.list.activeElement
+                          ?.map((e) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: TextComponent(
+                                      text: 'Thành phần',
+                                      isTitle: true,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: TextComponent(
+                                      text: e.title.toString(),
+                                      maxLines: 6,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: e.desc
+                                              ?.map(
+                                                (description) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: TextComponent(
+                                                    text: "- ${description}",
+                                                    maxLines: 6,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                              )
+                                              .toList() ??
+                                          [])
+                                ],
+                              ))
+                          .toList() ??
+                      [],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: TextComponent(
-                    text: "${widget.list["activeElement"][0]["title"]}".toString(),
-                    maxLines: 6,
-                    size: 20,
-                  ),
+              if (widget.list.indication != null &&
+                  widget.list.indication!.isNotEmpty)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: TextComponent(
+                        text: 'Chỉ định',
+                        isTitle: true,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: widget.list.indication
+                              ?.map(
+                                (e) => Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: TextComponent(
+                                    text: "- ${e.toString()}",
+                                    maxLines: 6,
+                                    size: 20,
+                                  ),
+                                ),
+                              )
+                              .toList() ??
+                          [],
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              if (widget.list.contraindication != null &&
+                  widget.list.contraindication!.isNotEmpty)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: TextComponent(
+                        text: 'Chống chỉ định',
+                        isTitle: true,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: widget.list.contraindication
+                              ?.map(
+                                (e) => Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: TextComponent(
+                                    text: "- ${e.toString()}",
+                                    maxLines: 6,
+                                    size: 20,
+                                  ),
+                                ),
+                              )
+                              .toList() ??
+                          [],
+                    ),
+                  ],
+                ),
+              if (widget.list.uses != null && widget.list.uses!.isNotEmpty)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: TextComponent(
+                        text: 'Công dụng',
+                        isTitle: true,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: widget.list.uses
+                              ?.map(
+                                (e) => Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: TextComponent(
+                                    text: "- ${e.toString()}",
+                                    maxLines: 6,
+                                    size: 20,
+                                  ),
+                                ),
+                              )
+                              .toList() ??
+                          [],
+                    ),
+                  ],
+                ),
+              if (_showMoreColumns)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (widget.list.genderOfUse != null &&
+                        widget.list.genderOfUse!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Giới tính sử dụng',
+                              isTitle: true,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.list.genderOfUse
+                                    ?.map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: TextComponent(
+                                          text: "- ${e.toString()}",
+                                          maxLines: 6,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    if (widget.list.ageOfUse != null &&
+                        widget.list.ageOfUse!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Độ tuổi sử dụng',
+                              isTitle: true,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.list.ageOfUse
+                                    ?.map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: TextComponent(
+                                          text: "- ${e.toString()}",
+                                          maxLines: 6,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    if (widget.list.using != null &&
+                        widget.list.using!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Cách sử dụng',
+                              isTitle: true,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.list.using
+                                    ?.map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: TextComponent(
+                                          text: "- ${e.toString()}",
+                                          maxLines: 6,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    if (widget.list.dosage != null &&
+                        widget.list.dosage!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Liều dùng',
+                              isTitle: true,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.list.dosage
+                                    ?.map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: TextComponent(
+                                          text: "- ${e.toString()}",
+                                          maxLines: 6,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    if (widget.list.sideEffect != null &&
+                        widget.list.sideEffect!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Tác dụng phụ',
+                              isTitle: true,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.list.sideEffect
+                                    ?.map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: TextComponent(
+                                          text: "- ${e.toString()}",
+                                          maxLines: 6,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    if (widget.list.careFul != null &&
+                        widget.list.careFul!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Thận trọng',
+                              isTitle: true,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.list.careFul
+                                    ?.map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: TextComponent(
+                                          text: "- ${e.toString()}",
+                                          maxLines: 6,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    if (widget.list.drugInteractions != null &&
+                        widget.list.drugInteractions!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text:
+                                  'Tương tác thuốc (Những lưu ý khi dùng chung thuốc với thực phẩm hoặc thuốc khác)',
+                              isTitle: true,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.list.drugInteractions
+                                    ?.map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: TextComponent(
+                                          text: "- ${e.toString()}",
+                                          maxLines: 6,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    if (widget.list.recommendation != null &&
+                        widget.list.recommendation!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Khuyến cáo',
+                              isTitle: true,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.list.recommendation
+                                    ?.map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: TextComponent(
+                                          text: "- ${e.toString()}",
+                                          maxLines: 6,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    if (widget.list.preserve != null &&
+                        widget.list.preserve!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Bảo quản',
+                              isTitle: true,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: widget.list.preserve
+                                    ?.map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: TextComponent(
+                                          text: "- ${e.toString()}",
+                                          maxLines: 6,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    if (widget.list.packing != null &&
+                        widget.list.packing!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Quy cách đóng gói',
+                              isTitle: true,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: TextComponent(
+                              text: "- ${widget.list.packing.toString()}",
+                              maxLines: 6,
+                              size: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    if (widget.list.producer != null &&
+                        widget.list.producer!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: TextComponent(
+                              text: 'Thương hiệu',
+                              isTitle: true,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: TextComponent(
+                              text: "- ${widget.list.producer.toString()}",
+                              maxLines: 6,
+                              size: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _showMoreColumns = !_showMoreColumns;
+                    });
+                  },
+                  child: Text(_showMoreColumns ? 'Ẩn bớt' : 'Xem thêm'),
+                ),
+              ),
+            ],
+          ),
           Divider(
             height: 30,
             color: Color.fromARGB(255, 219, 219, 219),
