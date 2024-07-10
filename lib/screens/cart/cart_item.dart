@@ -9,7 +9,7 @@ import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 
 class CartItem extends StatefulWidget {
-  CartItem({super.key, this.value = false, required this.title});
+  CartItem({super.key, this.value = false, this.title='abc'});
 
   bool value;
   String title;
