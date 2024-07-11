@@ -225,7 +225,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   widget.list.activeElement!.isNotEmpty)
                 Column(
                   children: widget.list.activeElement
-                          ?.map((e) => Column(
+                          ?.map((e) => 
+                          Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(

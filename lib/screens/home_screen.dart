@@ -289,17 +289,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        TimerCountdown(
-                          format: CountDownTimerFormat.hoursMinutesSeconds,
-                          enableDescriptions: false,
-                          endTime: DateTime(
-                            2024,
-                            7,
-                            1,
-                            5,
-                            30,
-                          ),
-                        ),
+                        // TextComponent(
+                        //   text: '00:00:00',
+                        //   size: 30,
+                        //   color: Colors.white,
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(right: 20),
                           child: TextButton(
@@ -389,34 +383,49 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   TextButton(
+                    onPressed: () {},
+                    child: TextButton(
                       onPressed: () {},
-                      child: TextButton(
-                        onPressed: () {},
-                        child: TextComponent(
-                          text: 'Xem thêm',
-                          color: primaryColor,
-                        ),
-                      ))
+                      child: TextComponent(
+                        text: 'Xem thêm',
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              // Container(
-              //   height: 380,
-              //   child: Padding(
-              //     padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-              //     child: ListView(
-              //       scrollDirection: Axis.horizontal,
-              //       children: [
-              //         Padding(
-              //           padding: const EdgeInsets.only(right: 5),
-              //           child: ProductCard(),
-              //         ),
-              //         ProductCard(),
-              //         ProductCard(),
-              //         ProductCard(),
-              //       ],
-              //     ),
-              //   ),
-              // ),
+              Container(
+                height: 380,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 14),
+                  child: FutureBuilder(
+                    future: Api.getProduct(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        List<Product> pdata = snapshot.data;
+
+                        pdata.sort((a, b) => b.sold.compareTo(a.sold));
+                        List<Product> topSoldProducts = pdata.take(2).toList();
+                        // print('Top 2 products by sold:');
+                        // topSoldProducts.forEach((product) {
+                        //   return ProductCard(list: product);
+                        // });
+
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: topSoldProducts.length,
+                          itemBuilder: (context, int index) {
+                            return ProductCard(list: topSoldProducts[index]);
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ],
