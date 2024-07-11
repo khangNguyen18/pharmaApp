@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/product_card.dart';
+import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/widgets/filter_overlay.dart';
 import 'package:pharma_app/widgets/tab_bar_category.dart';
 
@@ -72,9 +73,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Danh mục thuốc',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        TextComponent(
+                          text: 'Danh mục thuốc',
+                          isTitle: true,
+                          color: Colors.white,
                         ),
                         Row(
                           children: [
@@ -92,7 +94,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       ],
                     ),
                   ),
-SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
                     child: CupertinoSearchTextField(
@@ -167,7 +169,7 @@ SizedBox(height: 10),
                               color: Color(0xff6F6F6F),
                             ),
                           ),
-],
+                        ],
                       ),
                     ),
                   ),

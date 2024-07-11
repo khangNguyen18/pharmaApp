@@ -8,7 +8,7 @@ import 'package:pharma_app/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.9:3001/";
+  static const baseUrl = "http://192.168.130.4:3001/";
 
   //post account
   static postLoginAuth(Map adata) async {
@@ -58,17 +58,22 @@ class Api {
 
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
-        data["data"].forEach(
+        // data["data"].forEach(
+        //   (value) => {
+        //     value["activeElement"].forEach((item) => {
+        //           activeElement
+        //               .add(ActiveElementModel(item["title"], [...item["desc"]]))
+        //         })
+        //   },
+        // );
+        data['data'].forEach(
           (value) => {
             value["activeElement"].forEach((item) => {
                   activeElement
                       .add(ActiveElementModel(item["title"], [...item["desc"]]))
-                })
-          },
-        );
-        data['data'].forEach(
-          (value) => {
-            products.add(Product(
+                }),
+            products.add(
+              Product(
                 value["title"],
                 value["desc"],
                 [...value["photoUrl"]],
@@ -93,7 +98,10 @@ class Api {
                 [...value["using"]],
                 [...value["recommendation"]],
                 [...value["preserve"]],
-                value["unit"])),
+                value["unit"],
+              ),
+            ),
+            activeElement = []
           },
         );
         print(products.first.activeElement!.first ?? "alo");

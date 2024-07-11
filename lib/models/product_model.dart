@@ -4,7 +4,7 @@ class Product {
   final String? title;
   final String? description;
   final List<String>? photoUrl;
-  final num? sold;
+  final int sold;
   final num? discount;
   final String price;
   final List<String>? categories;
