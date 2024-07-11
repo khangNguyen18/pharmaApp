@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_app/config/app_theme.dart';
+import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/widgets/bottom_navigation.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  runApp(MultiProvider(
+    providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
+    child: MyApp(),
+  ));
 }
 
 var kColorScheme = ColorScheme.fromSeed(

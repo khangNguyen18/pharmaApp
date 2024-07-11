@@ -1,23 +1,29 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/screens/auth/login_screen.dart';
-import 'package:pharma_app/screens/home_screen.dart';
+import 'package:pharma_app/services/api.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
-
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: AppBar(
         primary: true,
@@ -25,72 +31,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
         toolbarHeight: 110,
         shadowColor: Colors.black,
         elevation: 5.0,
-        leading: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-          child: Icon(
-            Icons.account_circle_rounded,
-            color: Color.fromARGB(255, 255, 255, 255),
-            size: 50,
-          ),
-        ),
-        title: TextButton(
-          onPressed: () {
-            Route route = MaterialPageRoute(
-              builder: (context) => LoginScreen(),
-            );
-            Navigator.push(context, route);
-          },
-          child: TextComponent(
-            text: 'Đăng ký/Đăng nhập',
-            color: Colors.white,
-            fontStyle: FontStyle.normal,
-            decoration: TextDecoration.none,
-          ),
+        centerTitle: true,
+        title: TextComponent(
+          text: user.email,
+          isTitle: true,
+          color: Colors.white,
         ),
       ),
       body: ListView(
         children: [
-          Image.network('https://picsum.photos/250?image=9'),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextComponent(
-                  text: 'Chào mừng đến Pharma Town',
-                  weight: FontWeight.bold,
-                  isTitle: true,
-                  size: 50,
-                ),
-                const SizedBox(height: 15),
-                const Text(
-                  'Hãy đăng nhập để được hưởng các đặc quyền dành riêng cho thành viên',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "MarkaziText-Regular",
-                    fontSize: 18,
-                    fontWeight: FontWeight.normal,
+          if (user.email == "" && user.email.isEmpty)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextComponent(
+                    text: 'Chào mừng đến Pharma Town',
+                    weight: FontWeight.bold,
+                    isTitle: true,
+                    size: 50,
                   ),
-                ),
-                const SizedBox(height: 15),
-                TextButton(
-                  onPressed: () {
-                    Route route = MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
-                    );
-                    Navigator.push(context, route);
-                  },
-                  child: TextComponent(
-                    text: 'Đăng ký/Đăng nhập',
-                    color: Colors.black,
-                    fontStyle: FontStyle.italic,
-                    decoration: TextDecoration.underline,
+                  const SizedBox(height: 15),
+                  const Text(
+                    'Hãy đăng nhập để được hưởng các đặc quyền dành riêng cho thành viên',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: "MarkaziText-Regular",
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-              ],
+                  const SizedBox(height: 15),
+                  TextButton(
+                    onPressed: () {
+                      Route route = MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      );
+                      Navigator.push(context, route);
+                    },
+                    child: TextComponent(
+                      text: 'Đăng ký/Đăng nhập',
+                      color: Colors.black,
+                      fontStyle: FontStyle.italic,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                ],
+              ),
             ),
-          ),
           Column(
             children: [
               Container(
@@ -184,14 +174,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           ),
-          TextButton(
-            onPressed: () async {
-              // final SharedPreferences? prefs = await _prefs;
-              // prefs?.clear();
-              // Get.offAll(HomeScreen());
-            },
-            child: Text('Đăng xuất'),
-          ),
+          if (user.email != "" && user.email.isNotEmpty)
+            TextButton(
+              onPressed: () async {
+                await Api.signOut(context);
+              },
+              child: Text("Đăng xuất"),
+            ),
           // TextButton(
           //     onPressed: () async {
           //       print(token);

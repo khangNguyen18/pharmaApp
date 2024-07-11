@@ -12,25 +12,25 @@ import 'package:pharma_app/screens/support_screen.dart';
 
 class MyBottomNavigation extends StatefulWidget {
   const MyBottomNavigation({super.key});
-
   @override
   State<MyBottomNavigation> createState() => _MyBottomNavigationState();
 }
 
 class _MyBottomNavigationState extends State<MyBottomNavigation> {
+  late List<StatefulWidget> _screens;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _screens = [
+      HomeScreen(),
+      CategoryScreen(),
+      SupportScreen(),
+      OrderScreen(),
+      ProfileScreen(),
+    ];
   }
 
-  final _screens = [
-    HomeScreen(),
-    CategoryScreen(),
-    SupportScreen(),
-    OrderScreen(),
-    ProfileScreen()
-  ];
   int _selectedIndex = 0;
 
   @override

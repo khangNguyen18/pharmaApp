@@ -10,9 +10,11 @@ import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/product_card.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/models/product_model.dart';
+import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/screens/discount_screen.dart';
 import 'package:pharma_app/services/api.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,9 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/images/carousel/carousel4.jpg',
   ];
   int _currentPage = 0;
+
   final searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     final primaryColor = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(

@@ -3,5 +3,5 @@ class Auth {
   final String? fullName;
   final String? password;
 
-  Auth({this.email,this.fullName, this.password});
+  Auth({this.email, this.fullName, this.password});
 }

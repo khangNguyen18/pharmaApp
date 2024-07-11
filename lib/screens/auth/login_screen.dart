@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
-import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/screens/auth/profile_screen.dart';
 import 'package:pharma_app/screens/auth/register_screen.dart';
 import 'package:pharma_app/services/api.dart';
 
@@ -207,27 +206,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     Color.fromRGBO(0, 103, 105, 1)),
-                            onPressed: () {
-                              var data = {
-                                "email": emailController.text,
-                                "password": passwordController.text,
-                              };
-                              Api.postLoginAuth(data);
-                              if (_formSignInKey.currentState!.validate() &&
-                                  rememberPassword) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Processing Data'),
-                                  ),
-                                );
-                              } else if (!rememberPassword) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        'Please agree to the processing of personal data'),
-                                  ),
-                                );
-                              }
+                            onPressed: () async {
+                              await Api.postLoginAuth(
+                                  context: context,
+                                  email: emailController.text,
+                                  password: passwordController.text);
                             },
                             child: const Text(
                               'Đăng nhập',
