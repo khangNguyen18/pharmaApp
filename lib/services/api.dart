@@ -145,7 +145,7 @@ class Api {
     }
   }
 
-  static addNewCart() {
-    
+  static addNewCart() async{
+
   }
 }
