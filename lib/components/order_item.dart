@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/models/product_model.dart';
 
 class OrderItem extends StatelessWidget {
   bool isCartOverLayItem;
-  OrderItem({super.key, this.isCartOverLayItem = false});
+  Product list;
+  OrderItem({super.key, this.isCartOverLayItem = false, required this.list});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +24,11 @@ class OrderItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Image(
-                  width: 120,
-                  image: AssetImage(
-                      'assets/images/medicines/BeroccaPerformance.png'),
+                child: Image.network(
+                  list.photoUrl!.first.toString(),
+                  fit: BoxFit.fill,
                 ),
               ),
               Expanded(
@@ -38,19 +40,20 @@ class OrderItem extends StatelessWidget {
                     children: [
                       TextComponent(
                         text: //chỗ này sau này là title được truyền vào
-                            'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
+                            list.title.toString(),
                         size: 22,
                         weight: FontWeight.bold,
                       ),
                       TextComponent(
-                        text: 'Phân loại: Hộp',
+                        text: 'Phân loại: ${list.unit}',
                         size: 20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextComponent(
-                            text: '115.000 đ',
+                            text:
+                                '${NumberFormat.currency(locale: "vi").format(int.parse(list.price.toString()))}',
                             size: 35,
                             color: Theme.of(context).colorScheme.primary,
                             weight: FontWeight.bold,
@@ -66,8 +69,7 @@ class OrderItem extends StatelessWidget {
           ),
         ),
       );
-    }
-    else {
+    } else {
       return Card(
         borderOnForeground: false,
         shape: RoundedRectangleBorder(
@@ -78,12 +80,11 @@ class OrderItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Image(
-                  width: 120,
-                  image: AssetImage(
-                      'assets/images/medicines/BeroccaPerformance.png'),
+                child: Image.network(
+                  list.photoUrl!.first.toString(),
+                  fit: BoxFit.fill,
                 ),
               ),
               Expanded(
@@ -95,8 +96,8 @@ class OrderItem extends StatelessWidget {
                     children: [
                       TextComponent(
                         text: //chỗ này sau này là title được truyền vào
-                            'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
-                            maxLines: 5,
+                            list.title.toString(),
+                        maxLines: 5,
                         size: 22,
                         weight: FontWeight.bold,
                       ),
@@ -104,7 +105,8 @@ class OrderItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextComponent(
-                            text: '115.000 đ',
+                            text:
+                                '${NumberFormat.currency(locale: "vi").format(int.parse(list.price.toString()))}',
                             size: 35,
                             color: Theme.of(context).colorScheme.primary,
                             weight: FontWeight.bold,

@@ -6,9 +6,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/order_item.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/models/product_model.dart';
 
 class AddToCartOverlay extends StatefulWidget {
-  const AddToCartOverlay({super.key});
+  AddToCartOverlay({super.key, required this.list});
+
+  Product list;
 
   @override
   State<AddToCartOverlay> createState() => _AddToCartOverlayState();
@@ -104,12 +107,14 @@ class _AddToCartOverlayState extends State<AddToCartOverlay> {
             ),
             OrderItem(
               isCartOverLayItem: true,
+              list: widget.list,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15),
               child: Align(
-                  alignment: Alignment.topLeft,
-                  child: TextComponent(text: 'Số lượng')),
+                alignment: Alignment.topLeft,
+                child: TextComponent(text: 'Số lượng'),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

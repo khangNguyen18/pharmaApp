@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/services/api.dart';
 import 'package:pharma_app/widgets/add_to_cart_overlay.dart';
 
 class DetailBottomBar extends StatefulWidget {
-  const DetailBottomBar({super.key});
+  DetailBottomBar({super.key, required this.list});
+
+  Product list;
 
   @override
   State<DetailBottomBar> createState() => _DetailBottomBarState();
@@ -15,7 +18,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
   void _openAddToCartOverlay() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => AddToCartOverlay(),
+      builder: (context) => AddToCartOverlay(list: widget.list),
     );
   }
 

@@ -87,6 +87,7 @@ flutter:
     - assets/images/logo_white_small.png
     - assets/images/logo_no_text.png
     - assets/images/clipperticket.png
+    - assets/images/verification.png
     #medicines
     - assets/images/medicines/BeroccaPerformance.png
 

@@ -63,17 +63,43 @@ class _ProductCardState extends State<ProductCard> {
                       size: 20,
                       weight: FontWeight.bold,
                     ),
-
-                    const SizedBox(height: 5),
                     //chỗ này sẽ làm if discount = ... => show Text()
-                    TextComponent(
-                      text:
-                          '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list.price.toString()))}',
-                      size: 32,
-                      color: Theme.of(context).colorScheme.primary,
-                      weight: FontWeight.w900,
-                    ),
-                    const SizedBox(height: 5),
+                    if (widget.list.discount > 0)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextComponent(
+                            text: '${NumberFormat.currency(locale: "vi").format(
+                              int.parse(
+                                widget.list.price.toString(),
+                              ),
+                            )}',
+                            size: 25,
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                          TextComponent(
+                            text:
+                                '${NumberFormat.currency(locale: "vi").format((int.parse(widget.list.price.toString()) * widget.list.discount) / 100)}',
+                            size: 32,
+                            color: Theme.of(context).colorScheme.primary,
+                            weight: FontWeight.w900,
+                          ),
+                        ],
+                      )
+                    else ...[
+                      SizedBox(
+                        height: 36,
+                      ),
+                      TextComponent(
+                        text:
+                            '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list.price.toString()))}',
+                        size: 32,
+                        color: Theme.of(context).colorScheme.primary,
+                        weight: FontWeight.w900,
+                      ),
+                    ],
+
                     Row(
                       children: [
                         Icon(

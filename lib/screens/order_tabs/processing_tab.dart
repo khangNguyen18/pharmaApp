@@ -12,8 +12,8 @@ class ProcessingTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        OrderItem(),
-        OrderItem(),
+        // OrderItem(),
+        // OrderItem(),
         SizedBox(
           height: 20,
         ),

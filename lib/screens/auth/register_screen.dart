@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
+import 'package:pharma_app/screens/auth/verification_screen.dart';
 import 'package:pharma_app/services/api.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -206,6 +207,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   "password": passwordController.text,
                                 };
                                 Api.postRegisterAuth(data);
+
+
+                                
                                 if (_formSignInKey.currentState!.validate() &&
                                     rememberPassword) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -220,6 +224,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             'Please agree to the processing of personal data')),
                                   );
                                 }
+                                
                               },
                               child: const Text(
                                 'Đăng ký',

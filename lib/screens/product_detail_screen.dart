@@ -3,9 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:pharma_app/components/icon_component.dart';
+import 'package:pharma_app/components/product_card.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
+import 'package:pharma_app/services/api.dart';
 import 'package:pharma_app/widgets/detail_bottom_bar.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -124,17 +126,66 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               weight: FontWeight.w600,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-            child: TextComponent(
-              text:
-                  '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list.price.toString()))}/${widget.list.unit}'
-                      .toString(),
-              color: primaryColor,
-              weight: FontWeight.w800,
-              size: 40,
+          if (widget.list.discount > 0)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 15),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Color.fromARGB(255, 223, 1, 1)),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 3, 8, 3),
+                          child: TextComponent(
+                            text: '-${widget.list.discount}%',
+                            color: Colors.white,
+                            weight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      TextComponent(
+                        text: '${NumberFormat.currency(locale: "vi").format(
+                          int.parse(
+                            widget.list.price.toString(),
+                          ),
+                        )}',
+                        size: 25,
+                        color: Colors.grey,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ],
+                  ),
+                  TextComponent(
+                    text:
+                        '${NumberFormat.currency(locale: "vi").format((int.parse(widget.list.price.toString()) * widget.list.discount) / 100)}/${widget.list.unit}'
+                            .toString(),
+                    color: primaryColor,
+                    weight: FontWeight.w800,
+                    size: 40,
+                  ),
+                ],
+              ),
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+              child: TextComponent(
+                text: '${NumberFormat.currency(locale: "vi").format(
+                  int.parse(
+                    widget.list.price.toString(),
+                  ),
+                )}'
+                    .toString(),
+                color: primaryColor,
+                weight: FontWeight.w800,
+                size: 40,
+              ),
             ),
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: TextComponent(
@@ -225,8 +276,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   widget.list.activeElement!.isNotEmpty)
                 Column(
                   children: widget.list.activeElement
-                          ?.map((e) => 
-                          Column(
+                          ?.map((e) => Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
@@ -768,39 +818,52 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ),
                   TextButton(
+                    onPressed: () {},
+                    child: TextButton(
                       onPressed: () {},
-                      child: TextButton(
-                        onPressed: () {},
-                        child: TextComponent(
-                          text: 'Xem thêm',
-                          color: primaryColor,
-                        ),
-                      ))
+                      child: TextComponent(
+                        text: 'Xem thêm',
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              // Container(
-              //   height: 380,
-              //   child: Padding(
-              //     padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-              //     child: ListView(
-              //       scrollDirection: Axis.horizontal,
-              //       children: [
-              //         Padding(
-              //           padding: const EdgeInsets.only(right: 5),
-              //           child: ProductCard(),
-              //         ),
-              //         ProductCard(),
-              //         ProductCard(),
-              //         ProductCard(),
-              //       ],
-              //     ),
-              //   ),
-              // ),
+              Container(
+                height: 420,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 14),
+                  child: FutureBuilder(
+                    future: Api.getProduct(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        List<Product> pdata = snapshot.data;
+
+                        pdata.sort((a, b) => b.sold.compareTo(a.sold));
+                        List<Product> topSoldProducts = pdata.take(4).toList();
+
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: topSoldProducts.length,
+                          itemBuilder: (context, int index) {
+                            return ProductCard(list: topSoldProducts[index]);
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ],
       ),
-      bottomNavigationBar: DetailBottomBar(),
+      bottomNavigationBar: DetailBottomBar(
+        list: widget.list,
+      ),
     );
   }
 }

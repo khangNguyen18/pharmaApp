@@ -4,6 +4,7 @@ import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/screens/auth/login_screen.dart';
+import 'package:pharma_app/screens/auth/verification_screen.dart';
 import 'package:pharma_app/services/api.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 5.0,
         centerTitle: true,
         title: TextComponent(
-          text: user.email,
+          text: "Cá nhân",
           isTitle: true,
           color: Colors.white,
         ),
@@ -119,7 +120,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VerificationScreen()));
+                    },
                     style: OutlinedButton.styleFrom(
                         side: BorderSide(color: Colors.transparent)),
                     child: Container(

@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.9:3001/";
+  static const baseUrl = "http://192.168.130.5:3001/";
 
   //post account
   static postLoginAuth(
@@ -143,5 +143,9 @@ class Api {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  static addNewCart() {
+    
   }
 }

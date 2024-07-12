@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_app/components/button_component.dart';
 import 'package:pharma_app/components/button_filter_component.dart';
+import 'package:pharma_app/components/text_component.dart';
 
 class FilterOverlay extends StatefulWidget {
   const FilterOverlay({super.key});
@@ -128,11 +129,11 @@ const SizedBox(
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    content: 'Hủy',
+                    content: TextComponent(text: 'Huỷ',),
                     color: Colors.black,
                     colorBackground: Color(0xffF5F5F5),
                   ),
-                  ButtonComponent(onTap: () {}, content: 'Xác nhận')
+                  ButtonComponent(onTap: () {}, content: TextComponent(text: 'Xác nhận',))
                 ],
               ),
             ),
