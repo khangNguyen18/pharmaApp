@@ -8,4 +8,11 @@ class CartModel {
   final List<CartProduct> products;
 
   CartModel(this.fullname, this.email, this.products);
+  factory CartModel.fromJson(Map<String, dynamic> json) => CartModel.fromJson(json);
 }
+
+// extension CartExt on CartModel {
+//   double get grandTotal {
+//     return buildProductList(category);
+//   }
+//}

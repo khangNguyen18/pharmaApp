@@ -202,13 +202,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       Color.fromRGBO(0, 103, 105, 1)),
-                              onPressed: () {
+                              onPressed: () async{
                                 var data = {
                                   "fullname": fullNameController.text,
                                   "email": emailController.text,
                                   "password": passwordController.text,
                                 };
-                                Api.postRegisterAuth(data);
+                                await Api.postRegisterAuth(data, context);
 
 
                                 

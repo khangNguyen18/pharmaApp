@@ -39,7 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
     final primaryColor = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(

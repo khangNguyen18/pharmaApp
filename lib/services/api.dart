@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharma_app/main.dart';
 import 'package:pharma_app/models/activeElement_model.dart';
+import 'package:pharma_app/models/cart_model.dart';
 import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/screens/home_screen.dart';
@@ -15,7 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.17:3001/";
+  static const baseUrl = "http://192.168.130.4:3001/";
 
   //post account
   static postLoginAuth(
@@ -62,7 +63,8 @@ class Api {
     );
   }
 
-  static postRegisterAuth(Map<String, String> rdata) async {
+  static postRegisterAuth(
+      Map<String, String> rdata, BuildContext context) async {
     print(rdata);
     var url = Uri.parse("${baseUrl}auth/register");
 
@@ -72,6 +74,7 @@ class Api {
           body: jsonEncode(rdata));
       if (res.statusCode == 200) {
         print(res.body);
+        Navigator.of(context).pop();
       } else {
         print("Failed to get response");
       }
@@ -262,7 +265,29 @@ class Api {
     }
   }
 
-  static addNewCart() async {
-    var url = Uri.parse("${baseUrl}product/");
+  Future<void> addNewCart(CartModel cartProduct, BuildContext context) async {
+  var url = Uri.parse("$baseUrl/cart/addNewCart");
+
+  try {
+    http.Response res = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(cartProduct),
+    );
+
+    if (res.statusCode == 200) {
+      // Thành công khi thêm vào giỏ hàng, có thể xử lý dữ liệu trả về nếu cần
+      var jsonResponse = jsonDecode(res.body);
+      print('Response: $jsonResponse');
+
+    } else {
+      // Xử lý khi không thành công
+      print("Failed to add to cart. Status code: ${res.statusCode}");
+
+    }
+  } catch (e) {
+    // Xử lý khi có lỗi trong quá trình gửi yêu cầu
+    print('Error: $e');
   }
+}
 }

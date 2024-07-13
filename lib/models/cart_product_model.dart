@@ -1,6 +1,9 @@
-class CartProduct {
-  final String productId;
-  final num quantity;
+import 'package:pharma_app/models/product_model.dart';
 
-  CartProduct(this.productId, this.quantity);
+class CartProduct {
+  final Product product;
+  final double quantity;
+
+  CartProduct(this.product, this.quantity);
+  factory CartProduct.fromJson(Map<String, dynamic> json) => CartProduct.fromJson(json);
 }
