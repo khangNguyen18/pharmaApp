@@ -88,33 +88,34 @@ class _PaymentScreenState extends State<PaymentScreen> {
             indent: 20,
             endIndent: 20,
           ),
-const SizedBox(height: 2),
+          const SizedBox(height: 2),
           Stack(
             children: [
               Row(
                 children: [
                   Align(
-                      child: Container(
-                    margin: EdgeInsets.only(left: 20),
-                    child: Center(
-                      child: Text(
-                        "Thông tin người nhận",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20),
+                      child: Center(
+                        child: Text(
+                          "Thông tin người nhận",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
-                  )),
+                  ),
                   SizedBox(width: 150),
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdateInfo(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => UpdateInfo(),
+                      //   ),
+                      // );
                     },
                     icon: const FaIcon(FontAwesomeIcons.penToSquare),
                     iconSize: 24,
@@ -179,7 +180,7 @@ const SizedBox(height: 2),
                 endIndent: 20,
               ),
               Align(
-child: Container(
+                  child: Container(
                 margin: EdgeInsets.only(
                   top: 4,
                   right: 300,
@@ -258,7 +259,7 @@ child: Container(
             ],
             color: Colors.white,
           ),
-height: 130,
+          height: 130,
           child: Column(
             children: [
               ElevatedButton(
@@ -333,7 +334,7 @@ height: 130,
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
-borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(5),
                             ),
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,

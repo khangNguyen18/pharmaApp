@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.130.4:3001/";
+  static const baseUrl = "http://192.168.1.17:3001/";
 
   //post account
   static postLoginAuth(
@@ -144,6 +144,7 @@ class Api {
       print(e.toString());
     }
   }
+
   static searchProduct(String title) async {
     List<Product> products = [];
     List<ActiveElementModel> activeElement = [];
@@ -261,8 +262,7 @@ class Api {
     }
   }
 
-  static addNewCart() async{
-     var url = Uri.parse(
-        "${baseUrl}product/");
+  static addNewCart() async {
+    var url = Uri.parse("${baseUrl}product/");
   }
 }

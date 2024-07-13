@@ -158,6 +158,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     size: 30,
                   ),
                 ),
+                ProfileOptionComponent(
+                  onTap: () {},
+                  text: 'Về chúng tôi',
+                  icon: Icon(
+                    IconlyLight.more_circle,
+                    size: 30,
+                  ),
+                ),
               ],
             )
           else
@@ -179,8 +187,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ProfileOptionComponent(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => UpdateInfo()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UpdateInfo(
+                                  name: user.name,
+                                )));
                   },
                   text: 'Chỉnh sửa thông tin',
                   icon: Icon(
@@ -233,6 +245,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: 'Hệ thống cửa hàng',
                   icon: Icon(
                     IconlyLight.location,
+                    size: 30,
+                  ),
+                ),
+                ProfileOptionComponent(
+                  onTap: () {},
+                  text: 'Về chúng tôi',
+                  icon: Icon(
+                    IconlyLight.more_circle,
                     size: 30,
                   ),
                 ),

@@ -26,7 +26,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   List<String> _searchResults = [];
   bool _showHintText = true;
   List<Product> _products = [];
