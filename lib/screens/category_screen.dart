@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 //import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/product_card.dart';
+import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/models/product_model.dart';
+import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/screens/product_tabs/beauty_tab.dart';
 import 'package:pharma_app/screens/product_tabs/functional_products_tab.dart';
 import 'package:pharma_app/screens/product_tabs/medical_equipment_tab.dart';
@@ -83,47 +86,50 @@ class _CategoryScreenState extends State<CategoryScreen> {
           });
         },
         child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(160),
-            child: AppBar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              flexibleSpace: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 160,
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            actions: [
+              Row(
                 children: [
-                  SizedBox(height: 20),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Danh mục thuốc',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.textsms_outlined,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 8),
-                            Icon(
-                              Icons.shopping_cart_outlined,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ],
+                  IconComponent(
+                      icon: Icon(IconlyLight.chat),
+                      iconBackgroundColor: null,
+                      iconColor: Colors.white,
+                      onIconPress: () {}),
+                  IconComponent(
+                    icon: Icon(
+                      IconlyLight.buy,
                     ),
+                    iconBackgroundColor: null,
+                    onIconPress: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Cart()),
+                      );
+                    },
+                    iconColor: Colors.white,
                   ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
-                    child: SearchCategory(),
-                  ),
-                  const SizedBox(height: 10),
                 ],
               ),
+            ],
+            title: TextComponent(
+              text: 'Danh mục thuốc',
+              isTitle: true,
+              color: Colors.white,
+            ),
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(height: 20),
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                  child: SearchCategory(),
+                ),
+                const SizedBox(height: 10),
+              ],
             ),
           ),
           body: Column(
@@ -155,22 +161,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     icon: Image.asset('assets/icons/medicalequipment.png'),
                   ),
                 ],
-                
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: SizedBox(
-
                     width: 120,
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadiusDirectional.circular(5),
-                            side:
-                                const BorderSide(width: 1, color: Color(0xff6F6F6F))),
+                            side: const BorderSide(
+                                width: 1, color: Color(0xff6F6F6F))),
                       ),
                       onPressed: _openFilterOverlay,
                       child: const Row(

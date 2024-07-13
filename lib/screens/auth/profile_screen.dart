@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         primary: true,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        toolbarHeight: 130,
+        toolbarHeight: 120,
         shadowColor: Colors.black,
         elevation: 5.0,
         title: user.email.isEmpty

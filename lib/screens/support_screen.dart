@@ -15,12 +15,15 @@ class _SupportScreenState extends State<SupportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 90,
+        toolbarHeight: 120,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: TextComponent(
-          text: 'Hỗ trợ',
-          color: Colors.white,
-          isTitle: true,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: TextComponent(
+            text: 'Hỗ trợ',
+            color: Colors.white,
+            isTitle: true,
+          ),
         ),
         centerTitle: true,
       ),

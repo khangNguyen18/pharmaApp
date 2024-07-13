@@ -262,6 +262,7 @@ class Api {
   }
 
   static addNewCart() async{
-
+     var url = Uri.parse(
+        "${baseUrl}product/");
   }
 }

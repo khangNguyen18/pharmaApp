@@ -20,12 +20,15 @@ class _OrderScreenState extends State<OrderScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
-          toolbarHeight: 110,
+          toolbarHeight: 120,
           centerTitle: true,
-          title: TextComponent(
-            text: 'Lịch sử đơn hàng',
-            isTitle: true,
-            color: Colors.white,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: TextComponent(
+              text: 'Lịch sử đơn hàng',
+              isTitle: true,
+              color: Colors.white,
+            ),
           ),
         ),
         body: Column(

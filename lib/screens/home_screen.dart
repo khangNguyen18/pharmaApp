@@ -13,7 +13,9 @@ import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/screens/discount_screen.dart';
+import 'package:pharma_app/screens/see_more.dart';
 import 'package:pharma_app/services/api.dart';
+import 'package:pharma_app/widgets/search_category.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -43,38 +45,37 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         elevation: 5.0,
         shadowColor: Colors.black,
-        toolbarHeight: 160,
+        toolbarHeight: 120,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: CupertinoSearchTextField(
-          controller: searchController,
-          backgroundColor: Colors.white,
-          autocorrect: false,
-          onChanged: (_) {
-            print(searchController.toString());
-          },
+        title: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: SearchCategory(),
         ),
         actions: [
-          Row(
-            children: [
-              IconComponent(
-                  icon: Icon(IconlyLight.chat),
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Row(
+              children: [
+                IconComponent(
+                    icon: Icon(IconlyLight.chat),
+                    iconBackgroundColor: null,
+                    iconColor: Colors.white,
+                    onIconPress: () {}),
+                IconComponent(
+                  icon: Icon(
+                    IconlyLight.buy,
+                  ),
                   iconBackgroundColor: null,
+                  onIconPress: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Cart()),
+                    );
+                  },
                   iconColor: Colors.white,
-                  onIconPress: () {}),
-              IconComponent(
-                icon: Icon(
-                  IconlyLight.buy,
                 ),
-                iconBackgroundColor: null,
-                onIconPress: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Cart()),
-                  );
-                },
-                iconColor: Colors.white,
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -295,7 +296,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: const EdgeInsets.only(right: 20),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SeeMore(
+                                          isSale: true,
+                                          title:
+                                              'Săn Deals tháng ${DateTime.now().month}')));
+                            },
                             child: TextComponent(
                               text: 'Xem thêm',
                               color: Colors.white,
@@ -338,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               Container(
-                height: 480,
+                height: 420,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(8, 0, 8, 14),
                   child: FutureBuilder(
@@ -383,7 +392,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   TextButton(
                     onPressed: () {},
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SeeMore(
+                                    isSold: true,
+                                    title: 'Top bán chạy toàn quốc')));
+                      },
                       child: TextComponent(
                         text: 'Xem thêm',
                         color: primaryColor,
