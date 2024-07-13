@@ -47,47 +47,33 @@ class _UpdateInfoState extends State<UpdateInfo> {
       backgroundColor: Colors.white,
       body: Container(
         child: ListView(
-          children: <Widget>[
+          children: [
             Container(
-              decoration:
-                  BoxDecoration(color: Theme.of(context).colorScheme.primary),
-              child: Stack(
-                children: [
-                  Positioned(
-                    child: IconComponent(
-                      icon: Icon(IconlyLight.arrow_left_2),
-                      onIconPress: () {
-                        Navigator.pop(context);
-                      },
-                      iconColor: Colors.white,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Image(
-                      image: AssetImage('assets/images/logo_white_small.png'),
-                    ),
-                  ),
-                ],
+              height: 50,
+              width: 1,
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(100),
               ),
+              child: Icon(IconlyLight.profile),
             ),
-            Container(
-              child: Center(
-                child: FadeInUp(
-                    duration: Duration(milliseconds: 800),
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20, right: 130),
-                      child: Center(
-                        child: Text(
-                          "Cập nhật thông tin",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 26,
-fontWeight: FontWeight.bold),
+            
+            Center(
+              child: FadeInUp(
+                  duration: Duration(milliseconds: 800),
+                  child: Container(
+                    margin: EdgeInsets.only(top: 20, right: 130),
+                    child: Center(
+                      child: Text(
+                        "Cập nhật thông tin",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    )),
-              ),
+                    ),
+                  )),
             ),
             Padding(
                 padding: EdgeInsets.all(30.0),
@@ -147,7 +133,7 @@ fontWeight: FontWeight.bold),
                               ),
                               border: OutlineInputBorder(
                                 borderSide: const BorderSide(
-color: Colors.black26, // Default border color
+                                  color: Colors.black26, // Default border color
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -207,7 +193,7 @@ color: Colors.black26, // Default border color
                               suffixIcon: IconButton(
                                   onPressed: () {
                                     setState(() {
-_isVisible = !_isVisible;
+                                      _isVisible = !_isVisible;
                                     });
                                   },
                                   icon: _isVisible
@@ -265,7 +251,7 @@ _isVisible = !_isVisible;
                           ),
                         ],
                       ),
-),
+                    ),
                   ),
                 ))
           ],

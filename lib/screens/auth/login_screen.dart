@@ -20,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 
 final _formSignInKey = GlobalKey<FormState>();
 bool rememberPassword = true;
-bool _isVisible = false;
+bool _isVisible = true;
 // void _submitLoginData() {
 //   showDialog(context: context, builder: builder)
 // }
@@ -153,14 +153,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _isVisible = !_isVisible;
-                                  });
-                                },
-                                icon: _isVisible
-                                    ? Icon(Icons.visibility)
-                                    : Icon(Icons.visibility_off)),
+                              onPressed: () {
+                                setState(() {
+                                  _isVisible = !_isVisible;
+                                });
+                              },
+                              icon: _isVisible
+                                  ? Icon(Icons.visibility_off)
+                                  : Icon(Icons.visibility),
+                            ),
                             label: const Text('Mật khẩu'),
                             hintText: 'Mật khẩu',
                             hintStyle: const TextStyle(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/screens/auth/verification_screen.dart';
@@ -98,6 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               return null;
                             },
                             decoration: InputDecoration(
+                              
                               label: const Text('Họ và tên'),
                               hintText: 'Họ và tên',
                               hintStyle: const TextStyle(
