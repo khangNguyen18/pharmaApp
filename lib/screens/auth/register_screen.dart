@@ -99,7 +99,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               return null;
                             },
                             decoration: InputDecoration(
-                              
                               label: const Text('Họ và tên'),
                               hintText: 'Họ và tên',
                               hintStyle: const TextStyle(
@@ -202,16 +201,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       Color.fromRGBO(0, 103, 105, 1)),
-                              onPressed: () async{
+                              onPressed: () async {
                                 var data = {
                                   "fullname": fullNameController.text,
                                   "email": emailController.text,
                                   "password": passwordController.text,
                                 };
-                                await Api.postRegisterAuth(data, context);
 
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (e) => VerificationScreen(
+                                      data: data,
+                                    ),
+                                  ),
+                                );
 
-                                
                                 if (_formSignInKey.currentState!.validate() &&
                                     rememberPassword) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -226,7 +231,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             'Please agree to the processing of personal data')),
                                   );
                                 }
-                                
                               },
                               child: const Text(
                                 'Đăng ký',

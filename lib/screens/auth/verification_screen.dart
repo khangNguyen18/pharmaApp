@@ -1,12 +1,63 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/button_component.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/services/api.dart';
 
-class VerificationScreen extends StatelessWidget {
-  const VerificationScreen({super.key});
+class VerificationScreen extends StatefulWidget {
+  final Map<String, String> data;
+  const VerificationScreen({super.key, required this.data});
+
+  @override
+  State<VerificationScreen> createState() => _VerificationScreenState();
+}
+
+class _VerificationScreenState extends State<VerificationScreen> {
+  var number1 = TextEditingController();
+  var number2 = TextEditingController();
+  var number3 = TextEditingController();
+  var number4 = TextEditingController();
+  int _timerDuration = 20; // 60 seconds
+  Timer? _timer;
+  var _otp;
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+    _getNewOTP();
+  }
+
+  Future<void> _getNewOTP() async {
+    _otp = await Api.verification(context, widget.data["email"]!);
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(
+      Duration(seconds: 1),
+      (timer) {
+        setState(() {
+          if (_timerDuration > 0) {
+            _timerDuration--;
+          } else {
+            _timer?.cancel();
+          }
+        });
+      },
+    );
+  }
+
+  void _resetTimer() async {
+    _timer?.cancel();
+    _otp = await Api.verification(context, widget.data["email"]!);
+    setState(() {
+      _timerDuration = 20;
+    });
+    _startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +100,7 @@ class VerificationScreen extends StatelessWidget {
                 text: 'Chúng tôi đã gửi mã xác minh 4 số tới',
               ),
               TextComponent(
-                text: 'dang******2906@gmail.com',
+                text: widget.data["email"].toString(),
                 weight: FontWeight.bold,
               ),
               //truyền email vô đây
@@ -62,6 +113,7 @@ class VerificationScreen extends StatelessWidget {
                       height: 65,
                       width: 65,
                       child: TextFormField(
+                        controller: number1,
                         onChanged: (value) {
                           if (value.length == 1) {
                             FocusScope.of(context).nextFocus();
@@ -83,6 +135,7 @@ class VerificationScreen extends StatelessWidget {
                       height: 65,
                       width: 65,
                       child: TextFormField(
+                        controller: number2,
                         onChanged: (value) {
                           if (value.length == 1) {
                             FocusScope.of(context).nextFocus();
@@ -104,6 +157,7 @@ class VerificationScreen extends StatelessWidget {
                       height: 65,
                       width: 65,
                       child: TextFormField(
+                        controller: number3,
                         onChanged: (value) {
                           if (value.length == 1) {
                             FocusScope.of(context).nextFocus();
@@ -125,9 +179,19 @@ class VerificationScreen extends StatelessWidget {
                       height: 65,
                       width: 65,
                       child: TextFormField(
-                        onChanged: (value) {
+                        controller: number4,
+                        onChanged: (value) async {
                           if (value.length == 1) {
                             FocusScope.of(context).nextFocus();
+                          }
+                          if (number1.text +
+                                  number2.text +
+                                  number3.text +
+                                  number4.text ==
+                              _otp.toString()) {
+                            await Api.postRegisterAuth(widget.data, context);
+                          } else {
+                            print("Failed");
                           }
                         },
                         decoration: InputDecoration(
@@ -148,28 +212,23 @@ class VerificationScreen extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              ButtonComponent(
-                onTap: () {},
-                content: TextComponent(
-                  text: 'Xác minh',
-                  size: 30,
-                  color: Colors.white,
-                ),
-                widthSize: 375,
-                radius: 10,
-                colorBackground: Theme.of(context).colorScheme.primary,
-              ),
+
               const SizedBox(
                 height: 25,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextComponent(text: 'Bạn chưa nhận được OTP?'),
+                  TextComponent(
+                      text: _timerDuration == 0
+                          ? "Bạn chưa nhận được mã?"
+                          : 'Mã có hiệu lực trong'),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: _timerDuration == 0 ? _resetTimer : null,
                     child: TextComponent(
-                      text: ' Gửi lại',
+                      text: _timerDuration == 0
+                          ? ' Gửi lại'
+                          : ' ($_timerDuration)',
                       color: Theme.of(context).colorScheme.primary,
                       weight: FontWeight.bold,
                     ),
