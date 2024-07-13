@@ -144,6 +144,122 @@ class Api {
       print(e.toString());
     }
   }
+  static searchProduct(String title) async {
+    List<Product> products = [];
+    List<ActiveElementModel> activeElement = [];
+    var url = Uri.parse("${baseUrl}product/search-products?title=${title}");
+    try {
+      final res = await http.get(url);
+
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+        data["data"].forEach(
+          (value) => {
+            value["activeElement"].forEach((item) => {
+                  activeElement
+                      .add(ActiveElementModel(item["title"], [...item["desc"]]))
+                })
+          },
+        );
+        data['data'].forEach(
+          (value) => {
+            products.add(Product(
+                value["title"],
+                value["desc"],
+                [...value["photoUrl"]],
+                value["sold"] ?? 0,
+                value["discount"] ?? 0,
+                value["price"] ?? 0,
+                [...value["categories"]],
+                [...value["subCategories"]],
+                [...value["subSubCategories"]],
+                [...value["indication"]],
+                [...value["contraindication"]],
+                [...value["dosage"]],
+                [...value["uses"]],
+                activeElement,
+                value["producer"],
+                value["packing"],
+                [...value["sideEffect"]],
+                [...value["careFul"]],
+                [...value["drugInteractions"]],
+                [...value["ageOfUse"]],
+                [...value["genderOfUse"]],
+                [...value["using"]],
+                [...value["recommendation"]],
+                [...value["preserve"]],
+                value["unit"])),
+          },
+        );
+        print("From api : " + products.length.toString());
+        return products;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  static getProductsByCategoryId(String categoryId) async {
+    List<Product> products = [];
+    List<ActiveElementModel> activeElement = [];
+    var url = Uri.parse(
+        "${baseUrl}product/get-products-by-categoryid?id=$categoryId");
+    try {
+      final res = await http.get(url);
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+        data["data"].forEach(
+          (value) => {
+            value["activeElement"].forEach((item) => {
+                  activeElement
+                      .add(ActiveElementModel(item["title"], [...item["desc"]]))
+                })
+          },
+        );
+        data['data'].forEach(
+          (value) => {
+            products.add(Product(
+                value["title"],
+                value["desc"],
+                [...value["photoUrl"]],
+                value["sold"] ?? 0,
+                value["discount"] ?? 0,
+                value["price"] ?? 0,
+                [...value["categories"]],
+                [...value["subCategories"]],
+                [...value["subSubCategories"]],
+                [...value["indication"]],
+                [...value["contraindication"]],
+                [...value["dosage"]],
+                [...value["uses"]],
+                activeElement,
+                value["producer"],
+                value["packing"],
+                [...value["sideEffect"]],
+                [...value["careFul"]],
+                [...value["drugInteractions"]],
+                [...value["ageOfUse"]],
+                [...value["genderOfUse"]],
+                [...value["using"]],
+                [...value["recommendation"]],
+                [...value["preserve"]],
+                value["unit"])),
+          },
+        );
+        print(products);
+        return products;
+      } else {
+        print("error");
+
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
 
   static addNewCart() async{
 

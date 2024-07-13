@@ -3,12 +3,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/product_card.dart';
-import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/models/product_model.dart';
+import 'package:pharma_app/screens/product_tabs/beauty_tab.dart';
+import 'package:pharma_app/screens/product_tabs/functional_products_tab.dart';
+import 'package:pharma_app/screens/product_tabs/medical_equipment_tab.dart';
+import 'package:pharma_app/screens/product_tabs/medicine_tab.dart';
+import 'package:pharma_app/screens/product_tabs/mom_tab.dart';
+import 'package:pharma_app/screens/product_tabs/personal_care_tab.dart';
+import 'package:pharma_app/services/api.dart';
 import 'package:pharma_app/widgets/filter_overlay.dart';
+import 'package:pharma_app/widgets/search_category.dart';
 import 'package:pharma_app/widgets/tab_bar_category.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({super.key});
+  CategoryScreen({super.key});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -16,7 +24,15 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   TextEditingController _searchController = TextEditingController();
+  List<String> _searchResults = [];
   bool _showHintText = true;
+  List<Product> _products = [];
+  void _searchProducts(String query) async {
+    var results = await Api.searchProduct(query);
+    setState(() {
+      _searchResults = results;
+    });
+  }
 
   @override
   void initState() {
@@ -42,6 +58,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
   void _openFilterOverlay() {
     showModalBottomSheet(
         context: context, builder: (ctx) => const FilterOverlay());
+  }
+
+  void _getProductsByCategory(String categoryId) async {
+    List<Product> products = await Api.getProductsByCategoryId(categoryId);
+    setState(() {
+      _products = products;
+    });
   }
 
   String name = '';
@@ -73,10 +96,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextComponent(
-                          text: 'Danh mục thuốc',
-                          isTitle: true,
-                          color: Colors.white,
+                        Text(
+                          'Danh mục thuốc',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                         Row(
                           children: [
@@ -97,14 +119,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
-                    child: CupertinoSearchTextField(
-                      //controller: searchController,
-                      backgroundColor: Colors.white,
-                      autocorrect: false,
-                      onChanged: (_) {
-                        //print(searchController.toString());
-                      },
-                    ),
+                    child: SearchCategory(),
                   ),
                   const SizedBox(height: 10),
                 ],
@@ -140,12 +155,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     icon: Image.asset('assets/icons/medicalequipment.png'),
                   ),
                 ],
+                
               ),
               Padding(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: SizedBox(
+
                     width: 120,
                     height: 50,
                     child: ElevatedButton(
@@ -153,10 +170,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadiusDirectional.circular(5),
                             side:
-                                BorderSide(width: 1, color: Color(0xff6F6F6F))),
+                                const BorderSide(width: 1, color: Color(0xff6F6F6F))),
                       ),
                       onPressed: _openFilterOverlay,
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Icon(
@@ -175,15 +192,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: TabBarView(
                   children: [
-                    buildProductList('Thuốc'),
-                    buildProductList('Thực phẩm chức năng'),
-                    buildProductList('Chăm sóc cá nhân'),
-                    buildProductList('Mẹ và bé'),
-                    buildProductList('Sắc đẹp'),
-                    buildProductList('Thiết bị y tế'),
+                    MedicineTab(),
+                    FunctionalProductTab(),
+                    PersonalCareTab(),
+                    MomTab(),
+                    BeautyTab(),
+                    MedicalEquipmentTab(),
                   ],
                 ),
               ),
