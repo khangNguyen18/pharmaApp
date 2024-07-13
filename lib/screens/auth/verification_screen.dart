@@ -21,7 +21,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   var number2 = TextEditingController();
   var number3 = TextEditingController();
   var number4 = TextEditingController();
-  int _timerDuration = 20; // 60 seconds
+  int _timerDuration = 60;
   Timer? _timer;
   var _otp;
   @override
@@ -54,7 +54,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     _timer?.cancel();
     _otp = await Api.verification(context, widget.data["email"]!);
     setState(() {
-      _timerDuration = 20;
+      _timerDuration = 60;
     });
     _startTimer();
   }
