@@ -1,6 +1,7 @@
 import 'package:pharma_app/models/activeElement_model.dart';
 
 class Product {
+  final String? id;
   final String? title;
   final String? description;
   final List<String>? photoUrl;
@@ -28,6 +29,7 @@ class Product {
   final String? unit;
 
   Product(
+    this.id,
     this.title,
     this.description,
     this.photoUrl,

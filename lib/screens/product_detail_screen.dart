@@ -6,9 +6,12 @@ import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/product_card.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/models/product_model.dart';
+import 'package:pharma_app/provider/user_provider.dart';
+import 'package:pharma_app/screens/auth/login_screen.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/services/api.dart';
 import 'package:pharma_app/widgets/detail_bottom_bar.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   ProductDetailScreen({super.key, required this.list});
@@ -24,6 +27,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool _showMoreColumns = false;
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     final primaryColor = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(
@@ -47,12 +51,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
             iconBackgroundColor: null,
             onIconPress: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Cart(),
-                ),
-              );
+              if (user.email.isNotEmpty && user.email != "")
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Cart(),
+                  ),
+                );
+              else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
+              }
             },
             iconColor: Colors.white,
           ),

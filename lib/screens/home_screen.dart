@@ -11,6 +11,7 @@ import 'package:pharma_app/components/product_card.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/provider/user_provider.dart';
+import 'package:pharma_app/screens/auth/login_screen.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:pharma_app/screens/discount_screen.dart';
 import 'package:pharma_app/screens/see_more.dart';
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     final primaryColor = Theme.of(context).colorScheme.primary;
     return Scaffold(
       appBar: AppBar(
@@ -66,10 +68,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   iconBackgroundColor: null,
                   onIconPress: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Cart()),
-                    );
+                    if (user.email.isNotEmpty && user.email != "")
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Cart(),
+                        ),
+                      );
+                    else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        ),
+                      );
+                    }
                   },
                   iconColor: Colors.white,
                 ),

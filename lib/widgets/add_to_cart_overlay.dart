@@ -7,6 +7,10 @@ import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/order_item.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/models/product_model.dart';
+import 'package:pharma_app/provider/user_provider.dart';
+import 'package:pharma_app/screens/auth/login_screen.dart';
+import 'package:pharma_app/services/api.dart';
+import 'package:provider/provider.dart';
 
 class AddToCartOverlay extends StatefulWidget {
   AddToCartOverlay({super.key, required this.list});
@@ -92,6 +96,7 @@ class _AddToCartOverlayState extends State<AddToCartOverlay> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
+    final user = Provider.of<UserProvider>(context).user;
 
     return SizedBox(
       height: 450,
@@ -163,7 +168,25 @@ class _AddToCartOverlayState extends State<AddToCartOverlay> {
               height: 60,
               width: 420,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  if (user.email.isEmpty && user.email == "") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  } else {
+                    var data = {
+                      "idUser": user.id,
+                      "products": [
+                        {"productId": widget.list.id, "quantity": quantity}
+                      ],
+                      "total": widget.list.price
+                    };
+                    await Api.addNewCart(data, context);
+                  }
+                },
                 child: TextComponent(
                   text: 'Thêm vào giỏ',
                   color: Colors.white,

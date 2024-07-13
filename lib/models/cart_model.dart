@@ -3,16 +3,11 @@ import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 
 class CartModel {
-  final String fullname;
-  final String email;
+  final String idUser;
   final List<CartProduct> products;
+  final int total;
 
-  CartModel(this.fullname, this.email, this.products);
-  factory CartModel.fromJson(Map<String, dynamic> json) => CartModel.fromJson(json);
+  CartModel(this.idUser, this.products, this.total);
+  factory CartModel.fromJson(Map<String, dynamic> json) =>
+      CartModel.fromJson(json);
 }
-
-// extension CartExt on CartModel {
-//   double get grandTotal {
-//     return buildProductList(category);
-//   }
-//}

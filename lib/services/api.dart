@@ -37,7 +37,8 @@ class Api {
 
         var jsonResponse = jsonDecode(res.body);
         userProvider.setUser(res.body);
-        print("name" + userProvider.user.accesstoken);
+        await getCart(userProvider.user.id);
+
         navigator.pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => MyApp()), (route) => false);
       } else {
@@ -130,6 +131,7 @@ class Api {
                 }),
             products.add(
               Product(
+                value["_id"],
                 value["title"],
                 value["desc"],
                 [...value["photoUrl"]],
@@ -190,6 +192,7 @@ class Api {
         data['data'].forEach(
           (value) => {
             products.add(Product(
+                value["_id"],
                 value["title"],
                 value["desc"],
                 [...value["photoUrl"]],
@@ -247,6 +250,7 @@ class Api {
         data['data'].forEach(
           (value) => {
             products.add(Product(
+                value["_id"],
                 value["title"],
                 value["desc"],
                 [...value["photoUrl"]],
@@ -287,22 +291,37 @@ class Api {
     }
   }
 
-  Future<void> addNewCart(CartModel cartProduct, BuildContext context) async {
-    var url = Uri.parse("$baseUrl/cart/addNewCart");
-
+  static addNewCart(
+      Map<String, Object> cartProduct, BuildContext context) async {
+    var url = Uri.parse("${baseUrl}cart");
     try {
       http.Response res = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(cartProduct),
       );
-
       if (res.statusCode == 200) {
-        // Thành công khi thêm vào giỏ hàng, có thể xử lý dữ liệu trả về nếu cần
         var jsonResponse = jsonDecode(res.body);
-        print('Response: $jsonResponse');
+        print('Response: ${jsonResponse}');
       } else {
-        // Xử lý khi không thành công
+        print("Failed to add to cart. Status code: ${res.statusCode}");
+      }
+    } catch (e) {
+      // Xử lý khi có lỗi trong quá trình gửi yêu cầu
+      print('Error: $e');
+    }
+  }
+
+  static getCart(String id) async {
+    var url = Uri.parse("${baseUrl}cart/GetCartById?id=${id}");
+    try {
+      http.Response res = await http.get(
+        url,
+      );
+      if (res.statusCode == 200) {
+        var jsonResponse = jsonDecode(res.body);
+        print('Response: ${jsonResponse}');
+      } else {
         print("Failed to add to cart. Status code: ${res.statusCode}");
       }
     } catch (e) {

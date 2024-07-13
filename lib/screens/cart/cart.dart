@@ -3,13 +3,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/screens/cart/cart_item.dart';
 import 'package:pharma_app/screens/cart/payment_screen.dart';
 import 'package:pharma_app/screens/discount_screen.dart';
+import 'package:pharma_app/services/api.dart';
+import 'package:provider/provider.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
-
   @override
   State<Cart> createState() => _CartState();
 }
@@ -19,8 +21,12 @@ class _CartState extends State<Cart> {
     title:
         'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
   );
+
   final List checkBoxList = [];
   int count = 0;
+  // void getCart() async {
+  //   await Api.getCart(id)
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

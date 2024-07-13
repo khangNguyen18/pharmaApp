@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/models/product_model.dart';
+import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/services/api.dart';
 import 'package:pharma_app/widgets/add_to_cart_overlay.dart';
+import 'package:provider/provider.dart';
 
 class DetailBottomBar extends StatefulWidget {
   DetailBottomBar({super.key, required this.list});
@@ -25,6 +27,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
+    final user = Provider.of<UserProvider>(context).user;
 
     return SafeArea(
       child: Container(
