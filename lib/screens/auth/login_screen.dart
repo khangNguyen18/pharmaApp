@@ -29,6 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
+  bool isValidEmail(email) {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,6 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Vui lòng nhập email';
+                            } else if (!isValidEmail(value)) {
+                              return 'Sai định dạng email';
                             }
                             return null;
                           },
@@ -208,10 +216,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 backgroundColor:
                                     Color.fromRGBO(0, 103, 105, 1)),
                             onPressed: () async {
-                              await Api.postLoginAuth(
-                                  context: context,
-                                  email: emailController.text,
-                                  password: passwordController.text);
+                              if (_formSignInKey.currentState!.validate() &&
+                                  rememberPassword) {
+                                await Api.postLoginAuth(
+                                    context: context,
+                                    email: emailController.text,
+                                    password: passwordController.text);
+                              }
                             },
                             child: const Text(
                               'Đăng nhập',
