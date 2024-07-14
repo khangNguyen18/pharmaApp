@@ -179,12 +179,12 @@ class _AddToCartOverlayState extends State<AddToCartOverlay> {
                   } else {
                     var data = {
                       "idUser": user.id,
-                      "products": [
-                        {"productId": widget.list.id, "quantity": quantity}
-                      ],
-                      "total": widget.list.price
+                      "products": {
+                        "productId": widget.list.id,
+                        "quantity": quantity
+                      },
                     };
-                    await Api.addNewCart(data, context);
+                    await Api.putToCart(data, context);
                   }
                 },
                 child: TextComponent(

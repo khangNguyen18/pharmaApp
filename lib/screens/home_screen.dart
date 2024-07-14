@@ -68,14 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   iconBackgroundColor: null,
                   onIconPress: () {
-                    if (user.email.isNotEmpty && user.email != "")
+                    if (user.email.isNotEmpty && user.email != "") {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const Cart(),
                         ),
                       );
-                    else {
+                    } else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(

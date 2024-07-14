@@ -8,7 +8,9 @@ import 'package:http/http.dart' as http;
 import 'package:pharma_app/main.dart';
 import 'package:pharma_app/models/activeElement_model.dart';
 import 'package:pharma_app/models/cart_model.dart';
+import 'package:pharma_app/models/cart_product_model.dart';
 import 'package:pharma_app/models/product_model.dart';
+import 'package:pharma_app/provider/cart_provider.dart';
 import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/screens/home_screen.dart';
 import 'package:pharma_app/widgets/bottom_navigation.dart';
@@ -37,8 +39,7 @@ class Api {
 
         var jsonResponse = jsonDecode(res.body);
         userProvider.setUser(res.body);
-        await getCart(userProvider.user.id);
-
+        await getCart(jsonResponse["id"], context);
         navigator.pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => MyApp()), (route) => false);
       } else {
@@ -291,11 +292,11 @@ class Api {
     }
   }
 
-  static addNewCart(
+  static putToCart(
       Map<String, Object> cartProduct, BuildContext context) async {
-    var url = Uri.parse("${baseUrl}cart");
+    var url = Uri.parse("${baseUrl}cart/PutItemToCart");
     try {
-      http.Response res = await http.post(
+      http.Response res = await http.put(
         url,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(cartProduct),
@@ -312,15 +313,27 @@ class Api {
     }
   }
 
-  static getCart(String id) async {
+  static getCart(String id, BuildContext context) async {
+    CartModel cart;
+    List<CartProduct> cartProduct = [];
     var url = Uri.parse("${baseUrl}cart/GetCartById?id=${id}");
     try {
+      var cartProvider = Provider.of<CartProvider>(context, listen: false);
       http.Response res = await http.get(
         url,
       );
       if (res.statusCode == 200) {
         var jsonResponse = jsonDecode(res.body);
-        print('Response: ${jsonResponse}');
+        cartProvider.setCart(res.body);
+        jsonResponse["products"].forEach((value) => cartProduct.add(
+              CartProduct(
+                  productId: value["productId"], quantity: value["quantity"]),
+            ));
+        cart = CartModel(
+            idUser: jsonResponse["idUser"],
+            products: cartProduct,
+            total: jsonResponse["total"]);
+        return cart;
       } else {
         print("Failed to add to cart. Status code: ${res.statusCode}");
       }
