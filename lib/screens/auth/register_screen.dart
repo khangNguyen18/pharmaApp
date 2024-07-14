@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pharma_app/components/icon_component.dart';
@@ -17,12 +18,20 @@ class RegisterScreen extends StatefulWidget {
 
 final _formSignInKey = GlobalKey<FormState>();
 bool _isVisible = false;
+bool _isVisible2 = false;
 bool rememberPassword = true;
 
 class _RegisterScreenState extends State<RegisterScreen> {
   var fullNameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  var rePasswordController = TextEditingController();
+
+  bool isValidEmail(email) {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(email);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +136,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Vui lòng nhập email';
                               }
+                              else if(!isValidEmail(value)) {
+                                return 'Sai định dạng email';
+                              }
                               return null;
                             },
                             decoration: InputDecoration(
@@ -194,6 +206,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(
                             height: 25.0,
                           ),
+                          TextFormField(
+                            controller: rePasswordController,
+                            obscureText: !_isVisible2,
+                            obscuringCharacter: '*',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Vui lòng nhập mật khẩu';
+                              } else if(value != passwordController.text){
+                                return 'Mật khẩu nhập lại không khớp';
+                              }
+                            },
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _isVisible2 = !_isVisible2;
+                                    });
+                                  },
+                                  icon: _isVisible2
+                                      ? Icon(Icons.visibility)
+                                      : Icon(Icons.visibility_off)),
+                              label: const Text('Nhập lại mật khẩu'),
+                              hintText: 'Nhập lại mật khẩu',
+                              hintStyle: const TextStyle(
+                                color: Colors.black26,
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.black12, // Default border color
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.black26, // Default border color
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          ),
                           SizedBox(
                             width: double.infinity,
                             height: 50,
@@ -202,23 +257,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   backgroundColor:
                                       Color.fromRGBO(0, 103, 105, 1)),
                               onPressed: () async {
-                                var data = {
-                                  "fullname": fullNameController.text,
-                                  "email": emailController.text,
-                                  "password": passwordController.text,
-                                };
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (e) => VerificationScreen(
-                                      data: data,
-                                    ),
-                                  ),
-                                );
-
                                 if (_formSignInKey.currentState!.validate() &&
                                     rememberPassword) {
+                                  var data = {
+                                    "fullname": fullNameController.text,
+                                    "email": emailController.text,
+                                    "password": passwordController.text,
+                                  };
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (e) => VerificationScreen(
+                                        data: data,
+                                      ),
+                                    ),
+                                  );
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text('Processing Data'),
