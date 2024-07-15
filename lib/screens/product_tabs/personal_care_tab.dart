@@ -9,7 +9,7 @@ class PersonalCareTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Api.getProduct(),
+      future: Api.getProductsByCategoryId("Chăm sóc cá nhân"),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return const Center(
@@ -19,9 +19,10 @@ class PersonalCareTab extends StatelessWidget {
           return GridView.builder(
               shrinkWrap: true,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.52,
-                  mainAxisSpacing: 6),
+                crossAxisCount: 2,
+                childAspectRatio: 0.52,
+                mainAxisSpacing: 6,
+              ),
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return ProductCard(list: snapshot.data[index]);

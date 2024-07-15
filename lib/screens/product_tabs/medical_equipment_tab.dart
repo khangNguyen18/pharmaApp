@@ -9,7 +9,7 @@ class MedicalEquipmentTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Api.getProduct(),
+      future: Api.getProductsByCategoryId("Thiết bị y tế"),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return const Center(

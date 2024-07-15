@@ -9,7 +9,7 @@ class BeautyTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Api.getProductsByCategoryId("Thuốc"),
+      future: Api.getProductsByCategoryId("Chăm sóc sắc đẹp"),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return const Center(

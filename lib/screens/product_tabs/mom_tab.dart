@@ -9,7 +9,7 @@ class MomTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Api.getProduct(),
+      future: Api.getProductsByCategoryId("Mẹ và bé"),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return const Center(

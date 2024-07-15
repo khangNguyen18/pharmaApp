@@ -5,6 +5,7 @@ import 'package:pharma_app/components/button_component.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/profile_option_component.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/provider/cart_provider.dart';
 import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/screens/auth/login_screen.dart';
@@ -34,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-
+    final cart = Provider.of<CartProvider>(context).cart;
     return Scaffold(
       appBar: AppBar(
         primary: true,
@@ -61,7 +62,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(width: 15),
                     TextComponent(
-                      text: user.name,
+                      text: cart.idUser != "" && cart.idUser.isNotEmpty
+                          ? cart.idUser.toString()
+                          : "Khong co gi het",
                       weight: FontWeight.bold,
                       color: Colors.white,
                       size: 25,
