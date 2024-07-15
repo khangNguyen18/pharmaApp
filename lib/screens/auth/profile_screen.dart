@@ -8,6 +8,7 @@ import 'package:pharma_app/components/text_component.dart';
 import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/provider/cart_provider.dart';
 import 'package:pharma_app/provider/user_provider.dart';
+import 'package:pharma_app/screens/aboutUs_screen.dart';
 import 'package:pharma_app/screens/auth/login_screen.dart';
 import 'package:pharma_app/screens/auth/update_info.dart';
 import 'package:pharma_app/screens/auth/verification_screen.dart';
@@ -35,7 +36,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    final cart = Provider.of<CartProvider>(context).cart;
     return Scaffold(
       appBar: AppBar(
         primary: true,
@@ -162,7 +162,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 ProfileOptionComponent(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)  => AboutusScreen()));
+                  },
                   text: 'Về chúng tôi',
                   icon: Icon(
                     IconlyLight.more_circle,
@@ -254,7 +256,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 ProfileOptionComponent(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)  => AboutusScreen()));
+                  },
                   text: 'Về chúng tôi',
                   icon: Icon(
                     IconlyLight.more_circle,

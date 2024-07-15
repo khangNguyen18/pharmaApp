@@ -42,415 +42,418 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
     final primaryColor = Theme.of(context).colorScheme.primary;
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 5.0,
-        shadowColor: Colors.black,
-        toolbarHeight: 120,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 30),
-          child: SearchCategory(),
-        ),
-        actions: [
-          Padding(
+    return GestureDetector(
+      onTap: () {FocusManager.instance.primaryFocus?.unfocus();} ,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 5.0,
+          shadowColor: Colors.black,
+          toolbarHeight: 120,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: Padding(
             padding: const EdgeInsets.only(top: 30),
-            child: Row(
-              children: [
-                IconComponent(
-                    icon: Icon(IconlyLight.chat),
+            child: SearchCategory(),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Row(
+                children: [
+                  IconComponent(
+                      icon: Icon(IconlyLight.chat),
+                      iconBackgroundColor: null,
+                      iconColor: Colors.white,
+                      onIconPress: () {}),
+                  IconComponent(
+                    icon: Icon(
+                      IconlyLight.buy,
+                    ),
                     iconBackgroundColor: null,
-                    iconColor: Colors.white,
-                    onIconPress: () {}),
-                IconComponent(
-                  icon: Icon(
-                    IconlyLight.buy,
-                  ),
-                  iconBackgroundColor: null,
-                  onIconPress: () {
-                    if (user.email.isNotEmpty && user.email != "") {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Cart(),
-                        ),
-                      );
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
-                        ),
-                      );
-                    }
-                  },
-                  iconColor: Colors.white,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      body: ListView(
-        children: [
-          Stack(
-            children: [
-              CarouselSlider(
-                items: imgList
-                    .map(
-                      (e) => Image.asset(e),
-                    )
-                    .toList(),
-                options: CarouselOptions(
-                  height: 200,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  viewportFraction: 1,
-                  initialPage: 0,
-                  enlargeCenterPage: true,
-                  onPageChanged: (value, _) {
-                    setState(() {
-                      _currentPage = value;
-                    });
-                  },
-                ),
-              ),
-              Positioned(
-                bottom: 1,
-                left: 200,
-                child: buildCarouselIndicator(),
-              ),
-            ],
-          ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           IconComponent(
-          //             icon: FaIcon(FontAwesomeIcons.store),
-          //             iconColor: Theme.of(context).colorScheme.primary,
-          //             hasBorder: true,
-          //             size: 40,
-          //             onIconPress: () {},
-          //           ),
-          //           TextComponent(
-          //             text: 'Nhà thuốc',
-          //             size: 18,
-          //           )
-          //         ],
-          //       ),
-          //     ),
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           IconComponent(
-          //             iconColor: primaryColor,
-          //             icon: FaIcon(FontAwesomeIcons.userDoctor),
-          //             hasBorder: true,
-          //             size: 40,
-          //             onIconPress: () {},
-          //           ),
-          //           TextComponent(
-          //             text: 'Liên hệ dược sĩ',
-          //             size: 18,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           IconComponent(
-          //             iconColor: primaryColor,
-          //             icon: FaIcon(FontAwesomeIcons.calendar),
-          //             hasBorder: true,
-          //             size: 40,
-          //             onIconPress: () {},
-          //           ),
-          //           TextComponent(
-          //             text: 'Đặt lịch khám',
-          //             size: 18,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           IconComponent(
-          //             iconColor: primaryColor,
-          //             icon: Icon(Icons.discount_rounded),
-          //             hasBorder: true,
-          //             size: 40,
-          //             onIconPress: () {
-          //               Navigator.push(
-          //                 context,
-          //                 MaterialPageRoute(
-          //                   builder: (context) => DiscountScreen(),
-          //                 ),
-          //               );
-          //             },
-          //           ),
-          //           TextComponent(
-          //             text: 'Mã giảm giá',
-          //             size: 18,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          Stack(
-            children: [
-              Container(
-                height: 480,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      primaryColor,
-                      Color.fromARGB(255, 65, 221, 104),
-                    ],
-                    begin: Alignment(0, -1),
-                    end: Alignment(0, 0),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 60, 8, 20),
-                  child: FutureBuilder(
-                    future: Api.getProduct(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapshot) {
-                      if (!snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
+                    onIconPress: () {
+                      if (user.email.isNotEmpty && user.email != "") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Cart(),
+                          ),
+                        );
                       } else {
-                        List<Product> pdata = snapshot.data;
-
-                        pdata.sort((a, b) => b.discount.compareTo(a.discount));
-                        List<Product> topSaleProducts = pdata.take(4).toList();
-
-                        return ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: topSaleProducts.length,
-                          itemBuilder: (context, int index) {
-                            return ProductCard(list: topSaleProducts[index]);
-                          },
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
                         );
                       }
                     },
+                    iconColor: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        body: ListView(
+          children: [
+            Stack(
+              children: [
+                CarouselSlider(
+                  items: imgList
+                      .map(
+                        (e) => Image.asset(e),
+                      )
+                      .toList(),
+                  options: CarouselOptions(
+                    height: 200,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    viewportFraction: 1,
+                    initialPage: 0,
+                    enlargeCenterPage: true,
+                    onPageChanged: (value, _) {
+                      setState(() {
+                        _currentPage = value;
+                      });
+                    },
                   ),
                 ),
-              ),
-              Positioned(
-                child: ClipPath(
-                  clipper: ClipTrapezoid(),
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white,
-                          blurStyle: BlurStyle.solid,
-                          offset: Offset(4, 20),
-                        ),
+                Positioned(
+                  bottom: 1,
+                  left: 200,
+                  child: buildCarouselIndicator(),
+                ),
+              ],
+            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Expanded(
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           IconComponent(
+            //             icon: FaIcon(FontAwesomeIcons.store),
+            //             iconColor: Theme.of(context).colorScheme.primary,
+            //             hasBorder: true,
+            //             size: 40,
+            //             onIconPress: () {},
+            //           ),
+            //           TextComponent(
+            //             text: 'Nhà thuốc',
+            //             size: 18,
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           IconComponent(
+            //             iconColor: primaryColor,
+            //             icon: FaIcon(FontAwesomeIcons.userDoctor),
+            //             hasBorder: true,
+            //             size: 40,
+            //             onIconPress: () {},
+            //           ),
+            //           TextComponent(
+            //             text: 'Liên hệ dược sĩ',
+            //             size: 18,
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           IconComponent(
+            //             iconColor: primaryColor,
+            //             icon: FaIcon(FontAwesomeIcons.calendar),
+            //             hasBorder: true,
+            //             size: 40,
+            //             onIconPress: () {},
+            //           ),
+            //           TextComponent(
+            //             text: 'Đặt lịch khám',
+            //             size: 18,
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           IconComponent(
+            //             iconColor: primaryColor,
+            //             icon: Icon(Icons.discount_rounded),
+            //             hasBorder: true,
+            //             size: 40,
+            //             onIconPress: () {
+            //               Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                   builder: (context) => DiscountScreen(),
+            //                 ),
+            //               );
+            //             },
+            //           ),
+            //           TextComponent(
+            //             text: 'Mã giảm giá',
+            //             size: 18,
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            Stack(
+              children: [
+                Container(
+                  height: 480,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        primaryColor,
+                        Color.fromARGB(255, 65, 221, 104),
                       ],
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromARGB(255, 65, 221, 104),
-                          Colors.teal,
-                        ],
-                        begin: Alignment(-1, 0),
-                        end: Alignment(1, 0),
-                      ),
+                      begin: Alignment(0, -1),
+                      end: Alignment(0, 0),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Text.rich(
-                            TextSpan(
-                              text: 'Săn ',
-                              style: GoogleFonts.markaziText(fontSize: 25),
-                              children: [
-                                WidgetSpan(
-                                  child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    child: Image(
-                                      image:
-                                          AssetImage('assets/icons/storm.png'),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 60, 8, 20),
+                    child: FutureBuilder(
+                      future: Api.getProduct(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          List<Product> pdata = snapshot.data;
+      
+                          pdata.sort((a, b) => b.discount.compareTo(a.discount));
+                          List<Product> topSaleProducts = pdata.take(4).toList();
+      
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: topSaleProducts.length,
+                            itemBuilder: (context, int index) {
+                              return ProductCard(list: topSaleProducts[index]);
+                            },
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                Positioned(
+                  child: ClipPath(
+                    clipper: ClipTrapezoid(),
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            blurStyle: BlurStyle.solid,
+                            offset: Offset(4, 20),
+                          ),
+                        ],
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 65, 221, 104),
+                            Colors.teal,
+                          ],
+                          begin: Alignment(-1, 0),
+                          end: Alignment(1, 0),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: Text.rich(
+                              TextSpan(
+                                text: 'Săn ',
+                                style: GoogleFonts.markaziText(fontSize: 25),
+                                children: [
+                                  WidgetSpan(
+                                    child: Container(
+                                      height: 30,
+                                      width: 30,
+                                      child: Image(
+                                        image:
+                                            AssetImage('assets/icons/storm.png'),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                TextSpan(
-                                  text: 'Deal',
-                                  style: GoogleFonts.markaziText(
-                                    color: Colors.white,
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.bold,
+                                  TextSpan(
+                                    text: 'Deal',
+                                    style: GoogleFonts.markaziText(
+                                      color: Colors.white,
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        // TextComponent(
-                        //   text: '00:00:00',
-                        //   size: 30,
-                        //   color: Colors.white,
-                        // ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SeeMore(
-                                          isSale: true,
-                                          title:
-                                              'Săn Deals tháng ${DateTime.now().month}')));
-                            },
-                            child: TextComponent(
-                              text: 'Xem thêm',
-                              color: Colors.white,
+                          // TextComponent(
+                          //   text: '00:00:00',
+                          //   size: 30,
+                          //   color: Colors.white,
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SeeMore(
+                                            isSale: true,
+                                            title:
+                                                'Săn Deals tháng ${DateTime.now().month}')));
+                              },
+                              child: TextComponent(
+                                text: 'Xem thêm',
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Divider(
-            height: 1,
-            color: Color.fromARGB(255, 219, 219, 219),
-            thickness: 5,
-          ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: TextComponent(
-                      text: 'Săn Deals Online',
-                      isTitle: true,
+              ],
+            ),
+            Divider(
+              height: 1,
+              color: Color.fromARGB(255, 219, 219, 219),
+              thickness: 5,
+            ),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextComponent(
+                        text: 'Sản phẩm hot',
+                        isTitle: true,
+                      ),
+                    ),
+                    TextButton(
+                        onPressed: () {},
+                        child: TextButton(
+                          onPressed: () {},
+                          child: TextComponent(
+                            text: 'Xem thêm',
+                            color: primaryColor,
+                          ),
+                        ))
+                  ],
+                ),
+                Container(
+                  height: 420,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 14),
+                    child: FutureBuilder(
+                      future: Api.getProduct(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          List<Product> pdata = snapshot.data;
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: pdata.length,
+                            itemBuilder: (context, int index) {
+                              return ProductCard(list: pdata[index]);
+                            },
+                          );
+                        }
+                      },
                     ),
                   ),
-                  TextButton(
+                ),
+              ],
+            ),
+            Divider(
+              height: 10,
+              color: Color.fromARGB(255, 219, 219, 219),
+              thickness: 5,
+            ),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextComponent(
+                        text: 'Top bán chạy toàn quốc',
+                        isTitle: true,
+                      ),
+                    ),
+                    TextButton(
                       onPressed: () {},
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SeeMore(
+                                      isSold: true,
+                                      title: 'Top bán chạy toàn quốc')));
+                        },
                         child: TextComponent(
                           text: 'Xem thêm',
                           color: primaryColor,
                         ),
-                      ))
-                ],
-              ),
-              Container(
-                height: 420,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 14),
-                  child: FutureBuilder(
-                    future: Api.getProduct(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapshot) {
-                      if (!snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        List<Product> pdata = snapshot.data;
-                        return ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: pdata.length,
-                          itemBuilder: (context, int index) {
-                            return ProductCard(list: pdata[index]);
-                          },
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Divider(
-            height: 10,
-            color: Color.fromARGB(255, 219, 219, 219),
-            thickness: 5,
-          ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: TextComponent(
-                      text: 'Top bán chạy toàn quốc',
-                      isTitle: true,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SeeMore(
-                                    isSold: true,
-                                    title: 'Top bán chạy toàn quốc')));
-                      },
-                      child: TextComponent(
-                        text: 'Xem thêm',
-                        color: primaryColor,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Container(
-                height: 420,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 14),
-                  child: FutureBuilder(
-                    future: Api.getProduct(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapshot) {
-                      if (!snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        List<Product> pdata = snapshot.data;
-
-                        pdata.sort((a, b) => b.sold.compareTo(a.sold));
-                        List<Product> topSoldProducts = pdata.take(4).toList();
-
-                        return ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: topSoldProducts.length,
-                          itemBuilder: (context, int index) {
-                            return ProductCard(list: topSoldProducts[index]);
-                          },
-                        );
-                      }
-                    },
+                  ],
+                ),
+                Container(
+                  height: 420,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 14),
+                    child: FutureBuilder(
+                      future: Api.getProduct(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          List<Product> pdata = snapshot.data;
+      
+                          pdata.sort((a, b) => b.sold.compareTo(a.sold));
+                          List<Product> topSoldProducts = pdata.take(4).toList();
+      
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: topSoldProducts.length,
+                            itemBuilder: (context, int index) {
+                              return ProductCard(list: topSoldProducts[index]);
+                            },
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

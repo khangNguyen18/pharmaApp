@@ -238,9 +238,10 @@ class _CartState extends State<Cart> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 13),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),

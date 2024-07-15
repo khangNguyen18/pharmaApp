@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.42:3001/";
+  static const baseUrl = "http://192.168.130.4:3001/";
 
   //post account
   static postLoginAuth(
