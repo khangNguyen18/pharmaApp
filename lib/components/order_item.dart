@@ -101,18 +101,42 @@ class OrderItem extends StatelessWidget {
                         size: 22,
                         weight: FontWeight.bold,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextComponent(
-                            text:
-                                '${NumberFormat.currency(locale: "vi").format(int.parse(list.price.toString()))}',
-                            size: 35,
-                            color: Theme.of(context).colorScheme.primary,
-                            weight: FontWeight.bold,
-                          ),
-                        ],
-                      ),
+                      if (list.discount > 0)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextComponent(
+                              text:
+                                  '${NumberFormat.currency(locale: "vi").format(
+                                int.parse(
+                                  list.price.toString(),
+                                ),
+                              )}',
+                              size: 25,
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                            TextComponent(
+                              text:
+                                  '${NumberFormat.currency(locale: "vi").format(int.parse(list.price) - (int.parse(list.price) * list.discount / 100))}',
+                              size: 32,
+                              color: Theme.of(context).colorScheme.primary,
+                              weight: FontWeight.w900,
+                            ),
+                          ],
+                        )
+                      else ...[
+                        SizedBox(
+                          height: 30,
+                        ),
+                        TextComponent(
+                          text:
+                              '${NumberFormat.currency(locale: "vi").format(int.parse(list.price.toString()))}',
+                          size: 32,
+                          color: Theme.of(context).colorScheme.primary,
+                          weight: FontWeight.w900,
+                        ),
+                      ],
                     ],
                   ),
                 ),
