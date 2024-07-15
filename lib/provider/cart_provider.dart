@@ -7,6 +7,8 @@ class CartProvider extends ChangeNotifier {
     idUser: '',
     products: [],
     total: 0,
+    voucher: '',
+    discountAmount: 0,
   );
 
   CartModel get cart => _cart;
@@ -22,10 +24,7 @@ class CartProvider extends ChangeNotifier {
 
   void remove() {
     _cart = CartModel(
-      idUser: '',
-      products: [],
-      total: 0,
-    );
+        idUser: '', products: [], total: 0, voucher: "", discountAmount: 0);
     notifyListeners();
   }
 }

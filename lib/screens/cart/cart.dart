@@ -4,10 +4,12 @@ import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
+import 'package:pharma_app/models/voucher_model.dart';
 import 'package:pharma_app/provider/cart_provider.dart';
 import 'package:pharma_app/screens/cart/cart_item.dart';
 import 'package:pharma_app/screens/cart/payment_screen.dart';
 import 'package:pharma_app/screens/discount_screen.dart';
+import 'package:pharma_app/services/api.dart';
 import 'package:provider/provider.dart';
 
 class Cart extends StatefulWidget {
@@ -19,6 +21,18 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   int count = 0;
+  List<VoucherModel> vouchers = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    vouchers = await Api.getVoucher();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,86 +117,20 @@ class _CartState extends State<Cart> {
                     child: FaIcon(
                       FontAwesomeIcons.trash,
                       color: Colors.white,
-                      // textDirection: TextDirection.rtl,
                     ),
                   ),
                 ),
                 key: ValueKey(cart.products[index].productId),
                 onDismissed: (DismissDirection direction) {},
                 child: ListTile(
-                    // leading: Checkbox(
-                    //   value: checkBoxList[index].value,
-                    //   onChanged: (value) => onItemChecked(
-                    //     checkBoxList[index],
-                    //   ),
-                    // ),
                     title: CartItem(
                   quan: cart.products[index].quantity,
                   id: cart.products[index].productId,
                   idUser: cart.idUser,
                 )),
-
-                // Column(
-                //   children: [
-                //     for (var i = 1; i < checkBoxList.length; i++) ...[
-                //       ListTile(
-                //         leading: Checkbox(
-                //           value: checkBoxList[i].value,
-                //           onChanged: (value) => onItemChecked(checkBoxList[i]),
-                //         ),
-                //         title: checkBoxList[i],
-                //       ),
-
-                //       // ...checkBoxList.map(
-                //       //   (item) => ListTile(
-                //       //     leading: Checkbox(
-                //       //       value: item.value,
-                //       //       onChanged: (value) => onItemChecked(item),
-                //       //     ),
-                //       //     title: CartItem(),
-                //       //   ),
-                //       // ),
-                //     ],
-                //   ],
-                // ),
               );
             },
           ),
-          // child: ListView.builder(
-          //     itemCount: checkBoxList.length,
-          //     itemBuilder: (BuildContext context, int index) {
-          //       return Dismissible(
-          //         background: Container(
-          //           color: Colors.red,
-          //           child: FaIcon(FontAwesomeIcons.trash),
-          //         ),
-          //         key: ValueKey<CartItem>(checkBoxList[index]),
-          //         onDismissed: (DismissDirection direction) {
-          //           setState(() {
-          //             checkBoxList.removeAt(index);
-          //           });
-          //         },
-          //         child: ListView(
-          //           children: [
-          //             ...checkBoxList.map(
-          //               (item) => ListTile(
-          //                 leading: Checkbox(
-          //                   value: item.value,
-          //                   onChanged: (value) => onItemChecked(item),
-          //                 ),
-          //                 title: CartItem(),
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-
-          //         //
-          //       );
-          //     }
-
-          //
-          //     //),
-          //     ),
         ),
       ),
       bottomNavigationBar: SafeArea(
@@ -220,75 +168,121 @@ class _CartState extends State<Cart> {
                   children: [
                     Row(
                       children: [
-                        Icon(IconlyBold.discount),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-                          child: TextComponent(
-                            text: 'Mã khuyến mãi',
-                            weight: FontWeight.w500,
-                            size: 22,
-                          ),
+                        Row(
+                          children: [
+                            Icon(IconlyBold.discount),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                              child: TextComponent(
+                                text: 'Mã khuyến mãi',
+                                weight: FontWeight.w500,
+                                size: 22,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
+                    ),
+                    TextComponent(
+                      text: cart.voucher == ""
+                          ? ""
+                          : vouchers.isEmpty
+                              ? ""
+                              : vouchers
+                                  .firstWhere(
+                                      (voucher) => voucher.id == cart.voucher)
+                                  .code,
                     ),
                     Icon(IconlyLight.arrow_right_2),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 13),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              TextComponent(
-                                text: 'Tổng tiền',
-                                size: 18,
-                              ),
-                              TextComponent(
-                                text:
-                                    '${NumberFormat.currency(locale: "vi").format(
-                                  int.parse(
-                                    cart.total.toString(),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  TextComponent(
+                                    text: 'Tổng thanh toán',
+                                    size: 20,
                                   ),
-                                )}',
-                                size: 35,
-                                weight: FontWeight.w900,
-                                color: Colors.red,
+                                  TextComponent(
+                                    text: cart.discountAmount > 0
+                                        ? 'đ${NumberFormat.decimalPattern("vi").format(
+                                            int.parse(
+                                              cart.discountAmount.toString(),
+                                            ),
+                                          )}'
+                                        : '${NumberFormat.decimalPattern("vi").format(
+                                            int.parse(
+                                              cart.total.toString(),
+                                            ),
+                                          )}',
+                                    size: 22,
+                                    weight: FontWeight.w900,
+                                    color: Colors.red,
+                                  ),
+                                ],
                               ),
+                              if (cart.voucher != "")
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    TextComponent(
+                                      text: 'Tiết kiệm',
+                                      size: 20,
+                                    ),
+                                    TextComponent(
+                                      text:
+                                          'đ${NumberFormat.decimalPattern("vi").format(
+                                        int.parse(
+                                          (cart.total - cart.discountAmount)
+                                              .toString(),
+                                        ),
+                                      )}',
+                                      size: 22,
+                                      weight: FontWeight.w900,
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                ),
                             ],
                           ),
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PaymentScreen(),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                            padding: EdgeInsets.symmetric(horizontal: 30),
-                          ),
-                          child: TextComponent(
-                            text: 'Mua hàng',
-                            size: 25,
-                            color: Colors.white,
-                          ),
-                        ),
                       ],
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaymentScreen(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                      ),
+                      child: TextComponent(
+                        text: 'Mua hàng',
+                        size: 25,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
@@ -299,41 +293,4 @@ class _CartState extends State<Cart> {
       ),
     );
   }
-
-  // onAllChecked(CartItem cbItem) {
-  //   final newValue = !cbItem.value;
-  //   setState(() {
-  //     cbItem.value = newValue;
-  //     checkBoxList.forEach((element) {
-  //       element.value = newValue;
-  //     });
-  //   });
-  // }
-
-  // onItemChecked(CartItem cbItem) {
-  //   final newValue = !cbItem.value;
-  //   setState(() {
-  //     cbItem.value = newValue;
-  //     if (!newValue) {
-  //       allCartItemsChecked.value = false;
-  //     } else {
-  //       final allListChecked = checkBoxList.every((element) => element.value);
-  //       allCartItemsChecked.value = allListChecked;
-  //     }
-  //   });
-  // }
-
-  // deleteCartItem(CartItem cbItem) {
-  //   setState(() {
-  //     if (cbItem.value == true) {
-  //       checkBoxList.remove(cbItem);
-  //     }
-  //   });
-  // }
 }
-
-// class CheckBoxModal {
-//   String title;
-//   bool value;
-//   CheckBoxModal({required this.title, this.value = false});
-// }

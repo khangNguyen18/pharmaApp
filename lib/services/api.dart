@@ -7,13 +7,15 @@ import 'package:pharma_app/models/activeElement_model.dart';
 import 'package:pharma_app/models/cart_model.dart';
 import 'package:pharma_app/models/cart_product_model.dart';
 import 'package:pharma_app/models/product_model.dart';
+import 'package:pharma_app/models/voucher_model.dart';
 import 'package:pharma_app/provider/cart_provider.dart';
 import 'package:pharma_app/provider/user_provider.dart';
+import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.42:3001/";
+  static const baseUrl = "http://192.168.1.5:3001/";
 
   //post account
   static postLoginAuth(
@@ -110,14 +112,6 @@ class Api {
 
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
-        // data["data"].forEach(
-        //   (value) => {
-        //     value["activeElement"].forEach((item) => {
-        //           activeElement
-        //               .add(ActiveElementModel(item["title"], [...item["desc"]]))
-        //         })
-        //   },
-        // );
         data['data'].forEach(
           (value) => {
             value["activeElement"].forEach((item) => {
@@ -157,7 +151,6 @@ class Api {
             activeElement = []
           },
         );
-        print(products.first.activeElement!.first ?? "alo");
         return products;
       } else {
         return [];
@@ -215,7 +208,6 @@ class Api {
                 value["unit"])),
           },
         );
-        print("From api : " + products.length.toString());
         return products;
       } else {
         return [];
@@ -273,11 +265,9 @@ class Api {
                 value["unit"])),
           },
         );
-        print(products);
         return products;
       } else {
         print("error");
-
         return [];
       }
     } catch (e) {
@@ -331,7 +321,6 @@ class Api {
         return products;
       } else {
         print("error");
-
         return [];
       }
     } catch (e) {
@@ -374,15 +363,89 @@ class Api {
       if (res.statusCode == 200) {
         var jsonResponse = jsonDecode(res.body);
         cartProvider.setCart(res.body);
-        jsonResponse["products"].forEach((value) => cartProduct.add(
-              CartProduct(
-                  productId: value["productId"], quantity: value["quantity"]),
-            ));
-        cart = CartModel(
-            idUser: jsonResponse["idUser"],
-            products: cartProduct,
-            total: jsonResponse["total"]);
-        return cart;
+      } else {
+        print("Failed to add to cart. Status code: ${res.statusCode}");
+      }
+    } catch (e) {
+      // Xử lý khi có lỗi trong quá trình gửi yêu cầu
+      print('Error: $e');
+    }
+  }
+
+  static getVoucher() async {
+    List<VoucherModel> vouchers = [];
+    var url = Uri.parse("${baseUrl}voucher/");
+    try {
+      http.Response res = await http.get(
+        url,
+      );
+      if (res.statusCode == 200) {
+        var jsonResponse = jsonDecode(res.body);
+        jsonResponse.forEach((value) => vouchers.add(new VoucherModel(
+            id: value["_id"],
+            name: value["name"],
+            code: value["code"],
+            discountPercentage: value["discountPercentage"],
+            discountAmount: value["discountAmount"],
+            startDate: value["startDate"],
+            endDate: value["endDate"],
+            minOrderAmount: value["minOrderAmount"],
+            maxUsage: value["maxUsage"],
+            usageCount: value["usageCount"])));
+        return vouchers;
+      } else {
+        print("Failed to add to cart. Status code: ${res.statusCode}");
+      }
+    } catch (e) {
+      // Xử lý khi có lỗi trong quá trình gửi yêu cầu
+      print('Error: $e');
+    }
+  }
+
+  static ApplyVoucher(
+      String idUser, String voucherCode, BuildContext context) async {
+    CartModel cart;
+    List<CartProduct> cartProduct = [];
+    var url = Uri.parse("${baseUrl}cart/apply-voucher?idUser=${idUser}");
+    try {
+      final navigator = Navigator.of(context);
+      var cartProvider = Provider.of<CartProvider>(context, listen: false);
+      http.Response res = await http.put(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({"voucherCode": voucherCode}));
+      if (res.statusCode == 200) {
+        var jsonResponse = jsonDecode(res.body);
+        cartProvider.setCart(res.body);
+        navigator.pop(
+          MaterialPageRoute(builder: (context) => new Cart()),
+        );
+      } else {
+        print("Failed to add to cart. Status code: ${res.statusCode}");
+      }
+    } catch (e) {
+      // Xử lý khi có lỗi trong quá trình gửi yêu cầu
+      print('Error: $e');
+    }
+  }
+
+  static RemoveVoucher(String idUser, BuildContext context) async {
+    CartModel cart;
+    List<CartProduct> cartProduct = [];
+    var url = Uri.parse("${baseUrl}cart/remove-voucher?idUser=${idUser}");
+    try {
+      final navigator = Navigator.of(context);
+      var cartProvider = Provider.of<CartProvider>(context, listen: false);
+      http.Response res = await http.put(url, headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      if (res.statusCode == 200) {
+        var jsonResponse = jsonDecode(res.body);
+        cartProvider.setCart(res.body);
+        navigator.pop(
+          MaterialPageRoute(builder: (context) => new Cart()),
+        );
       } else {
         print("Failed to add to cart. Status code: ${res.statusCode}");
       }

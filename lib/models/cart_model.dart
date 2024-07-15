@@ -9,15 +9,22 @@ class CartModel {
   final String idUser;
   final List<CartProduct> products;
   final int total;
+  final int discountAmount;
+  final String voucher;
 
   CartModel(
-      {required this.idUser, required this.products, required this.total});
+      {required this.idUser,
+      required this.products,
+      required this.total,
+      required this.voucher,
+      required this.discountAmount});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'idUser': idUser,
       'products': products.map((x) => x.toMap()).toList(),
       'total': total,
+      "voucher": voucher
     };
   }
 
@@ -30,6 +37,8 @@ class CartModel {
         ),
       ),
       total: map['total'] ?? 0,
+      voucher: map['voucher'] ?? "",
+      discountAmount: map["discountAmount"] ?? 0,
     );
   }
 

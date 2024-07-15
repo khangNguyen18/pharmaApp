@@ -122,90 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           IconComponent(
-          //             icon: FaIcon(FontAwesomeIcons.store),
-          //             iconColor: Theme.of(context).colorScheme.primary,
-          //             hasBorder: true,
-          //             size: 40,
-          //             onIconPress: () {},
-          //           ),
-          //           TextComponent(
-          //             text: 'Nhà thuốc',
-          //             size: 18,
-          //           )
-          //         ],
-          //       ),
-          //     ),
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           IconComponent(
-          //             iconColor: primaryColor,
-          //             icon: FaIcon(FontAwesomeIcons.userDoctor),
-          //             hasBorder: true,
-          //             size: 40,
-          //             onIconPress: () {},
-          //           ),
-          //           TextComponent(
-          //             text: 'Liên hệ dược sĩ',
-          //             size: 18,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           IconComponent(
-          //             iconColor: primaryColor,
-          //             icon: FaIcon(FontAwesomeIcons.calendar),
-          //             hasBorder: true,
-          //             size: 40,
-          //             onIconPress: () {},
-          //           ),
-          //           TextComponent(
-          //             text: 'Đặt lịch khám',
-          //             size: 18,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           IconComponent(
-          //             iconColor: primaryColor,
-          //             icon: Icon(Icons.discount_rounded),
-          //             hasBorder: true,
-          //             size: 40,
-          //             onIconPress: () {
-          //               Navigator.push(
-          //                 context,
-          //                 MaterialPageRoute(
-          //                   builder: (context) => DiscountScreen(),
-          //                 ),
-          //               );
-          //             },
-          //           ),
-          //           TextComponent(
-          //             text: 'Mã giảm giá',
-          //             size: 18,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
           Stack(
             children: [
               Container(
@@ -275,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.only(left: 30),
                           child: Text.rich(
                             TextSpan(
-                              text: 'Săn ',
+                              text: 'Săn',
                               style: GoogleFonts.markaziText(fontSize: 25),
                               children: [
                                 WidgetSpan(
