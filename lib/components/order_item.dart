@@ -76,7 +76,7 @@ class OrderItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(0),
         ),
         child: SizedBox(
-          height: 175,
+          height: 180,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -119,7 +119,7 @@ class OrderItem extends StatelessWidget {
                             TextComponent(
                               text:
                                   '${NumberFormat.currency(locale: "vi").format(int.parse(list.price) - (int.parse(list.price) * list.discount / 100))}',
-                              size: 32,
+                              size: 30,
                               color: Theme.of(context).colorScheme.primary,
                               weight: FontWeight.w900,
                             ),

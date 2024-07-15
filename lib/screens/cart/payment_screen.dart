@@ -91,21 +91,30 @@ class _PaymentScreenState extends State<PaymentScreen> {
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Icon(IconlyBold.location),
-                    Align(
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        child: const Center(
-                          child: Text(
-                            "Thông tin người nhận",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
+                    Row(
+                      children: [
+                        const Icon(IconlyBold.location),
+                        Align(
+                          child: Container(
+                            margin: const EdgeInsets.only(left: 10),
+                            child: const Center(
+                              child: Text(
+                                "Thông tin người nhận",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(IconlyLight.arrow_right_2),
                     ),
                   ],
                 ),
@@ -174,77 +183,160 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ],
             ),
           ),
-          Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              const Divider(
-                height: 1,
-                color: Color.fromARGB(255, 219, 219, 219),
-                thickness: 5,
-              ),
-              Align(
-                  child: Container(
-                margin: const EdgeInsets.only(
-                  top: 4,
-                  right: 300,
+          const Divider(
+            height: 0,
+            color: Color.fromARGB(255, 219, 219, 219),
+            thickness: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
                 ),
-                child: const Text(
-                  "Sản phẩm",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
-              )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Image(
-                      width: 120,
-                      image: AssetImage(
-                          'assets/images/medicines/BeroccaPerformance.png'),
-                    ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: TextComponent(
+                    text: "Sản phẩm",
+                    weight: FontWeight.w500,
+                    maxLines: 3,
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 0, 10, 5),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextComponent(
-                            text: //chỗ này sau này là title được truyền vào
-                                'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
-                            size: 22,
-                            weight: FontWeight.bold,
-                          ),
-                          TextComponent(
-                            text: 'Phân loại: Hộp',
-                            size: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextComponent(
-                                text: '115.000 đ',
-                                size: 35,
-                                color: Theme.of(context).colorScheme.primary,
-                                weight: FontWeight.bold,
-                              ),
-                              TextComponent(text: 'Số lượng: 1'),
-                            ],
-                          ),
-                        ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Image(
+                        width: 120,
+                        image: AssetImage(
+                            'assets/images/medicines/BeroccaPerformance.png'),
                       ),
                     ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 0, 10, 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextComponent(
+                              text: //chỗ này sau này là title được truyền vào
+                                  'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
+                              size: 22,
+                              weight: FontWeight.bold,
+                            ),
+                            TextComponent(
+                              text: 'Phân loại: Hộp',
+                              size: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextComponent(
+                                  text: '115.000 đ',
+                                  size: 35,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  weight: FontWeight.bold,
+                                ),
+                                TextComponent(text: 'Số lượng: 1'),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          const Divider(
+            height: 0,
+            color: Color.fromARGB(255, 219, 219, 219),
+            thickness: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Icon(IconlyLight.wallet),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: TextComponent(
+                        text: 'Phương thức thanh toán',
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    TextComponent(text: 'Tiền mặt'),
+                    Icon(IconlyLight.arrow_right_2),
+                  ],
+                )
+              ],
+            ),
+          ),
+          const Divider(
+            height: 0,
+            color: Color.fromARGB(255, 219, 219, 219),
+            thickness: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: TextComponent(
+                    text: "Chi tiết thanh toán",
+                    weight: FontWeight.w500,
+                    maxLines: 3,
                   ),
-                ],
-              )
-            ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextComponent(text: 'Tạm tính (1 sản phẩm)'),
+                    TextComponent(text: '115.000 đ'),
+                  ],
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                //CHO NAY DANG BI LOI NE SON
+                
+                // if (cart.voucher != '' || vouchers.isNotEmpty)
+                //   Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       TextComponent(text: 'Áp dụng ${vouchers
+                //                 .firstWhere(
+                //                     (voucher) => voucher.id == cart.voucher)
+                //                 .name}' ),
+                //       TextComponent(text: '115.000 đ'),
+                //     ],
+                //   ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextComponent(text: 'Tạm tính (1 sản phẩm)'),
+                    TextComponent(text: '115.000 đ'),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -301,7 +393,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 13),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Row(
                       children: [
