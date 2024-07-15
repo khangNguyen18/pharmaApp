@@ -17,7 +17,6 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  final allCartItemsChecked = CartItem();
   final List checkBoxList = [];
   int count = 0;
   @override
@@ -303,15 +302,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   children: [
                     Row(
                       children: [
-                        Checkbox(
-                            value: allCartItemsChecked.value,
-                            onChanged: (value) =>
-                                onAllChecked(allCartItemsChecked)),
-                        Text('Tất cả'),
-                      ],
-                    ),
-                    Row(
-                      children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
@@ -358,34 +348,34 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  onAllChecked(CartItem cbItem) {
-    final newValue = !cbItem.value;
-    setState(() {
-      cbItem.value = newValue;
-      checkBoxList.forEach((element) {
-        element.value = newValue;
-      });
-    });
-  }
+  // onAllChecked(CartItem cbItem) {
+  //   final newValue = !cbItem.value;
+  //   setState(() {
+  //     cbItem.value = newValue;
+  //     checkBoxList.forEach((element) {
+  //       element.value = newValue;
+  //     });
+  //   });
+  // }
 
-  onItemChecked(CartItem cbItem) {
-    final newValue = !cbItem.value;
-    setState(() {
-      cbItem.value = newValue;
-      if (!newValue) {
-        allCartItemsChecked.value = false;
-      } else {
-        final allListChecked = checkBoxList.every((element) => element.value);
-        allCartItemsChecked.value = allListChecked;
-      }
-    });
-  }
+  // onItemChecked(CartItem cbItem) {
+  //   final newValue = !cbItem.value;
+  //   setState(() {
+  //     cbItem.value = newValue;
+  //     if (!newValue) {
+  //       allCartItemsChecked.value = false;
+  //     } else {
+  //       final allListChecked = checkBoxList.every((element) => element.value);
+  //       allCartItemsChecked.value = allListChecked;
+  //     }
+  //   });
+  // }
 
-  deleteCartItem(CartItem cbItem) {
-    setState(() {
-      if (cbItem.value == true) {
-        checkBoxList.remove(cbItem);
-      }
-    });
-  }
+  // deleteCartItem(CartItem cbItem) {
+  //   setState(() {
+  //     if (cbItem.value == true) {
+  //       checkBoxList.remove(cbItem);
+  //     }
+  //   });
+  // }
 }

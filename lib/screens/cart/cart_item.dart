@@ -1,29 +1,84 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:iconly/iconly.dart';
+import 'package:intl/intl.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
-import 'package:pharma_app/screens/cart/cart.dart';
+import 'package:pharma_app/models/activeElement_model.dart';
+import 'package:pharma_app/models/product_model.dart';
+import 'package:pharma_app/services/api.dart';
 
 class CartItem extends StatefulWidget {
-  CartItem({super.key, this.value = false, this.title='abc'});
+  CartItem(
+      {super.key, required this.quan, required this.id, required this.idUser});
 
-  bool value;
-  String title;
-
+  int quan;
+  String id;
+  String idUser;
   @override
   State<CartItem> createState() => _CartItemState();
 }
 
 class _CartItemState extends State<CartItem> {
-  int quantity = 1;
+  late int quantity;
+  late Product product = new Product(
+      "",
+      "",
+      "",
+      [],
+      0,
+      0,
+      "",
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [new ActiveElementModel("", [])],
+      "",
+      "",
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      "");
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getData();
+  }
+
+  void getData() async {
+    product = await Api.getProductById(widget.id);
+    quantity = widget.quan;
+    setState(() {});
+  }
+
   void increaseQuantity() {
     setState(() {
       quantity++;
     });
+    updateQuantity();
+  }
+
+  void updateQuantity() async {
+    var data = {
+      "idUser": widget.idUser,
+      "products": {"productId": widget.id, "quantity": quantity},
+    };
+    await Api.putToCart(data, context);
   }
 
   void decreaseQuantity() {
@@ -34,6 +89,7 @@ class _CartItemState extends State<CartItem> {
         showConfirmDialog();
       }
     });
+    updateQuantity();
   }
 
   void showConfirmDialog() {
@@ -48,6 +104,8 @@ class _CartItemState extends State<CartItem> {
           actions: [
             TextButton(
               onPressed: () {
+                quantity--;
+                updateQuantity();
                 Navigator.pop(ctx);
               },
               child: TextComponent(
@@ -92,92 +150,106 @@ class _CartItemState extends State<CartItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: SizedBox(
-        height: 165,
-        width: 120,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Image(
-                width: 90,
-                image: AssetImage(
-                    'assets/images/medicines/BeroccaPerformance.png'),
+    setState(() {});
+
+    if (product.id != "" && product.id!.isNotEmpty) {
+      return Card(
+        child: SizedBox(
+          height: 165,
+          width: 120,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Image.network(
+                  product.photoUrl!.first.toString(),
+                ),
               ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextComponent(
-                    text:
-                        widget.title,
-                    size: 20,
-                    weight: FontWeight.bold,
-                  ),
-                  TextComponent(
-                    text: 'Phân loại: Hộp',
-                    size: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextComponent(
-                        text: '115.000 đ',
-                        size: 35,
-                        color: Theme.of(context).colorScheme.primary,
-                        weight: FontWeight.bold,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(100),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextComponent(
+                      text: product.title.toString(),
+                      size: 20,
+                      weight: FontWeight.bold,
+                    ),
+                    TextComponent(
+                      text: 'Phân loại: ${product.unit}',
+                      size: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextComponent(
+                          text: product.discount > 0
+                              ? '${NumberFormat.currency(locale: "vi").format(
+                                  ((int.parse(product.price) -
+                                          (int.parse(product.price) *
+                                              product.discount /
+                                              100)) *
+                                      widget.quan),
+                                )}'
+                              : '${NumberFormat.currency(locale: "vi").format(
+                                  ((int.parse(product.price) * widget.quan)),
+                                )}',
+                          size: 24,
+                          color: Theme.of(context).colorScheme.primary,
+                          weight: FontWeight.bold,
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: IconComponent(
+                                icon: FaIcon(FontAwesomeIcons.minus),
+                                size: 13,
+                                iconColor: Colors.black,
+                                onIconPress: decreaseQuantity,
+                              ),
                             ),
-                            child: IconComponent(
-                              icon: FaIcon(FontAwesomeIcons.minus),
-                              size: 13,
-                              iconColor: Colors.black,
-                              onIconPress: decreaseQuantity,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: TextComponent(
+                                text: quantity.toString(),
+                                size: 25,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: TextComponent(
-                              text: quantity.toString(),
-                              size: 25,
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: IconComponent(
+                                icon: FaIcon(FontAwesomeIcons.plus),
+                                size: 13,
+                                iconColor: Colors.black,
+                                onIconPress: increaseQuantity,
+                              ),
                             ),
-                          ),
-                          Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: IconComponent(
-                              icon: FaIcon(FontAwesomeIcons.plus),
-                              size: 13,
-                              iconColor: Colors.black,
-                              onIconPress: increaseQuantity,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return SizedBox.shrink();
+    }
   }
 }

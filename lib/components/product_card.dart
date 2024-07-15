@@ -80,7 +80,7 @@ class _ProductCardState extends State<ProductCard> {
                           ),
                           TextComponent(
                             text:
-                                '${NumberFormat.currency(locale: "vi").format((int.parse(widget.list.price.toString()) * widget.list.discount) / 100)}',
+                                '${NumberFormat.currency(locale: "vi").format(int.parse(widget.list.price) - (int.parse(widget.list.price) * widget.list.discount / 100))}',
                             size: 32,
                             color: Theme.of(context).colorScheme.primary,
                             weight: FontWeight.w900,

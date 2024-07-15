@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharma_app/main.dart';
 import 'package:pharma_app/models/activeElement_model.dart';
@@ -12,13 +9,11 @@ import 'package:pharma_app/models/cart_product_model.dart';
 import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/provider/cart_provider.dart';
 import 'package:pharma_app/provider/user_provider.dart';
-import 'package:pharma_app/screens/home_screen.dart';
-import 'package:pharma_app/widgets/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.130.4:3001/";
+  static const baseUrl = "http://192.168.1.5:3001/";
 
   //post account
   static postLoginAuth(
@@ -93,7 +88,6 @@ class Api {
           body: jsonEncode(rdata));
       if (res.statusCode == 200) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-
         var jsonResponse = jsonDecode(res.body);
         userProvider.setUser(res.body);
         await prefs.setString('tokenLogin', jsonResponse["accesstoken"]);
@@ -292,10 +286,65 @@ class Api {
     }
   }
 
+  static getProductById(String id) async {
+    print(1);
+    Product products;
+    List<ActiveElementModel> activeElement = [];
+    var url = Uri.parse("${baseUrl}product/get-product-by-id?id=$id");
+    try {
+      final res = await http.get(url);
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+
+        data["data"]["activeElement"].forEach((item) => {
+              activeElement
+                  .add(ActiveElementModel(item["title"], [...item["desc"]]))
+            });
+
+        products = new Product(
+            data['data']["_id"],
+            data['data']["title"],
+            data['data']["desc"],
+            [...data['data']["photoUrl"]],
+            data['data']["sold"] ?? 0,
+            data['data']["discount"] ?? 0,
+            data['data']["price"] ?? 0,
+            [...data['data']["categories"]],
+            [...data['data']["subCategories"]],
+            [...data['data']["subSubCategories"]],
+            [...data['data']["indication"]],
+            [...data['data']["contraindication"]],
+            [...data['data']["dosage"]],
+            [...data['data']["uses"]],
+            activeElement,
+            data['data']["producer"],
+            data['data']["packing"],
+            [...data['data']["sideEffect"]],
+            [...data['data']["careFul"]],
+            [...data['data']["drugInteractions"]],
+            [...data['data']["ageOfUse"]],
+            [...data['data']["genderOfUse"]],
+            [...data['data']["using"]],
+            [...data['data']["recommendation"]],
+            [...data['data']["preserve"]],
+            data['data']["unit"]);
+        return products;
+      } else {
+        print("error");
+
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
   static putToCart(
       Map<String, Object> cartProduct, BuildContext context) async {
     var url = Uri.parse("${baseUrl}cart/PutItemToCart");
     try {
+      var cartProvider = Provider.of<CartProvider>(context, listen: false);
       http.Response res = await http.put(
         url,
         headers: {"Content-Type": "application/json"},
@@ -303,7 +352,7 @@ class Api {
       );
       if (res.statusCode == 200) {
         var jsonResponse = jsonDecode(res.body);
-        print('Response: ${jsonResponse}');
+        cartProvider.setCart(res.body);
       } else {
         print("Failed to add to cart. Status code: ${res.statusCode}");
       }

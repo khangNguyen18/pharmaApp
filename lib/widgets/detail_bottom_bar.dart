@@ -47,9 +47,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                 height: 60,
                 width: 280,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Api.getProduct();
-                  },
+                  onPressed: () {},
                   child: TextComponent(
                     text: 'Mua ngay',
                     color: Colors.white,

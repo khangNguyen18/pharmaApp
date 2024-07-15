@@ -27,7 +27,6 @@ class Product {
   final List<String>? recommendation;
   final List<String>? preserve;
   final String? unit;
-
   Product(
     this.id,
     this.title,

@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    final cart = Provider.of<CartProvider>(context).cart;
+
     return Scaffold(
       appBar: AppBar(
         primary: true,
@@ -61,9 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(width: 15),
                     TextComponent(
-                      text: cart.idUser != "" && cart.idUser.isNotEmpty
-                          ? cart.idUser.toString()
-                          : "Khong co gi het",
+                      text: user.name,
                       weight: FontWeight.bold,
                       color: Colors.white,
                       size: 25,

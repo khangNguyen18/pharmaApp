@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
+import 'package:intl/intl.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/text_component.dart';
-import 'package:pharma_app/provider/user_provider.dart';
+import 'package:pharma_app/provider/cart_provider.dart';
 import 'package:pharma_app/screens/cart/cart_item.dart';
 import 'package:pharma_app/screens/cart/payment_screen.dart';
 import 'package:pharma_app/screens/discount_screen.dart';
-import 'package:pharma_app/services/api.dart';
 import 'package:provider/provider.dart';
 
 class Cart extends StatefulWidget {
@@ -18,18 +18,11 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  final allCartItemsChecked = CartItem(
-    title:
-        'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
-  );
-
-  final List checkBoxList = [];
   int count = 0;
-  // void getCart() async {
-  //   await Api.getCart(id)
-  // }
+
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context).cart;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -47,30 +40,15 @@ class _CartState extends State<Cart> {
           children: [
             TextComponent(
               color: Colors.white,
-              text: 'Giỏ hàng',
+              text: "Giỏ hàng",
               isTitle: true,
             ),
           ],
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                checkBoxList.add(CartItem(
-                  title:
-                      'Viên sủi Berocca Performance bổ sung vitamin và khoáng chất hương xoài (Tuýp 10 viên)',
-                ));
-              });
-            },
-            icon: Icon(Icons.add),
-          ),
           IconComponent(
             icon: Icon(IconlyLight.delete),
-            onIconPress: () {
-              setState(() {
-                checkBoxList.removeWhere((item) => item.value == true);
-              });
-            },
+            onIconPress: () {},
           ),
         ],
       ),
@@ -79,7 +57,7 @@ class _CartState extends State<Cart> {
         child: Transform.translate(
           offset: Offset(10, 0),
           child: ListView.builder(
-            itemCount: checkBoxList.length,
+            itemCount: cart.products.length,
             itemBuilder: (BuildContext context, int index) {
               return Dismissible(
                 confirmDismiss: (DismissDirection direction) async {
@@ -125,25 +103,24 @@ class _CartState extends State<Cart> {
                     child: FaIcon(
                       FontAwesomeIcons.trash,
                       color: Colors.white,
-                      textDirection: TextDirection.rtl,
+                      // textDirection: TextDirection.rtl,
                     ),
                   ),
                 ),
-                key: ValueKey(checkBoxList[index]),
-                onDismissed: (DismissDirection direction) {
-                  setState(() {
-                    checkBoxList.removeAt(index);
-                  });
-                },
+                key: ValueKey(cart.products[index].productId),
+                onDismissed: (DismissDirection direction) {},
                 child: ListTile(
-                  leading: Checkbox(
-                    value: checkBoxList[index].value,
-                    onChanged: (value) => onItemChecked(
-                      checkBoxList[index],
-                    ),
-                  ),
-                  title: checkBoxList[index],
-                ),
+                    // leading: Checkbox(
+                    //   value: checkBoxList[index].value,
+                    //   onChanged: (value) => onItemChecked(
+                    //     checkBoxList[index],
+                    //   ),
+                    // ),
+                    title: CartItem(
+                  quan: cart.products[index].quantity,
+                  id: cart.products[index].productId,
+                  idUser: cart.idUser,
+                )),
 
                 // Column(
                 //   children: [
@@ -261,18 +238,9 @@ class _CartState extends State<Cart> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 13),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
-                      children: [
-                        Checkbox(
-                            value: allCartItemsChecked.value,
-                            onChanged: (value) =>
-                                onAllChecked(allCartItemsChecked)),
-                        Text('Tất cả'),
-                      ],
-                    ),
-                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -284,7 +252,12 @@ class _CartState extends State<Cart> {
                                 size: 18,
                               ),
                               TextComponent(
-                                text: '115.000 đ',
+                                text:
+                                    '${NumberFormat.currency(locale: "vi").format(
+                                  int.parse(
+                                    cart.total.toString(),
+                                  ),
+                                )}',
                                 size: 35,
                                 weight: FontWeight.w900,
                                 color: Colors.red,
@@ -327,36 +300,36 @@ class _CartState extends State<Cart> {
     );
   }
 
-  onAllChecked(CartItem cbItem) {
-    final newValue = !cbItem.value;
-    setState(() {
-      cbItem.value = newValue;
-      checkBoxList.forEach((element) {
-        element.value = newValue;
-      });
-    });
-  }
+  // onAllChecked(CartItem cbItem) {
+  //   final newValue = !cbItem.value;
+  //   setState(() {
+  //     cbItem.value = newValue;
+  //     checkBoxList.forEach((element) {
+  //       element.value = newValue;
+  //     });
+  //   });
+  // }
 
-  onItemChecked(CartItem cbItem) {
-    final newValue = !cbItem.value;
-    setState(() {
-      cbItem.value = newValue;
-      if (!newValue) {
-        allCartItemsChecked.value = false;
-      } else {
-        final allListChecked = checkBoxList.every((element) => element.value);
-        allCartItemsChecked.value = allListChecked;
-      }
-    });
-  }
+  // onItemChecked(CartItem cbItem) {
+  //   final newValue = !cbItem.value;
+  //   setState(() {
+  //     cbItem.value = newValue;
+  //     if (!newValue) {
+  //       allCartItemsChecked.value = false;
+  //     } else {
+  //       final allListChecked = checkBoxList.every((element) => element.value);
+  //       allCartItemsChecked.value = allListChecked;
+  //     }
+  //   });
+  // }
 
-  deleteCartItem(CartItem cbItem) {
-    setState(() {
-      if (cbItem.value == true) {
-        checkBoxList.remove(cbItem);
-      }
-    });
-  }
+  // deleteCartItem(CartItem cbItem) {
+  //   setState(() {
+  //     if (cbItem.value == true) {
+  //       checkBoxList.remove(cbItem);
+  //     }
+  //   });
+  // }
 }
 
 // class CheckBoxModal {
