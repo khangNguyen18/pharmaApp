@@ -6,14 +6,28 @@ class User {
   final String name;
   final String email;
   final String accesstoken;
+  final String phone;
+  final String birthDay;
+  final String gender;
   final String password;
+  final String city;
+  final String district;
+  final String ward;
+  final String address;
 
   User(
       {required this.id,
       required this.name,
       required this.email,
       required this.accesstoken,
-      required this.password});
+      required this.password,
+      required this.city,
+      required this.district,
+      required this.ward,
+      required this.address,
+      required this.birthDay,
+      required this.gender,
+      required this.phone});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -21,6 +35,10 @@ class User {
       'email': email,
       'accesstoken': accesstoken,
       'password': password,
+      'gender': gender,
+      'address': address,
+      'phone': phone,
+      'birthDay': birthDay
     };
   }
 
@@ -31,6 +49,13 @@ class User {
       email: map['email'] ?? "",
       accesstoken: map['accesstoken'] ?? "",
       password: map['password'] ?? "",
+      birthDay: map["birthDay"] ?? "",
+      phone: map["phone"] ?? "",
+      city: map["city"] ?? "",
+      district: map["district"] ?? "",
+      ward: map["ward"] ?? "",
+      address: map["address"] ?? "",
+      gender: map["gender"] ?? "",
     );
   }
 

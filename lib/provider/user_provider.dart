@@ -8,6 +8,13 @@ class UserProvider extends ChangeNotifier {
     email: '',
     accesstoken: '',
     password: '',
+    city: "",
+    district: "",
+    ward: "",
+    address: "",
+    phone: "",
+    birthDay: "",
+    gender: "",
   );
 
   User get user => _user;
@@ -28,6 +35,13 @@ class UserProvider extends ChangeNotifier {
       email: '',
       accesstoken: '',
       password: '',
+      city: "",
+      district: "",
+      ward: "",
+      address: "",
+      phone: "",
+      birthDay: "",
+      gender: "",
     );
     notifyListeners();
   }

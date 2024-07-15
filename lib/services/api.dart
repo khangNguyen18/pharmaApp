@@ -10,12 +10,13 @@ import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/models/voucher_model.dart';
 import 'package:pharma_app/provider/cart_provider.dart';
 import 'package:pharma_app/provider/user_provider.dart';
+import 'package:pharma_app/screens/auth/profile_screen.dart';
 import 'package:pharma_app/screens/cart/cart.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.130.4:3001/";
+  static const baseUrl = "http://192.168.1.5:3001/";
 
   //post account
   static postLoginAuth(
@@ -32,8 +33,6 @@ class Api {
           },
           body: jsonEncode({"email": email, "password": password}));
       if (res.statusCode == 200) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-
         var jsonResponse = jsonDecode(res.body);
         userProvider.setUser(res.body);
         await getCart(jsonResponse["id"], context);
@@ -80,7 +79,6 @@ class Api {
 
   static postRegisterAuth(
       Map<String, String> rdata, BuildContext context) async {
-    print(rdata);
     var url = Uri.parse("${baseUrl}auth/register");
     var userProvider = Provider.of<UserProvider>(context, listen: false);
     final navigator = Navigator.of(context);
@@ -100,6 +98,41 @@ class Api {
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  static Future<void> updateUser(
+    Map<String, dynamic> userData,
+    BuildContext context,
+  ) async {
+    final userId = userData['id'];
+    final url = Uri.parse('$baseUrl/auth/userId = $userId');
+
+    try {
+      final response = await http.put(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(userData),
+      );
+
+      if (response.statusCode == 200) {
+        final updatedUser = jsonDecode(response.body);
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUser(updatedUser);
+
+        // Navigate to a success screen or display a success message
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => ProfileScreen()),
+          (route) => false,
+        );
+      } else {
+        // Handle error case
+        print('Failed to update user: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle network or other exceptions
+      print('Error updating user: $e');
     }
   }
 
@@ -277,7 +310,6 @@ class Api {
   }
 
   static getProductById(String id) async {
-    print(1);
     Product products;
     List<ActiveElementModel> activeElement = [];
     var url = Uri.parse("${baseUrl}product/get-product-by-id?id=$id");
@@ -340,7 +372,7 @@ class Api {
         body: jsonEncode(cartProduct),
       );
       if (res.statusCode == 200) {
-        var jsonResponse = jsonDecode(res.body);
+        jsonDecode(res.body);
         cartProvider.setCart(res.body);
       } else {
         print("Failed to add to cart. Status code: ${res.statusCode}");
@@ -352,8 +384,6 @@ class Api {
   }
 
   static getCart(String id, BuildContext context) async {
-    CartModel cart;
-    List<CartProduct> cartProduct = [];
     var url = Uri.parse("${baseUrl}cart/GetCartById?id=${id}");
     try {
       var cartProvider = Provider.of<CartProvider>(context, listen: false);
@@ -361,7 +391,6 @@ class Api {
         url,
       );
       if (res.statusCode == 200) {
-        var jsonResponse = jsonDecode(res.body);
         cartProvider.setCart(res.body);
       } else {
         print("Failed to add to cart. Status code: ${res.statusCode}");
@@ -404,8 +433,6 @@ class Api {
 
   static ApplyVoucher(
       String idUser, String voucherCode, BuildContext context) async {
-    CartModel cart;
-    List<CartProduct> cartProduct = [];
     var url = Uri.parse("${baseUrl}cart/apply-voucher?idUser=${idUser}");
     try {
       final navigator = Navigator.of(context);
@@ -416,7 +443,6 @@ class Api {
           },
           body: jsonEncode({"voucherCode": voucherCode}));
       if (res.statusCode == 200) {
-        var jsonResponse = jsonDecode(res.body);
         cartProvider.setCart(res.body);
         navigator.pop(
           MaterialPageRoute(builder: (context) => new Cart()),
@@ -431,8 +457,6 @@ class Api {
   }
 
   static RemoveVoucher(String idUser, BuildContext context) async {
-    CartModel cart;
-    List<CartProduct> cartProduct = [];
     var url = Uri.parse("${baseUrl}cart/remove-voucher?idUser=${idUser}");
     try {
       final navigator = Navigator.of(context);
@@ -441,7 +465,6 @@ class Api {
         'Content-Type': 'application/json; charset=UTF-8',
       });
       if (res.statusCode == 200) {
-        var jsonResponse = jsonDecode(res.body);
         cartProvider.setCart(res.body);
         navigator.pop(
           MaterialPageRoute(builder: (context) => new Cart()),
