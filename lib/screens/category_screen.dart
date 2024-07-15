@@ -136,29 +136,67 @@ class _CategoryScreenState extends State<CategoryScreen> {
             children: [
               TabBarCategory(
                 tabs: [
-                  Tab(
-                    child: Text('Thuốc'),
-                    icon: Image.asset('assets/icons/medicine1.png'),
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Tab(
+                      child: Text('Thuốc'),
+                      icon: Image.asset('assets/icons/medicine1.png'),
+                    ),
                   ),
-                  Tab(
-                    child: Text('Thực phẩm chức năng'),
-                    icon: Image.asset('assets/icons/functionalproducts.png'),
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Tab(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset('assets/icons/functionalproducts.png'),
+                          Text('Thực phẩm'),
+                          Text('chức năng')
+                        ],
+                      ),
+                    ),
                   ),
-                  Tab(
-                    child: Text('Chăm sóc cá nhân'),
-                    icon: Image.asset('assets/icons/personalcare.png'),
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Tab(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset('assets/icons/personalcare.png'),
+                          Text('Chăm sóc'),
+                          Text('cá nhân'),
+                        ],
+                      ),
+                    ),
                   ),
-                  Tab(
-                    child: Text('Mẹ và bé'),
-                    icon: Image.asset('assets/icons/childrenandmom.png'),
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Tab(
+                      child: Text('Mẹ và bé'),
+                      icon: Image.asset('assets/icons/childrenandmom.png'),
+                    ),
                   ),
-                  Tab(
-                    child: Text('Sắc đẹp'),
-                    icon: Image.asset('assets/icons/beauty.png'),
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Tab(
+                      child: Text('Sắc đẹp'),
+                      icon: Image.asset('assets/icons/beauty.png'),
+                    ),
                   ),
-                  Tab(
-                    child: Text('Thiết bị y tế'),
-                    icon: Image.asset('assets/icons/medicalequipment.png'),
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Tab(
+                      child: Text('Thiết bị y tế'),
+                      icon: Image.asset('assets/icons/medicalequipment.png'),
+                    ),
                   ),
                 ],
               ),
