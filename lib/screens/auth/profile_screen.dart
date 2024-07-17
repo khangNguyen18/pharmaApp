@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:iconly/iconly.dart';
-import 'package:pharma_app/components/button_component.dart';
 import 'package:pharma_app/components/icon_component.dart';
 import 'package:pharma_app/components/profile_option_component.dart';
 import 'package:pharma_app/components/text_component.dart';
-import 'package:pharma_app/models/product_model.dart';
-import 'package:pharma_app/provider/cart_provider.dart';
 import 'package:pharma_app/provider/user_provider.dart';
 import 'package:pharma_app/screens/aboutUs_screen.dart';
 import 'package:pharma_app/screens/auth/login_screen.dart';
 import 'package:pharma_app/screens/auth/update_info.dart';
-import 'package:pharma_app/screens/auth/verification_screen.dart';
 import 'package:pharma_app/screens/category_screen.dart';
 import 'package:pharma_app/screens/discount_screen.dart';
 import 'package:pharma_app/screens/order_screen.dart';
 import 'package:pharma_app/screens/support_screen.dart';
 import 'package:pharma_app/services/api.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -71,17 +65,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
         centerTitle: user.email.isNotEmpty ? false : true,
-        actions: [
-          user.email.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 35, right: 20),
-                  child: IconComponent(
-                    icon: Icon(IconlyLight.edit_square),
-                    onIconPress: () {},
-                  ),
-                )
-              : Container()
-        ],
       ),
       body: ListView(
         children: [
@@ -163,7 +146,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ProfileOptionComponent(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)  => AboutusScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AboutusScreen()));
                   },
                   text: 'Về chúng tôi',
                   icon: Icon(
@@ -192,12 +178,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ProfileOptionComponent(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UpdateInfo(
-                                  name: user.name,
-                                )));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => UpdateInfo()));
                   },
                   text: 'Chỉnh sửa thông tin',
                   icon: Icon(
@@ -257,7 +239,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ProfileOptionComponent(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)  => AboutusScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AboutusScreen()));
                   },
                   text: 'Về chúng tôi',
                   icon: Icon(

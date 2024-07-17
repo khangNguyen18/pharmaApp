@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharma_app/main.dart';
 import 'package:pharma_app/models/activeElement_model.dart';
-import 'package:pharma_app/models/cart_model.dart';
-import 'package:pharma_app/models/cart_product_model.dart';
 import 'package:pharma_app/models/product_model.dart';
 import 'package:pharma_app/models/voucher_model.dart';
 import 'package:pharma_app/provider/cart_provider.dart';
@@ -16,7 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.5:3001/";
+  static const baseUrl = "http://10.21.6.130:3001/";
 
   //post account
   static postLoginAuth(
@@ -101,14 +99,16 @@ class Api {
     }
   }
 
-  static Future<void> updateUser(
+  static Future<bool> updateUser(
     Map<String, dynamic> userData,
     BuildContext context,
   ) async {
     final userId = userData['id'];
-    final url = Uri.parse('$baseUrl/auth/userId = $userId');
+    print(userId);
+    final url = Uri.parse('${baseUrl}auth/updateUser?userId=$userId');
 
     try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
       final response = await http.put(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -116,23 +116,22 @@ class Api {
       );
 
       if (response.statusCode == 200) {
-        final updatedUser = jsonDecode(response.body);
-        final userProvider = Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUser(updatedUser);
-
+        userProvider.setUser(response.body);
         // Navigate to a success screen or display a success message
-        Navigator.pushAndRemoveUntil(
+        Navigator.pop(
           context,
           MaterialPageRoute(builder: (context) => ProfileScreen()),
-          (route) => false,
         );
+        return true;
       } else {
         // Handle error case
-        print('Failed to update user: ${response.statusCode}');
+        print('Failed to update user: ${response.body}');
+        return false;
       }
     } catch (e) {
       // Handle network or other exceptions
       print('Error updating user: $e');
+      return false;
     }
   }
 
